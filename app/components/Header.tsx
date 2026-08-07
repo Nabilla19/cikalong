@@ -20,13 +20,14 @@ export default function Header() {
   }, []);
 
   const navLinks = [
-    { name: 'Beranda', path: '/' },
-    { name: 'Profil Desa', path: '#' },
-    { name: 'Potensi & Unggulan', path: '#' },
-    { name: 'Pemerintahan', path: '#' },
-    { name: 'Informasi Publik', path: '#' },
-    { name: 'Berita', path: '#' },
-    { name: 'Kontak Kami', path: '#' },
+    { name: 'Beranda', path: '#beranda' },
+    { name: 'Profil Desa', path: '#profil' },
+    { name: 'Struktur', path: '#struktur' },
+    { name: 'Geografi', path: '#geografi' },
+    { name: 'Aktivitas & Budaya', path: '#aktivitas' },
+    { name: 'Berita', path: '#berita' },
+    { name: 'UMKM', path: '#umkm' },
+    { name: 'Kontak', path: '#kontak' },
   ];
 
   return (

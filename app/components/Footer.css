@@ -1,5 +1,5 @@
 .footer {
-  background-color: #111827;
+  background: linear-gradient(135deg, #2E7D32, #1B5E20);
   color: #f3f4f6;
   padding: 60px 0 20px 0;
   margin-top: auto;
@@ -26,10 +26,12 @@
 }
 
 .logo-icon-footer {
-  width: 35px;
-  height: 35px;
-  background: linear-gradient(135deg, #059669, #10b981);
-  border-radius: 8px;
+  width: 45px;
+  height: 45px;
+  background-image: url('https://ik.imagekit.io/klccxl9cu/Web%20Desa/Desain_tanpa_judul__3_-removebg-preview.png?updatedAt=1751087201639');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .footer-logo h2 {
@@ -61,7 +63,7 @@
   bottom: 0;
   width: 40px;
   height: 2px;
-  background-color: #10b981;
+  background-color: #1E88E5;
 }
 
 .footer-section ul {
@@ -82,7 +84,7 @@
 }
 
 .footer-section a:hover {
-  color: #10b981;
+  color: #1E88E5;
   transform: translateX(5px);
 }
 
