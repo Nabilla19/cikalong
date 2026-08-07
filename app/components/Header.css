@@ -4,21 +4,24 @@
   left: 0;
   width: 100%;
   z-index: 100;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: transparent;
-  padding: 20px 0;
+  padding: 24px 0;
 }
 
 .header.header-scrolled {
-  background: linear-gradient(135deg, #2E7D32 0%, #1E88E5 100%);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 15px 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md);
+  padding: 16px 0;
 }
 
 .header-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -27,28 +30,36 @@
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
 .logo-icon {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-image: url('https://ik.imagekit.io/klccxl9cu/Web%20Desa/Desain_tanpa_judul__3_-removebg-preview.png?updatedAt=1751087201639');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  transition: transform 0.3s ease;
+}
+
+.header-scrolled .logo-icon {
+  transform: scale(0.9);
 }
 
 .logo-text h1 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #1f2937;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
   margin: 0;
   letter-spacing: -0.5px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  transition: color 0.3s ease;
 }
 
 .header.header-scrolled .logo-text h1 {
-  color: #ffffff;
+  color: var(--foreground);
+  text-shadow: none;
 }
 
 .desktop-nav ul {
@@ -64,23 +75,27 @@
   color: #ffffff;
   font-weight: 500;
   font-size: 0.95rem;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
   display: inline-block;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  padding: 8px 12px;
+  border-radius: 8px;
 }
 
 .header.header-scrolled .desktop-nav a {
-  color: #f0fdf4;
+  color: #4b5563;
   text-shadow: none;
 }
 
 .desktop-nav a:hover {
-  color: #bbf7d0;
+  color: #ffffff;
+  background-color: rgba(255,255,255,0.2);
   transform: translateY(-2px);
 }
 
 .header.header-scrolled .desktop-nav a:hover {
-  color: #ffffff;
+  color: var(--primary);
+  background-color: rgba(5, 150, 105, 0.1);
 }
 
 /* Mobile Menu Button */
