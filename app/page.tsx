@@ -498,6 +498,7 @@ export default function Home() {
                   <div>
                     <strong className="block text-gray-900 mb-1">Alamat Kantor</strong>
                     <span className="text-gray-600 text-sm block mb-2">Jl. Cikalong - Sidamulih No. 45<br/>Kec. Sidamulih, Pangandaran</span>
+                  </div>
                 </div>
               </div>
             </div>
