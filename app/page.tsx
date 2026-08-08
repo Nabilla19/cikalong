@@ -1,5 +1,6 @@
 import Link from 'next/link';
-
+import Header from './components/Header';
+import Footer from './components/Footer';
 export default function Home() {
   const masyarakat = [
     { inisial: 'AS', nama: 'Bapak Aman Suherman', jabatan: 'Tokoh Adat', kutipan: 'Cikalong Budayanya Masih Terjaga.' },
@@ -24,7 +25,9 @@ export default function Home() {
 
   return (
     <>
-      {/* BERANDA */}
+      <Header />
+      
+      {/* BERANDA - BANNER UTAMA */}
       <section id="beranda" className="section pt-32 bg-light">
         <div className="container">
           <div className="text-center">
@@ -526,6 +529,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </>
   );
 }
