@@ -131,21 +131,19 @@ export default function Home() {
               </div>
 
               {/* Level 2: Sekretaris Desa */}
-              <div className="w-full relative z-10 -mt-6">
-                <div className="absolute top-6 left-1/2 w-[25%] h-1 bg-red-500"></div>
-                <div className="flex justify-end pr-[20%]">
-                  <div className="flex flex-col items-center">
-                    <div className="w-1 h-6 bg-red-500"></div>
-                    <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-3 rounded shadow-md text-center w-64">
-                      <h3 className="font-serif text-sm mb-1">Sekretaris Desa</h3>
-                      <p className="font-black text-lg uppercase">Kosmara</p>
-                    </div>
+              <div className="w-full max-w-4xl mx-auto relative z-10 -mt-6 h-24">
+                <div className="absolute top-6 left-1/2 w-[40%] h-[3px] bg-red-500 -z-10"></div>
+                <div className="absolute right-0 top-0 flex flex-col items-center">
+                  <div className="w-[3px] h-6 bg-red-500"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-3 rounded shadow-md text-center w-64">
+                    <h3 className="font-serif text-sm mb-1">Sekretaris Desa</h3>
+                    <p className="font-black text-lg uppercase">Kosmara</p>
                   </div>
                 </div>
               </div>
 
               {/* Trunk going down to Kaur (Green only) */}
-              <div className="w-1 h-12 bg-[#22c55e] mx-auto -mt-6"></div>
+              <div className="w-[3px] h-12 bg-[#22c55e] mx-auto -mt-16 relative z-0"></div>
               
               {/* Garis Horizontal Kaur (Hijau) */}
               <div className="w-full max-w-4xl h-1 bg-[#22c55e] mx-auto"></div>
@@ -500,29 +498,28 @@ export default function Home() {
                   <div>
                     <strong className="block text-gray-900 mb-1">Alamat Kantor</strong>
                     <span className="text-gray-600 text-sm block mb-2">Jl. Cikalong - Sidamulih No. 45<br/>Kec. Sidamulih, Pangandaran</span>
-                    <Link href="https://maps.app.goo.gl/iA7iBmdSFGnWFdpK9" target="_blank" className="text-[#f59e0b] hover:text-[#1e3a8a] font-medium text-sm transition-colors">Lihat di Google Maps &rarr;</Link>
-                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="card md:col-span-2 bg-[#1e3a8a] text-white">
-              <h3 className="card-title text-white border-b border-[#f59e0b]/50 pb-4 mb-6 text-2xl">Jam Pelayanan</h3>
+            <div className="card md:col-span-2">
+              <h3 className="card-title border-b border-[#1e3a8a]/20 pb-4 mb-6 text-2xl">Jam Pelayanan</h3>
               <div className="space-y-6">
                 <div className="flex justify-between items-center">
-                  <span className="font-medium">Senin - Jumat</span>
-                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-semibold">08.00 - 14.00</span>
+                  <span className="font-medium text-gray-800">Senin - Jumat</span>
+                  <span className="bg-[#1e3a8a] text-white px-3 py-1 rounded-full text-sm font-semibold">08.00 - 14.00</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="font-medium">Sabtu</span>
-                  <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-semibold">08.00 - 12.00</span>
+                  <span className="font-medium text-gray-800">Sabtu</span>
+                  <span className="bg-[#1e3a8a] text-white px-3 py-1 rounded-full text-sm font-semibold">08.00 - 12.00</span>
                 </div>
-                <div className="flex justify-between items-center text-[#f0e6d2]">
-                  <span className="font-medium">Minggu</span>
-                  <span className="bg-black/20 px-3 py-1 rounded-full text-sm font-semibold">Tutup</span>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium text-gray-800">Minggu</span>
+                  <span className="bg-gray-200 text-gray-500 px-3 py-1 rounded-full text-sm font-semibold line-through">Tutup</span>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
