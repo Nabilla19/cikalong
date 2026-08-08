@@ -170,6 +170,8 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
        {/* AKTIVITAS & BUDAYA */}
       <section id="aktivitas" className="section bg-light">
         <div className="container">
