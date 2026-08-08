@@ -51,20 +51,14 @@ export default function Home() {
 
           <div className="card mt-12 mb-12">
             <h3 className="card-title text-center text-[#1e3a8a]">Sambutan Kepala Desa</h3>
-            <div className="sambutan-text text-gray-700 leading-relaxed text-center max-w-3xl mx-auto">
-              <p>Assalamu’alaikum Warahmatullahi Wabarakatuh,</p>
-              <p>Salam sejahtera,</p>
-              <br/>
-              <p>Selamat datang di website resmi Desa Cikalong.</p>
-              <p>Website ini kami hadirkan sebagai sarana informasi, komunikasi, dan transparansi pelayanan publik kepada masyarakat.</p>
-              <br/>
-              <p>Dengan semangat <strong>"Ngahiji Ku Rasa, Ngahaja Ku Karsa, Ngajayakeun Cikalong"</strong>, mari kita bersama membangun desa yang maju, mandiri, dan berbudaya.</p>
-              <br/>
-              <p>Terima kasih atas kunjungan Anda. Saran dan masukan sangat kami harapkan demi kemajuan bersama.</p>
-              <br/>
-              <p>Wassalamu’alaikum Warahmatullahi Wabarakatuh.</p>
-              <br/>
-              <p className="text-xl font-bold text-gray-900 mt-4">Ruspandi</p>
+            <div className="sambutan-text text-gray-700 leading-relaxed text-center max-w-4xl mx-auto px-4 md:px-8">
+              <p className="mb-4">Assalamu’alaikum Warahmatullahi Wabarakatuh,<br/>Salam sejahtera,</p>
+              <p className="mb-4">Selamat datang di website resmi Desa Cikalong.</p>
+              <p className="mb-4">Website ini kami hadirkan sebagai sarana informasi, komunikasi, dan transparansi pelayanan publik kepada masyarakat.</p>
+              <p className="mb-4">Dengan semangat <strong>"Ngahiji Ku Rasa, Ngahaja Ku Karsa, Ngajayakeun Cikalong"</strong>, mari kita bersama membangun desa yang maju, mandiri, dan berbudaya.</p>
+              <p className="mb-4">Terima kasih atas kunjungan Anda. Saran dan masukan sangat kami harapkan demi kemajuan bersama.</p>
+              <p className="mb-6">Wassalamu’alaikum Warahmatullahi Wabarakatuh.</p>
+              <p className="text-xl font-bold text-gray-900 mt-2 pb-4">Ruspandi</p>
             </div>
           </div>
 
@@ -138,10 +132,10 @@ export default function Home() {
 
               {/* Level 2: Sekretaris Desa */}
               <div className="w-full relative z-10 -mt-6">
-                <div className="absolute top-6 left-1/2 w-[25%] h-1 bg-[#22c55e]"></div>
+                <div className="absolute top-6 left-1/2 w-[25%] h-1 bg-red-500"></div>
                 <div className="flex justify-end pr-[20%]">
                   <div className="flex flex-col items-center">
-                    <div className="w-1 h-6 bg-[#22c55e]"></div>
+                    <div className="w-1 h-6 bg-red-500"></div>
                     <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-3 rounded shadow-md text-center w-64">
                       <h3 className="font-serif text-sm mb-1">Sekretaris Desa</h3>
                       <p className="font-black text-lg uppercase">Kosmara</p>
@@ -150,6 +144,7 @@ export default function Home() {
                 </div>
               </div>
 
+              {/* Trunk going down to Kaur (Green only) */}
               <div className="w-1 h-12 bg-[#22c55e] mx-auto -mt-6"></div>
               
               {/* Garis Horizontal Kaur (Hijau) */}
@@ -197,15 +192,26 @@ export default function Home() {
 
               </div>
 
-              {/* Garis Kasi (Kuning/Oranye meniru gambar) */}
-              <div className="w-1 h-12 bg-[#f59e0b] mx-auto mt-6"></div>
-              <div className="w-full max-w-4xl h-1 bg-[#f59e0b] mx-auto"></div>
+              {/* Trunk going down to Kasi (Green & Red) */}
+              <div className="flex mx-auto mt-6 -mb-1 z-0">
+                <div className="w-[3px] h-12 bg-[#22c55e]"></div>
+                <div className="w-[3px] h-12 bg-red-500 ml-1"></div>
+              </div>
+              
+              {/* Garis Kasi (Hijau & Merah) */}
+              <div className="w-full max-w-4xl mx-auto flex flex-col">
+                <div className="w-full h-[3px] bg-[#22c55e] mb-1"></div>
+                <div className="w-full h-[3px] bg-red-500"></div>
+              </div>
 
               {/* Level 4: Kasi Row */}
               <div className="flex justify-between w-full max-w-4xl relative z-10 mt-0">
                 
                 <div className="flex flex-col items-center w-64">
-                  <div className="w-1 h-6 bg-[#f59e0b]"></div>
+                  <div className="flex">
+                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
+                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+                  </div>
                   <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
                     <h3 className="font-serif text-xs mb-1">Kepala Seksi Pelayanan</h3>
                     <p className="font-bold text-sm uppercase">Sukirman</p>
@@ -213,7 +219,10 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col items-center w-64">
-                  <div className="w-1 h-6 bg-[#f59e0b]"></div>
+                  <div className="flex">
+                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
+                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+                  </div>
                   <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
                     <h3 className="font-serif text-xs mb-1">Kepala Seksi Pemerintahan</h3>
                     <p className="font-bold text-sm uppercase">Nurdiana, S. Pd.Si</p>
@@ -221,7 +230,10 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col items-center w-64">
-                  <div className="w-1 h-6 bg-[#f59e0b]"></div>
+                  <div className="flex">
+                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
+                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+                  </div>
                   <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
                     <h3 className="font-serif text-xs mb-1">Kepala Seksi Kesejahteraan</h3>
                     <p className="font-bold text-sm uppercase">Kusnendar</p>
@@ -230,15 +242,25 @@ export default function Home() {
 
               </div>
 
-              {/* Garis Bawah ke Kadus (Hijau) */}
-              <div className="w-1 h-12 bg-[#22c55e] mx-auto mt-6"></div>
-              <div className="w-full max-w-4xl h-1 bg-[#22c55e] mx-auto"></div>
+              {/* Garis Bawah ke Kadus (Hijau & Merah) */}
+              <div className="flex mx-auto mt-6 -mb-1 z-0">
+                <div className="w-[3px] h-12 bg-[#22c55e]"></div>
+                <div className="w-[3px] h-12 bg-red-500 ml-1"></div>
+              </div>
+              
+              <div className="w-full max-w-4xl mx-auto flex flex-col">
+                <div className="w-full h-[3px] bg-[#22c55e] mb-1"></div>
+                <div className="w-full h-[3px] bg-red-500"></div>
+              </div>
 
               {/* Level 5: Kadus Row */}
               <div className="flex justify-between w-full max-w-4xl relative z-10 mt-0">
                 
                 <div className="flex flex-col items-center w-64">
-                  <div className="w-1 h-6 bg-[#22c55e]"></div>
+                  <div className="flex">
+                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
+                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+                  </div>
                   <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
                     <h3 className="font-serif text-xs mb-1">Kepala Dusun Citembong</h3>
                     <p className="font-bold text-sm uppercase">Aris Kustandar</p>
@@ -246,7 +268,10 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col items-center w-64">
-                  <div className="w-1 h-6 bg-[#22c55e]"></div>
+                  <div className="flex">
+                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
+                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+                  </div>
                   <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
                     <h3 className="font-serif text-xs mb-1">Kepala Dusun Cimanggu</h3>
                     <p className="font-bold text-sm uppercase">Didin Haridin</p>
@@ -254,7 +279,10 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col items-center w-64">
-                  <div className="w-1 h-6 bg-[#22c55e]"></div>
+                  <div className="flex">
+                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
+                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+                  </div>
                   <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
                     <h3 className="font-serif text-xs mb-1">Kepala Dusun Cimanggu</h3>
                     <p className="font-bold text-sm uppercase">Heri</p>
