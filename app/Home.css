@@ -15,7 +15,7 @@
 
 .bg-light {
   background-color: var(--background);
-  background-image: repeating-linear-gradient(45deg, rgba(92, 64, 51, 0.02) 0, rgba(92, 64, 51, 0.02) 2px, transparent 2px, transparent 8px);
+  background-image: repeating-linear-gradient(45deg, rgba(30, 58, 138, 0.02) 0, rgba(30, 58, 138, 0.02) 2px, transparent 2px, transparent 8px);
 }
 
 .section-title {
@@ -92,12 +92,12 @@
   object-fit: cover;
   display: block;
   transition: transform 0.5s ease;
-  filter: sepia(0.2);
+  filter: grayscale(0.2);
 }
 
 .carousel-slide:hover img {
   transform: scale(1.05);
-  filter: sepia(0);
+  filter: grayscale(0);
 }
 
 .carousel-content {
@@ -128,7 +128,7 @@
   border-radius: 8px;
   padding: 2.5rem;
   box-shadow: var(--shadow-md);
-  border: 1px solid rgba(92, 64, 51, 0.1);
+  border: 1px solid rgba(30, 58, 138, 0.1);
   border-top: 4px solid var(--accent);
   margin-bottom: 2rem;
   transition: all 0.3s ease;
@@ -161,7 +161,7 @@
   padding: 2.5rem;
   box-shadow: var(--shadow-md);
   transition: all 0.4s ease;
-  border: 1px solid rgba(92, 64, 51, 0.1);
+  border: 1px solid rgba(30, 58, 138, 0.1);
   border-bottom: 4px solid var(--primary);
 }
 
@@ -203,7 +203,7 @@
 
 .grid-budaya img {
   transition: transform 0.6s ease;
-  filter: sepia(0.3);
+  filter: grayscale(0.3);
 }
 
 .grid-budaya .card:hover img {

@@ -50,7 +50,7 @@ export default function Home() {
           </div>
 
           <div className="card mt-12 mb-12">
-            <h3 className="card-title text-center text-[#5c4033]">Sambutan Kepala Desa</h3>
+            <h3 className="card-title text-center text-[#1e3a8a]">Sambutan Kepala Desa</h3>
             <div className="sambutan-text text-gray-700 leading-relaxed text-center max-w-3xl mx-auto">
               <p>Assalamu’alaikum Warahmatullahi Wabarakatuh,</p>
               <p>Salam sejahtera,</p>
@@ -68,13 +68,13 @@ export default function Home() {
             </div>
           </div>
 
-          <h2 className="section-subtitle mt-16 text-[#5c4033]">Pandangan Umum Masyarakat</h2>
+          <h2 className="section-subtitle mt-16 text-[#1e3a8a]">Pandangan Umum Masyarakat</h2>
           <div className="grid-staff mt-8">
             {masyarakat.map((item, idx) => (
               <div key={idx} className="staff-card">
                 <div className="staff-photo">{item.inisial}</div>
                 <h3 className="text-xl font-bold text-gray-900">{item.nama}</h3>
-                <p className="text-[#5c4033] font-semibold mb-4">{item.jabatan}</p>
+                <p className="text-[#1e3a8a] font-semibold mb-4">{item.jabatan}</p>
                 <p className="text-gray-600 italic">"{item.kutipan}"</p>
               </div>
             ))}
@@ -101,7 +101,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
             <div className="card h-full">
-              <h3 className="card-title text-center text-[#f59e0b]">Visi Desa</h3>
+              <h3 className="card-title text-center text-[#1e3a8a]">Visi Desa</h3>
               <p className="text-gray-700 text-center font-medium leading-relaxed italic text-lg">"Pembangunan Yang Berkelanjutan untuk Mewujudkan Desa Budaya dengan Menitikberatkan PADA PENDIDIKAN AGAMA DAN KARAKTER."</p>
             </div>
 
@@ -125,120 +125,139 @@ export default function Home() {
             <h1 className="section-title text-center">Struktur Perangkat Desa</h1>
           </div>
           <div className="org-chart-container mt-12 overflow-x-auto pb-8">
-            <div className="min-w-[800px] flex flex-col items-center">
+            <div className="min-w-[1000px] flex flex-col items-center">
               
-              {/* Kepala Desa */}
-              <div className="org-node level-1 relative z-10">
-                <div className="org-box border-4 border-[var(--primary)] bg-[var(--accent)] text-[#fbf8f1] px-6 py-4 rounded-lg shadow-lg text-center mx-auto w-64 relative">
-                  <h3 className="font-serif font-bold text-xl mb-1">Kepala Desa</h3>
-                  <p className="font-semibold text-sm opacity-90">Ruspandi</p>
+              {/* Level 1: Kepala Desa */}
+              <div className="org-node relative z-10 w-full flex flex-col items-center">
+                <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-4 rounded shadow-md text-center w-72 relative">
+                  <h3 className="font-serif text-sm mb-1">Kepala Desa Cikalong</h3>
+                  <p className="font-black text-xl uppercase tracking-wide">Ruspandi</p>
                 </div>
-                {/* Line down */}
-                <div className="w-1 h-8 bg-[var(--primary)] mx-auto"></div>
+                <div className="w-1 h-12 bg-[#22c55e]"></div> {/* Garis Utama Hijau */}
               </div>
 
-              {/* Sekretaris Desa */}
-              <div className="org-node level-2 relative z-10">
-                <div className="org-box border-2 border-[var(--primary)] bg-[#fbf8f1] text-[var(--primary-dark)] px-6 py-3 rounded-lg shadow-md text-center mx-auto w-56 relative">
-                  <h3 className="font-serif font-bold text-lg mb-1">Sekretaris Desa</h3>
-                  <p className="text-sm opacity-90 italic">Nama Pejabat</p>
+              {/* Level 2: Sekretaris Desa */}
+              <div className="w-full relative z-10 -mt-6">
+                <div className="absolute top-6 left-1/2 w-[25%] h-1 bg-[#22c55e]"></div>
+                <div className="flex justify-end pr-[20%]">
+                  <div className="flex flex-col items-center">
+                    <div className="w-1 h-6 bg-[#22c55e]"></div>
+                    <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-3 rounded shadow-md text-center w-64">
+                      <h3 className="font-serif text-sm mb-1">Sekretaris Desa</h3>
+                      <p className="font-black text-lg uppercase">Kosmara</p>
+                    </div>
+                  </div>
                 </div>
-                {/* Line down */}
-                <div className="w-1 h-8 bg-[var(--primary)] mx-auto"></div>
               </div>
 
-              {/* Horizontal Line for Kaur/Kasi */}
-              <div className="w-full max-w-5xl h-1 bg-[var(--primary)] mx-auto relative z-0"></div>
-
-              {/* Kaur / Kasi Row */}
-              <div className="flex justify-between w-full max-w-5xl pt-4 relative z-10 gap-4">
-                
-                {/* Item */}
-                <div className="flex flex-col items-center flex-1">
-                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
-                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
-                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kaur Keuangan</h3>
-                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
-                  </div>
-                </div>
-
-                {/* Item */}
-                <div className="flex flex-col items-center flex-1">
-                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
-                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
-                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kaur TU & Umum</h3>
-                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
-                  </div>
-                </div>
-
-                {/* Item */}
-                <div className="flex flex-col items-center flex-1">
-                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
-                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
-                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kaur Perencanaan</h3>
-                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
-                  </div>
-                </div>
-
-                {/* Item */}
-                <div className="flex flex-col items-center flex-1">
-                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
-                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
-                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kasi Pemerintahan</h3>
-                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
-                  </div>
-                </div>
-
-                {/* Item */}
-                <div className="flex flex-col items-center flex-1">
-                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
-                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
-                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kasi Kesejahteraan</h3>
-                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
-                  </div>
-                </div>
-
-                {/* Item */}
-                <div className="flex flex-col items-center flex-1">
-                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
-                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
-                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kasi Pelayanan</h3>
-                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Line down to Kadus (from center of Kaur/Kasi row) */}
-              <div className="w-1 h-12 bg-[var(--primary)] mt-4"></div>
+              <div className="w-1 h-12 bg-[#22c55e] mx-auto -mt-6"></div>
               
-              {/* Horizontal Line for Kadus */}
-              <div className="w-full max-w-3xl h-1 bg-[var(--primary)] mx-auto relative z-0"></div>
+              {/* Garis Horizontal Kaur (Hijau) */}
+              <div className="w-full max-w-4xl h-1 bg-[#22c55e] mx-auto"></div>
 
-              {/* Kadus Row */}
-              <div className="flex justify-between w-full max-w-3xl pt-4 relative z-10 gap-6">
+              {/* Level 3: Kaur Row */}
+              <div className="flex justify-between w-full max-w-4xl relative z-10 mt-0">
                 
-                <div className="flex flex-col items-center flex-1">
-                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
-                  <div className="org-box border-2 border-[var(--accent)] bg-[#fffdf9] text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[80px] flex flex-col justify-center">
-                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--accent)]">Kepala Dusun I</h3>
-                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                {/* Perencanaan */}
+                <div className="flex flex-col items-center w-64">
+                  <div className="w-1 h-6 bg-[#22c55e]"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                    <h3 className="font-serif text-xs mb-1">Kaur Perencanaan</h3>
+                    <p className="font-bold text-sm uppercase">Etikah, A.Md</p>
                   </div>
                 </div>
 
-                <div className="flex flex-col items-center flex-1">
-                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
-                  <div className="org-box border-2 border-[var(--accent)] bg-[#fffdf9] text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[80px] flex flex-col justify-center">
-                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--accent)]">Kepala Dusun II</h3>
-                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                {/* Keuangan + Staf */}
+                <div className="flex flex-col items-center w-64">
+                  <div className="w-1 h-6 bg-[#22c55e]"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                    <h3 className="font-serif text-xs mb-1">Kaur Keuangan</h3>
+                    <p className="font-bold text-sm uppercase">Nolis Pitriani</p>
+                  </div>
+                  <div className="w-1 h-8 bg-[#22c55e]"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                    <h3 className="font-serif text-xs mb-1">Staf Keuangan</h3>
+                    <p className="font-bold text-sm uppercase">Arif Firmansyah</p>
                   </div>
                 </div>
 
-                <div className="flex flex-col items-center flex-1">
-                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
-                  <div className="org-box border-2 border-[var(--accent)] bg-[#fffdf9] text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[80px] flex flex-col justify-center">
-                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--accent)]">Kepala Dusun III</h3>
-                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                {/* TU & Umum + Staf */}
+                <div className="flex flex-col items-center w-64">
+                  <div className="w-1 h-6 bg-[#22c55e]"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                    <h3 className="font-serif text-xs mb-1">Kaur Tata Usaha & Umum</h3>
+                    <p className="font-bold text-sm uppercase">Sutarma Wiguna, S.Pd</p>
+                  </div>
+                  <div className="w-1 h-8 bg-[#22c55e]"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                    <h3 className="font-serif text-xs mb-1">Staf Umum</h3>
+                    <p className="font-bold text-sm uppercase">Endi Mulyadi, S.Pd</p>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Garis Kasi (Kuning/Oranye meniru gambar) */}
+              <div className="w-1 h-12 bg-[#f59e0b] mx-auto mt-6"></div>
+              <div className="w-full max-w-4xl h-1 bg-[#f59e0b] mx-auto"></div>
+
+              {/* Level 4: Kasi Row */}
+              <div className="flex justify-between w-full max-w-4xl relative z-10 mt-0">
+                
+                <div className="flex flex-col items-center w-64">
+                  <div className="w-1 h-6 bg-[#f59e0b]"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                    <h3 className="font-serif text-xs mb-1">Kepala Seksi Pelayanan</h3>
+                    <p className="font-bold text-sm uppercase">Sukirman</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center w-64">
+                  <div className="w-1 h-6 bg-[#f59e0b]"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                    <h3 className="font-serif text-xs mb-1">Kepala Seksi Pemerintahan</h3>
+                    <p className="font-bold text-sm uppercase">Nurdiana, S. Pd.Si</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center w-64">
+                  <div className="w-1 h-6 bg-[#f59e0b]"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                    <h3 className="font-serif text-xs mb-1">Kepala Seksi Kesejahteraan</h3>
+                    <p className="font-bold text-sm uppercase">Kusnendar</p>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Garis Bawah ke Kadus (Hijau) */}
+              <div className="w-1 h-12 bg-[#22c55e] mx-auto mt-6"></div>
+              <div className="w-full max-w-4xl h-1 bg-[#22c55e] mx-auto"></div>
+
+              {/* Level 5: Kadus Row */}
+              <div className="flex justify-between w-full max-w-4xl relative z-10 mt-0">
+                
+                <div className="flex flex-col items-center w-64">
+                  <div className="w-1 h-6 bg-[#22c55e]"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                    <h3 className="font-serif text-xs mb-1">Kepala Dusun Citembong</h3>
+                    <p className="font-bold text-sm uppercase">Aris Kustandar</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center w-64">
+                  <div className="w-1 h-6 bg-[#22c55e]"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                    <h3 className="font-serif text-xs mb-1">Kepala Dusun Cimanggu</h3>
+                    <p className="font-bold text-sm uppercase">Didin Haridin</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center w-64">
+                  <div className="w-1 h-6 bg-[#22c55e]"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                    <h3 className="font-serif text-xs mb-1">Kepala Dusun Cimanggu</h3>
+                    <p className="font-bold text-sm uppercase">Heri</p>
                   </div>
                 </div>
 
@@ -271,10 +290,10 @@ export default function Home() {
               <div className="card flex-1">
                 <h3 className="card-title">Batas Wilayah</h3>
                 <ul className="space-y-3 text-gray-600">
-                  <li className="flex items-center gap-3"><span className="text-[#5c4033] font-bold text-xl">•</span> <strong>Utara:</strong> Desa Kersaratu</li>
-                  <li className="flex items-center gap-3"><span className="text-[#5c4033] font-bold text-xl">•</span> <strong>Selatan:</strong> Desa Sukaresik</li>
-                  <li className="flex items-center gap-3"><span className="text-[#5c4033] font-bold text-xl">•</span> <strong>Timur:</strong> Desa Sidamulih</li>
-                  <li className="flex items-center gap-3"><span className="text-[#5c4033] font-bold text-xl">•</span> <strong>Barat:</strong> Desa Bojong</li>
+                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Utara:</strong> Desa Kersaratu</li>
+                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Selatan:</strong> Desa Sukaresik</li>
+                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Timur:</strong> Desa Sidamulih</li>
+                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Barat:</strong> Desa Bojong</li>
                 </ul>
               </div>
 
@@ -293,7 +312,7 @@ export default function Home() {
           <div className="text-center">
             <h1 className="section-title text-center">Aktivitas & Budaya Desa Cikalong</h1>
           </div>
-          <h2 className="section-subtitle mt-8 mb-8 text-[#f59e0b]">Pelestarian Budaya Leluhur</h2>
+          <h2 className="section-subtitle mt-8 mb-8 text-[#1e3a8a]">Pelestarian Budaya Leluhur</h2>
           
           <div className="grid-budaya">
             {budaya.map((b, i) => (
@@ -322,41 +341,41 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="card hover:-translate-y-2 transition-transform duration-300">
               <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#5c4033] transition-colors">    
+                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#1e3a8a] transition-colors">    
                     Desa Cikalong: Wisata Budaya yang Masih Melestarikan Tradisi Leluhur
                 </Link>
               </h3>
-              <p className="text-xs font-semibold text-[#f59e0b] mb-3 tracking-wider uppercase">18 Juni 2025 • Kumparan.com</p>
+              <p className="text-xs font-semibold text-[#1e3a8a] mb-3 tracking-wider uppercase">18 Juni 2025 • Kumparan.com</p>
               <p className="text-gray-600 leading-relaxed">Artikel ini menggambarkan keunikan lokal desa, mulai dari aktivitas seni budaya, sejarah yang hidup dalam keseharian warga, hingga nilai-nilai kearifan lokal yang terus dijaga.</p>
             </div>
 
             <div className="card hover:-translate-y-2 transition-transform duration-300">
               <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#5c4033] transition-colors">    
+                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#1e3a8a] transition-colors">    
                     Mahasiswa dan Dosen Unpad melakukan PPM di Desa Cikalong, Pangandaran
                 </Link>
               </h3>
-              <p className="text-xs font-semibold text-[#f59e0b] mb-3 tracking-wider uppercase">Juni 2025 • Kumparan.com</p>
+              <p className="text-xs font-semibold text-[#1e3a8a] mb-3 tracking-wider uppercase">Juni 2025 • Kumparan.com</p>
               <p className="text-gray-600 leading-relaxed">Artikel terbaru tentang Kegiatan PPM mahasiswa dan Dosen Unpad di Desa Cikalong, Kabupaten pangandaran. Simak Selengkapnya.</p>
             </div>
 
             <div className="card hover:-translate-y-2 transition-transform duration-300">
               <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#5c4033] transition-colors">    
+                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#1e3a8a] transition-colors">    
                      Peran Sumber Daya Manusia dalam Pelestarian Tradisi Hajat Bumi dan Ngabuku Taun di Desa Cikalong
                 </Link>
               </h3>
-              <p className="text-xs font-semibold text-[#f59e0b] mb-3 tracking-wider uppercase">Juni 2025 • abc.com</p>
+              <p className="text-xs font-semibold text-[#1e3a8a] mb-3 tracking-wider uppercase">Juni 2025 • abc.com</p>
               <p className="text-gray-600 leading-relaxed">Hajat Bumi (perayaan bumi) dan Ngabuku Taun (ritual tahun baru atau panen) merupakan acara di Desa Cikalong sebagai bentuk rasa Syukur masyarakat kepada alam dan Tuhan atas hasil panen yang melimpah.</p>
             </div>
 
             <div className="card hover:-translate-y-2 transition-transform duration-300">
               <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#5c4033] transition-colors">
+                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#1e3a8a] transition-colors">
                     Cikalong, Desa Kecil dengan Orang-Orang Hebat Penjaga Warisan
                 </Link>
               </h3>
-              <p className="text-xs font-semibold text-[#f59e0b] mb-3 tracking-wider uppercase">Juni 2025 • abc.com</p>
+              <p className="text-xs font-semibold text-[#1e3a8a] mb-3 tracking-wider uppercase">Juni 2025 • abc.com</p>
               <p className="text-gray-600 leading-relaxed">Mengangkat kisah inspiratif tokoh-tokoh luar biasa dari Desa Cikalong, mulai dari penjaga seni, tradisi, dan usaha lokal yang patut kita kenal dan hargai.</p>
             </div>
           </div>
@@ -375,7 +394,7 @@ export default function Home() {
               <div className="h-48 mb-6 overflow-hidden rounded-xl">
                 <img src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/WhatsApp%20Image%202025-06-24%20at%2012.18.27_79ab0ebc.jpg?updatedAt=1750742589442" alt="UMKM Opak Cikalong" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-[#5c4033]">UMKM Opak Cikalong</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#1e3a8a]">UMKM Opak Cikalong</h3>
               <div className="space-y-2 text-sm text-gray-600 flex-1">
                 <p><strong className="text-gray-900">Produk:</strong> Opak khas Cikalong</p>
                 <p><strong className="text-gray-900">Pemilik:</strong> Ibu Kisah</p>
@@ -387,7 +406,7 @@ export default function Home() {
               <div className="h-48 mb-6 overflow-hidden rounded-xl">
                 <img src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/DSC_0566.JPG?updatedAt=1750742523060" alt="UMKM Sari Mukti Keripik" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-[#5c4033]">UMKM Sari Mukti Keripik</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#1e3a8a]">UMKM Sari Mukti Keripik</h3>
               <div className="space-y-2 text-sm text-gray-600 flex-1">
                 <p><strong className="text-gray-900">Produk:</strong> Aneka jenis keripik</p>
                 <p><strong className="text-gray-900">Pemilik:</strong> Bapak Sajim dan Ibu Asna</p>
@@ -400,7 +419,7 @@ export default function Home() {
               <div className="h-48 mb-6 overflow-hidden rounded-xl">
                 <img src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/WhatsApp%20Image%202025-06-24%20at%2012.17.57_50d28fe6.jpg?updatedAt=1750742589463" alt="Pulo Sangkuriang Barokah" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-[#5c4033]">Pulo Sangkuriang Barokah</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#1e3a8a]">Pulo Sangkuriang Barokah</h3>
               <div className="space-y-2 text-sm text-gray-600 flex-1">
                 <p><strong className="text-gray-900">Produk:</strong> Bibit & Ikan Konsumsi Mujaer</p>
                 <p><strong className="text-gray-900">Pemilik:</strong> Bapak Ruswan (Pak Kancil)</p>
@@ -424,7 +443,7 @@ export default function Home() {
               <h3 className="card-title text-2xl mb-6">Informasi Kontak</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#5c4033] flex items-center justify-center text-2xl shadow-sm shrink-0">📞</div>
+                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">📞</div>
                   <div>
                     <strong className="block text-gray-900 mb-1">WhatsApp Pelayanan</strong>
                     <span className="text-gray-600">+62 853-2013-9810 (Endi)</span>
@@ -432,7 +451,7 @@ export default function Home() {
                 </div>
                 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#5c4033] flex items-center justify-center text-2xl shadow-sm shrink-0">✉️</div>
+                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">✉️</div>
                   <div>
                     <strong className="block text-gray-900 mb-1">Email Desa</strong>
                     <span className="text-gray-600 break-all">cikalongpangandaran@gmail.com</span>
@@ -440,7 +459,7 @@ export default function Home() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#5c4033] flex items-center justify-center text-2xl shadow-sm shrink-0">📱</div>
+                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">📱</div>
                   <div>
                     <strong className="block text-gray-900 mb-1">Media Sosial</strong>
                     <span className="text-gray-600 block text-sm">IG: @desacikalongpnd</span>
@@ -449,18 +468,18 @@ export default function Home() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#5c4033] flex items-center justify-center text-2xl shadow-sm shrink-0">📍</div>
+                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">📍</div>
                   <div>
                     <strong className="block text-gray-900 mb-1">Alamat Kantor</strong>
                     <span className="text-gray-600 text-sm block mb-2">Jl. Cikalong - Sidamulih No. 45<br/>Kec. Sidamulih, Pangandaran</span>
-                    <Link href="https://maps.app.goo.gl/iA7iBmdSFGnWFdpK9" target="_blank" className="text-[#f59e0b] hover:text-[#5c4033] font-medium text-sm transition-colors">Lihat di Google Maps &rarr;</Link>
+                    <Link href="https://maps.app.goo.gl/iA7iBmdSFGnWFdpK9" target="_blank" className="text-[#f59e0b] hover:text-[#1e3a8a] font-medium text-sm transition-colors">Lihat di Google Maps &rarr;</Link>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="card md:col-span-2 bg-[#5c4033] text-white">
-              <h3 className="card-title text-white border-b border-[#b94e3e]/50 pb-4 mb-6 text-2xl">Jam Pelayanan</h3>
+            <div className="card md:col-span-2 bg-[#1e3a8a] text-white">
+              <h3 className="card-title text-white border-b border-[#f59e0b]/50 pb-4 mb-6 text-2xl">Jam Pelayanan</h3>
               <div className="space-y-6">
                 <div className="flex justify-between items-center">
                   <span className="font-medium">Senin - Jumat</span>
