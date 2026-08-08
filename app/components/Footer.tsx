@@ -36,9 +36,9 @@ export default function Footer() {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2025 Desa Cikalong, Kabupaten Pangandaran. Hak cipta dilindungi.</p>
+          <p>&copy; 2026 Desa Cikalong, Kabupaten Pangandaran. Hak cipta dilindungi.</p>
           <p className="mt-1 text-sm text-gray-400">Website Resmi Pemerintah Desa Cikalong</p>
-          <p className="mt-1 text-sm text-gray-400">PPM Unpad 2025</p>
+          <p className="mt-1 text-sm font-bold text-[#b94e3e]">PPM UIN Suska 2026</p>
         </div>
       </div>
     </footer>

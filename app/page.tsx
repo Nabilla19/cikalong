@@ -124,12 +124,127 @@ export default function Home() {
           <div className="text-center">
             <h1 className="section-title text-center">Struktur Perangkat Desa</h1>
           </div>
-          <div className="text-center mt-8">
-            <img 
-              src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/Orgabigram%20Desa%20Cikalong%20(1500%20x%201920%20px).png?updatedAt=1750776307636" 
-              alt="Struktur Organisasi" 
-              className="rounded-3xl shadow-2xl w-full max-w-4xl mx-auto border border-gray-100"
-            />
+          <div className="org-chart-container mt-12 overflow-x-auto pb-8">
+            <div className="min-w-[800px] flex flex-col items-center">
+              
+              {/* Kepala Desa */}
+              <div className="org-node level-1 relative z-10">
+                <div className="org-box border-4 border-[var(--primary)] bg-[var(--accent)] text-[#fbf8f1] px-6 py-4 rounded-lg shadow-lg text-center mx-auto w-64 relative">
+                  <h3 className="font-serif font-bold text-xl mb-1">Kepala Desa</h3>
+                  <p className="font-semibold text-sm opacity-90">Ruspandi</p>
+                </div>
+                {/* Line down */}
+                <div className="w-1 h-8 bg-[var(--primary)] mx-auto"></div>
+              </div>
+
+              {/* Sekretaris Desa */}
+              <div className="org-node level-2 relative z-10">
+                <div className="org-box border-2 border-[var(--primary)] bg-[#fbf8f1] text-[var(--primary-dark)] px-6 py-3 rounded-lg shadow-md text-center mx-auto w-56 relative">
+                  <h3 className="font-serif font-bold text-lg mb-1">Sekretaris Desa</h3>
+                  <p className="text-sm opacity-90 italic">Nama Pejabat</p>
+                </div>
+                {/* Line down */}
+                <div className="w-1 h-8 bg-[var(--primary)] mx-auto"></div>
+              </div>
+
+              {/* Horizontal Line for Kaur/Kasi */}
+              <div className="w-full max-w-5xl h-1 bg-[var(--primary)] mx-auto relative z-0"></div>
+
+              {/* Kaur / Kasi Row */}
+              <div className="flex justify-between w-full max-w-5xl pt-4 relative z-10 gap-4">
+                
+                {/* Item */}
+                <div className="flex flex-col items-center flex-1">
+                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
+                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
+                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kaur Keuangan</h3>
+                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                  </div>
+                </div>
+
+                {/* Item */}
+                <div className="flex flex-col items-center flex-1">
+                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
+                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
+                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kaur TU & Umum</h3>
+                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                  </div>
+                </div>
+
+                {/* Item */}
+                <div className="flex flex-col items-center flex-1">
+                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
+                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
+                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kaur Perencanaan</h3>
+                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                  </div>
+                </div>
+
+                {/* Item */}
+                <div className="flex flex-col items-center flex-1">
+                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
+                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
+                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kasi Pemerintahan</h3>
+                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                  </div>
+                </div>
+
+                {/* Item */}
+                <div className="flex flex-col items-center flex-1">
+                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
+                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
+                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kasi Kesejahteraan</h3>
+                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                  </div>
+                </div>
+
+                {/* Item */}
+                <div className="flex flex-col items-center flex-1">
+                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
+                  <div className="org-box border-2 border-[var(--primary)] bg-white text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[90px] flex flex-col justify-center">
+                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--primary-dark)]">Kasi Pelayanan</h3>
+                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Line down to Kadus (from center of Kaur/Kasi row) */}
+              <div className="w-1 h-12 bg-[var(--primary)] mt-4"></div>
+              
+              {/* Horizontal Line for Kadus */}
+              <div className="w-full max-w-3xl h-1 bg-[var(--primary)] mx-auto relative z-0"></div>
+
+              {/* Kadus Row */}
+              <div className="flex justify-between w-full max-w-3xl pt-4 relative z-10 gap-6">
+                
+                <div className="flex flex-col items-center flex-1">
+                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
+                  <div className="org-box border-2 border-[var(--accent)] bg-[#fffdf9] text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[80px] flex flex-col justify-center">
+                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--accent)]">Kepala Dusun I</h3>
+                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center flex-1">
+                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
+                  <div className="org-box border-2 border-[var(--accent)] bg-[#fffdf9] text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[80px] flex flex-col justify-center">
+                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--accent)]">Kepala Dusun II</h3>
+                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-center flex-1">
+                  <div className="w-1 h-4 bg-[var(--primary)] -mt-4 mb-0"></div>
+                  <div className="org-box border-2 border-[var(--accent)] bg-[#fffdf9] text-[var(--foreground)] px-3 py-3 rounded-lg shadow text-center w-full min-h-[80px] flex flex-col justify-center">
+                    <h3 className="font-serif font-bold text-sm mb-1 text-[var(--accent)]">Kepala Dusun III</h3>
+                    <p className="text-xs italic opacity-80">Nama Pejabat</p>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
           </div>
         </div>
       </section>
