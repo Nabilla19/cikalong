@@ -50,7 +50,7 @@ export default function Home() {
           </div>
 
           <div className="card mt-12 mb-12">
-            <h3 className="card-title text-center text-[#059669]">Sambutan Kepala Desa</h3>
+            <h3 className="card-title text-center text-[#5c4033]">Sambutan Kepala Desa</h3>
             <div className="sambutan-text text-gray-700 leading-relaxed text-center max-w-3xl mx-auto">
               <p>Assalamu’alaikum Warahmatullahi Wabarakatuh,</p>
               <p>Salam sejahtera,</p>
@@ -68,13 +68,13 @@ export default function Home() {
             </div>
           </div>
 
-          <h2 className="section-subtitle mt-16 text-[#059669]">Pandangan Umum Masyarakat</h2>
+          <h2 className="section-subtitle mt-16 text-[#5c4033]">Pandangan Umum Masyarakat</h2>
           <div className="grid-staff mt-8">
             {masyarakat.map((item, idx) => (
               <div key={idx} className="staff-card">
                 <div className="staff-photo">{item.inisial}</div>
                 <h3 className="text-xl font-bold text-gray-900">{item.nama}</h3>
-                <p className="text-[#059669] font-semibold mb-4">{item.jabatan}</p>
+                <p className="text-[#5c4033] font-semibold mb-4">{item.jabatan}</p>
                 <p className="text-gray-600 italic">"{item.kutipan}"</p>
               </div>
             ))}
@@ -156,10 +156,10 @@ export default function Home() {
               <div className="card flex-1">
                 <h3 className="card-title">Batas Wilayah</h3>
                 <ul className="space-y-3 text-gray-600">
-                  <li className="flex items-center gap-3"><span className="text-[#059669] font-bold text-xl">•</span> <strong>Utara:</strong> Desa Kersaratu</li>
-                  <li className="flex items-center gap-3"><span className="text-[#059669] font-bold text-xl">•</span> <strong>Selatan:</strong> Desa Sukaresik</li>
-                  <li className="flex items-center gap-3"><span className="text-[#059669] font-bold text-xl">•</span> <strong>Timur:</strong> Desa Sidamulih</li>
-                  <li className="flex items-center gap-3"><span className="text-[#059669] font-bold text-xl">•</span> <strong>Barat:</strong> Desa Bojong</li>
+                  <li className="flex items-center gap-3"><span className="text-[#5c4033] font-bold text-xl">•</span> <strong>Utara:</strong> Desa Kersaratu</li>
+                  <li className="flex items-center gap-3"><span className="text-[#5c4033] font-bold text-xl">•</span> <strong>Selatan:</strong> Desa Sukaresik</li>
+                  <li className="flex items-center gap-3"><span className="text-[#5c4033] font-bold text-xl">•</span> <strong>Timur:</strong> Desa Sidamulih</li>
+                  <li className="flex items-center gap-3"><span className="text-[#5c4033] font-bold text-xl">•</span> <strong>Barat:</strong> Desa Bojong</li>
                 </ul>
               </div>
 
@@ -205,7 +205,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="card hover:-translate-y-2 transition-transform duration-300">
               <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#059669] transition-colors">    
+                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#5c4033] transition-colors">    
                     Desa Cikalong: Wisata Budaya yang Masih Melestarikan Tradisi Leluhur
                 </Link>
               </h3>
@@ -215,7 +215,7 @@ export default function Home() {
 
             <div className="card hover:-translate-y-2 transition-transform duration-300">
               <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#059669] transition-colors">    
+                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#5c4033] transition-colors">    
                     Mahasiswa dan Dosen Unpad melakukan PPM di Desa Cikalong, Pangandaran
                 </Link>
               </h3>
@@ -225,7 +225,7 @@ export default function Home() {
 
             <div className="card hover:-translate-y-2 transition-transform duration-300">
               <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#059669] transition-colors">    
+                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#5c4033] transition-colors">    
                      Peran Sumber Daya Manusia dalam Pelestarian Tradisi Hajat Bumi dan Ngabuku Taun di Desa Cikalong
                 </Link>
               </h3>
@@ -235,7 +235,7 @@ export default function Home() {
 
             <div className="card hover:-translate-y-2 transition-transform duration-300">
               <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#059669] transition-colors">
+                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#5c4033] transition-colors">
                     Cikalong, Desa Kecil dengan Orang-Orang Hebat Penjaga Warisan
                 </Link>
               </h3>
@@ -258,7 +258,7 @@ export default function Home() {
               <div className="h-48 mb-6 overflow-hidden rounded-xl">
                 <img src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/WhatsApp%20Image%202025-06-24%20at%2012.18.27_79ab0ebc.jpg?updatedAt=1750742589442" alt="UMKM Opak Cikalong" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-[#059669]">UMKM Opak Cikalong</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#5c4033]">UMKM Opak Cikalong</h3>
               <div className="space-y-2 text-sm text-gray-600 flex-1">
                 <p><strong className="text-gray-900">Produk:</strong> Opak khas Cikalong</p>
                 <p><strong className="text-gray-900">Pemilik:</strong> Ibu Kisah</p>
@@ -270,7 +270,7 @@ export default function Home() {
               <div className="h-48 mb-6 overflow-hidden rounded-xl">
                 <img src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/DSC_0566.JPG?updatedAt=1750742523060" alt="UMKM Sari Mukti Keripik" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-[#059669]">UMKM Sari Mukti Keripik</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#5c4033]">UMKM Sari Mukti Keripik</h3>
               <div className="space-y-2 text-sm text-gray-600 flex-1">
                 <p><strong className="text-gray-900">Produk:</strong> Aneka jenis keripik</p>
                 <p><strong className="text-gray-900">Pemilik:</strong> Bapak Sajim dan Ibu Asna</p>
@@ -283,7 +283,7 @@ export default function Home() {
               <div className="h-48 mb-6 overflow-hidden rounded-xl">
                 <img src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/WhatsApp%20Image%202025-06-24%20at%2012.17.57_50d28fe6.jpg?updatedAt=1750742589463" alt="Pulo Sangkuriang Barokah" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-[#059669]">Pulo Sangkuriang Barokah</h3>
+              <h3 className="text-xl font-bold mb-4 text-[#5c4033]">Pulo Sangkuriang Barokah</h3>
               <div className="space-y-2 text-sm text-gray-600 flex-1">
                 <p><strong className="text-gray-900">Produk:</strong> Bibit & Ikan Konsumsi Mujaer</p>
                 <p><strong className="text-gray-900">Pemilik:</strong> Bapak Ruswan (Pak Kancil)</p>
@@ -307,7 +307,7 @@ export default function Home() {
               <h3 className="card-title text-2xl mb-6">Informasi Kontak</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center text-2xl shadow-sm shrink-0">📞</div>
+                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#5c4033] flex items-center justify-center text-2xl shadow-sm shrink-0">📞</div>
                   <div>
                     <strong className="block text-gray-900 mb-1">WhatsApp Pelayanan</strong>
                     <span className="text-gray-600">+62 853-2013-9810 (Endi)</span>
@@ -315,7 +315,7 @@ export default function Home() {
                 </div>
                 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center text-2xl shadow-sm shrink-0">✉️</div>
+                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#5c4033] flex items-center justify-center text-2xl shadow-sm shrink-0">✉️</div>
                   <div>
                     <strong className="block text-gray-900 mb-1">Email Desa</strong>
                     <span className="text-gray-600 break-all">cikalongpangandaran@gmail.com</span>
@@ -323,7 +323,7 @@ export default function Home() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center text-2xl shadow-sm shrink-0">📱</div>
+                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#5c4033] flex items-center justify-center text-2xl shadow-sm shrink-0">📱</div>
                   <div>
                     <strong className="block text-gray-900 mb-1">Media Sosial</strong>
                     <span className="text-gray-600 block text-sm">IG: @desacikalongpnd</span>
@@ -332,18 +332,18 @@ export default function Home() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-emerald-50 text-[#059669] flex items-center justify-center text-2xl shadow-sm shrink-0">📍</div>
+                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#5c4033] flex items-center justify-center text-2xl shadow-sm shrink-0">📍</div>
                   <div>
                     <strong className="block text-gray-900 mb-1">Alamat Kantor</strong>
                     <span className="text-gray-600 text-sm block mb-2">Jl. Cikalong - Sidamulih No. 45<br/>Kec. Sidamulih, Pangandaran</span>
-                    <Link href="https://maps.app.goo.gl/iA7iBmdSFGnWFdpK9" target="_blank" className="text-[#f59e0b] hover:text-[#059669] font-medium text-sm transition-colors">Lihat di Google Maps &rarr;</Link>
+                    <Link href="https://maps.app.goo.gl/iA7iBmdSFGnWFdpK9" target="_blank" className="text-[#f59e0b] hover:text-[#5c4033] font-medium text-sm transition-colors">Lihat di Google Maps &rarr;</Link>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="card md:col-span-2 bg-[#059669] text-white">
-              <h3 className="card-title text-white border-b border-emerald-500/50 pb-4 mb-6 text-2xl">Jam Pelayanan</h3>
+            <div className="card md:col-span-2 bg-[#5c4033] text-white">
+              <h3 className="card-title text-white border-b border-[#b94e3e]/50 pb-4 mb-6 text-2xl">Jam Pelayanan</h3>
               <div className="space-y-6">
                 <div className="flex justify-between items-center">
                   <span className="font-medium">Senin - Jumat</span>
@@ -353,7 +353,7 @@ export default function Home() {
                   <span className="font-medium">Sabtu</span>
                   <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-semibold">08.00 - 12.00</span>
                 </div>
-                <div className="flex justify-between items-center text-emerald-100">
+                <div className="flex justify-between items-center text-[#f0e6d2]">
                   <span className="font-medium">Minggu</span>
                   <span className="bg-black/20 px-3 py-1 rounded-full text-sm font-semibold">Tutup</span>
                 </div>

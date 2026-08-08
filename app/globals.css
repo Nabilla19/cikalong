@@ -1,16 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fdfdfd;
-  --foreground: #1c1f23;
-  --primary: #059669; /* Emerald Green */
-  --primary-dark: #047857;
-  --accent: #f59e0b; /* Soft Gold/Amber accent */
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+  --background: #fbf8f1; /* Ivory / Cream */
+  --foreground: #4a3b32; /* Dark Brown / Wood text */
+  --primary: #5c4033; /* Dark Wood */
+  --primary-dark: #3e2723; /* Darker Wood */
+  --accent: #b94e3e; /* Terracotta / Clay red */
+  
+  --shadow-sm: 0 4px 6px -1px rgba(92, 64, 51, 0.1), 0 2px 4px -1px rgba(92, 64, 51, 0.05);
+  --shadow-md: 0 10px 15px -3px rgba(92, 64, 51, 0.1), 0 4px 6px -2px rgba(92, 64, 51, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(92, 64, 51, 0.15), 0 10px 10px -5px rgba(92, 64, 51, 0.05);
+}
+
+.font-serif {
+  font-family: var(--font-serif), Georgia, serif;
 }
 
 * {

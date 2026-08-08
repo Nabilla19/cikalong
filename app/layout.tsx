@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Lora } from "next/font/google";
 import "./globals.css";
 import "./components/Header.css";
 import "./components/Footer.css";
@@ -7,11 +7,12 @@ import "./Home.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const lora = Lora({ subsets: ["latin"], variable: "--font-serif" });
 
 export const metadata: Metadata = {
-  title: "Website Resmi Desa Cikalong",
-  description: "Portal informasi resmi, layanan publik, dan potensi lokal Desa Cikalong.",
+  title: "Website Desa Cikalong",
+  description: "Website resmi Desa Cikalong, Kecamatan Sidamulih, Kabupaten Pangandaran",
 };
 
 export default function RootLayout({
@@ -20,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={inter.className}>
-      <body>
+    <html lang="id">
+      <body className={`${inter.variable} ${lora.variable} font-sans`}>
         <Header />
         <main className="min-h-screen">
           {children}

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Home Page Styles (Premium)
+   Home Page Styles (Traditional & Classic)
    ========================================================================== */
 
 .container {
@@ -15,16 +15,15 @@
 
 .bg-light {
   background-color: var(--background);
-  background-image: radial-gradient(rgba(5, 150, 105, 0.03) 2px, transparent 2px);
-  background-size: 30px 30px;
+  background-image: repeating-linear-gradient(45deg, rgba(92, 64, 51, 0.02) 0, rgba(92, 64, 51, 0.02) 2px, transparent 2px, transparent 8px);
 }
 
 .section-title {
-  color: var(--foreground);
-  font-size: 2.5rem;
+  color: var(--primary-dark);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 2.8rem;
   margin-bottom: 2.5rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-weight: 700;
   position: relative;
   display: inline-block;
 }
@@ -34,10 +33,9 @@
   position: absolute;
   left: 0;
   bottom: -8px;
-  width: 60px;
-  height: 4px;
-  background: var(--primary);
-  border-radius: 4px;
+  width: 80px;
+  height: 3px;
+  background: var(--accent);
 }
 
 .section-title.text-center::after {
@@ -46,8 +44,9 @@
 }
 
 .section-subtitle {
-  color: var(--primary);
-  font-size: 1.5rem;
+  color: var(--accent);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.6rem;
   margin-bottom: 2rem;
   font-weight: 600;
   text-align: center;
@@ -62,8 +61,9 @@
 
 .main-banner-img {
   width: 100%;
-  border-radius: 24px;
+  border-radius: 8px;
   box-shadow: var(--shadow-lg);
+  border: 4px solid var(--primary);
   object-fit: cover;
   transition: transform 0.5s ease;
 }
@@ -76,7 +76,8 @@
   position: relative;
   max-width: 1000px;
   margin: 3rem auto;
-  border-radius: 24px;
+  border-radius: 8px;
+  border: 4px solid var(--primary);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
 }
@@ -91,10 +92,12 @@
   object-fit: cover;
   display: block;
   transition: transform 0.5s ease;
+  filter: sepia(0.2);
 }
 
 .carousel-slide:hover img {
   transform: scale(1.05);
+  filter: sepia(0);
 }
 
 .carousel-content {
@@ -102,14 +105,15 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-  color: white;
+  background: linear-gradient(to top, rgba(62, 39, 35, 0.95), transparent);
+  color: #fbf8f1;
   padding: 3rem 2rem 2rem;
 }
 
 .carousel-title {
-  font-size: 1.8rem;
-  font-weight: 800;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
   margin-bottom: 0.5rem;
 }
 
@@ -120,11 +124,12 @@
 
 /* General Cards */
 .card {
-  background: #ffffff;
-  border-radius: 20px;
+  background: #fffdf9;
+  border-radius: 8px;
   padding: 2.5rem;
   box-shadow: var(--shadow-md);
-  border: 1px solid rgba(0,0,0,0.03);
+  border: 1px solid rgba(92, 64, 51, 0.1);
+  border-top: 4px solid var(--accent);
   margin-bottom: 2rem;
   transition: all 0.3s ease;
 }
@@ -135,8 +140,9 @@
 }
 
 .card-title {
-  color: var(--foreground);
-  font-size: 1.4rem;
+  color: var(--primary-dark);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.6rem;
   margin-bottom: 1.2rem;
   font-weight: 700;
 }
@@ -150,33 +156,35 @@
 
 .staff-card {
   text-align: center;
-  background: #ffffff;
-  border-radius: 24px;
+  background: #fffdf9;
+  border-radius: 8px;
   padding: 2.5rem;
   box-shadow: var(--shadow-md);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(0,0,0,0.02);
+  transition: all 0.4s ease;
+  border: 1px solid rgba(92, 64, 51, 0.1);
+  border-bottom: 4px solid var(--primary);
 }
 
 .staff-card:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow-lg);
-  border-color: rgba(5, 150, 105, 0.2);
 }
 
 .staff-photo {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: var(--primary);
   margin: 0 auto 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #fbf8f1;
   font-size: 2.5rem;
-  font-weight: 800;
-  box-shadow: var(--shadow-md);
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 700;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+  border: 3px solid var(--accent);
 }
 
 /* Budaya Grid */
@@ -189,16 +197,28 @@
 .grid-budaya .card {
   padding: 0;
   overflow: hidden;
-  border-radius: 24px;
-  border: none;
+  border: 2px solid var(--primary);
+  border-radius: 4px;
 }
 
 .grid-budaya img {
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.6s ease;
+  filter: sepia(0.3);
 }
 
 .grid-budaya .card:hover img {
   transform: scale(1.1);
+  filter: sepia(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+  .carousel-slide img {
+    height: 350px;
+  }
 }
 
 /* Responsive */
