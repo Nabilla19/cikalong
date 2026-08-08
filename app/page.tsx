@@ -127,26 +127,28 @@ export default function Home() {
                   <h3 className="font-serif text-sm mb-1">Kepala Desa Cikalong</h3>
                   <p className="font-black text-xl uppercase tracking-wide">Ruspandi</p>
                 </div>
-                <div className="w-1 h-12 bg-[#22c55e]"></div> {/* Garis Utama Hijau */}
+                <div className="w-[3px] h-8 bg-[#22c55e]"></div> {/* Garis Utama Hijau */}
               </div>
 
               {/* Level 2: Sekretaris Desa */}
-              <div className="w-full max-w-4xl mx-auto relative z-10 -mt-6 h-24">
-                <div className="absolute top-6 left-1/2 w-[40%] h-[3px] bg-red-500 -z-10"></div>
-                <div className="absolute right-0 top-0 flex flex-col items-center">
-                  <div className="w-[3px] h-6 bg-red-500"></div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-3 rounded shadow-md text-center w-64">
+              <div className="w-full max-w-4xl mx-auto relative z-10 h-24 flex justify-end">
+                {/* Horizontal Red Line from Center to Sekdes center */}
+                <div className="absolute top-0 left-1/2 right-[128px] h-[3px] bg-red-500 -z-10"></div>
+                
+                {/* Center Green Trunk continuing through Sekdes row */}
+                <div className="absolute top-0 left-1/2 -ml-[1.5px] w-[3px] h-full bg-[#22c55e] -z-10"></div>
+
+                <div className="w-64 flex flex-col items-center">
+                  <div className="w-[3px] h-6 bg-red-500 relative z-0"></div>
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-3 rounded shadow-md text-center w-full relative z-10">
                     <h3 className="font-serif text-sm mb-1">Sekretaris Desa</h3>
                     <p className="font-black text-lg uppercase">Kosmara</p>
                   </div>
                 </div>
               </div>
-
-              {/* Trunk going down to Kaur (Green only) */}
-              <div className="w-[3px] h-12 bg-[#22c55e] mx-auto -mt-16 relative z-0"></div>
               
               {/* Garis Horizontal Kaur (Hijau) */}
-              <div className="w-full max-w-4xl h-1 bg-[#22c55e] mx-auto"></div>
+              <div className="w-full max-w-4xl h-[3px] bg-[#22c55e] mx-auto"></div>
 
               {/* Level 3: Kaur Row */}
               <div className="flex justify-between w-full max-w-4xl relative z-10 mt-0">
