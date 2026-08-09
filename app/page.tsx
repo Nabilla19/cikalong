@@ -151,8 +151,8 @@ export default async function Home() {
           <div className="text-center">
             <h1 className="section-title text-center">Struktur Perangkat Desa</h1>
           </div>
-          <div className="org-chart-container mt-12 overflow-x-auto pb-8">
-            <div className="min-w-[1000px] flex flex-col items-center">
+          <div className="org-chart-container mt-12 pb-8">
+            <div className="min-w-full md:min-w-[1000px] flex flex-col items-center overflow-x-hidden md:overflow-x-visible">
               
               {/* Level 1: Kepala Desa */}
               <div className="org-node relative z-10 w-full flex flex-col items-center">
@@ -164,15 +164,15 @@ export default async function Home() {
               </div>
 
               {/* Level 2: Sekretaris Desa */}
-              <div className="w-full max-w-4xl mx-auto relative z-10 h-24 flex justify-end">
-                {/* Horizontal Red Line from Center to Sekdes center */}
-                <div className="absolute top-0 left-1/2 right-[128px] h-[3px] bg-red-500 -z-10"></div>
+              <div className="w-full max-w-4xl mx-auto relative z-10 md:h-24 flex flex-col md:flex-row justify-center md:justify-end items-center mt-6 md:mt-0">
+                {/* Horizontal Red Line from Center to Sekdes center (Desktop Only) */}
+                <div className="hidden md:block absolute top-0 left-1/2 right-[128px] h-[3px] bg-red-500 -z-10"></div>
                 
                 {/* Center Green Trunk continuing through Sekdes row */}
-                <div className="absolute top-0 left-1/2 -ml-[1.5px] w-[3px] h-full bg-[#22c55e] -z-10"></div>
+                <div className="hidden md:block absolute top-0 left-1/2 -ml-[1.5px] w-[3px] h-full bg-[#22c55e] -z-10"></div>
 
                 <div className="w-64 flex flex-col items-center">
-                  <div className="w-[3px] h-6 bg-red-500 relative z-0"></div>
+                  <div className="w-[3px] h-6 bg-[#22c55e] md:bg-red-500 relative z-0"></div>
                   <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-3 rounded shadow-md text-center w-full relative z-10">
                     <h3 className="font-serif text-sm mb-1">{sekdes?.jabatan || 'Sekretaris Desa'}</h3>
                     <p className="font-black text-lg uppercase">{sekdes?.nama || 'Belum diisi'}</p>
@@ -180,43 +180,43 @@ export default async function Home() {
                 </div>
               </div>
               
-              {/* Garis Horizontal Kaur (Hijau) */}
-              <div className="w-full max-w-4xl h-[3px] bg-[#22c55e] mx-auto"></div>
+              {/* Garis Horizontal Kaur (Hijau) - Desktop Only */}
+              <div className="hidden md:block w-full max-w-4xl h-[3px] bg-[#22c55e] mx-auto"></div>
 
               {/* Level 3: Kaur Row */}
-              <div className="flex justify-around w-full max-w-4xl relative z-10 mt-0">
+              <div className="flex flex-col md:flex-row justify-around items-center w-full max-w-4xl relative z-10 mt-0 gap-4 md:gap-0">
                 {kaur.length > 0 ? kaur.map((item: any, idx: number) => (
                   <div key={item.id || idx} className="flex flex-col items-center w-64">
-                    <div className="w-1 h-6 bg-[#22c55e]"></div>
+                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
                     <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
                       <h3 className="font-serif text-xs mb-1">{item.jabatan}</h3>
                       <p className="font-bold text-sm uppercase">{item.nama}</p>
                     </div>
                   </div>
                 )) : (
-                  <p className="text-gray-400 py-4 w-full text-center">Data Kaur belum diisi (urutan 3 di admin)</p>
+                  <p className="text-gray-400 py-4 w-full text-center hidden md:block">Data Kaur belum diisi (urutan 3 di admin)</p>
                 )}
               </div>
 
-              {/* Trunk going down to Kasi (Green & Red) */}
-              <div className="flex mx-auto mt-6 -mb-1 z-0">
+              {/* Trunk going down to Kasi (Green & Red) - Desktop Only */}
+              <div className="hidden md:flex mx-auto mt-6 -mb-1 z-0">
                 <div className="w-[3px] h-12 bg-[#22c55e]"></div>
                 <div className="w-[3px] h-12 bg-red-500 ml-1"></div>
               </div>
               
-              {/* Garis Kasi (Hijau & Merah) */}
-              <div className="w-full max-w-4xl mx-auto flex flex-col">
+              {/* Garis Kasi (Hijau & Merah) - Desktop Only */}
+              <div className="hidden md:flex w-full max-w-4xl mx-auto flex-col">
                 <div className="w-full h-[3px] bg-[#22c55e] mb-1"></div>
                 <div className="w-full h-[3px] bg-red-500"></div>
               </div>
 
               {/* Level 4: Kasi Row */}
-              <div className="flex justify-around w-full max-w-4xl relative z-10 mt-0">
+              <div className="flex flex-col md:flex-row justify-around items-center w-full max-w-4xl relative z-10 mt-0 gap-4 md:gap-0">
                 {kasi.length > 0 ? kasi.map((item: any, idx: number) => (
                   <div key={item.id || idx} className="flex flex-col items-center w-64">
                     <div className="flex">
                       <div className="w-[3px] h-6 bg-[#22c55e]"></div>
-                      <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+                      <div className="w-[3px] h-6 bg-red-500 ml-1 md:block hidden"></div>
                     </div>
                     <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
                       <h3 className="font-serif text-xs mb-1">{item.jabatan}</h3>
@@ -224,28 +224,28 @@ export default async function Home() {
                     </div>
                   </div>
                 )) : (
-                  <p className="text-gray-400 py-4 w-full text-center">Data Kasi belum diisi (urutan 4 di admin)</p>
+                  <p className="text-gray-400 py-4 w-full text-center hidden md:block">Data Kasi belum diisi (urutan 4 di admin)</p>
                 )}
               </div>
 
-              {/* Garis Bawah ke Kadus (Hijau & Merah) */}
-              <div className="flex mx-auto mt-6 -mb-1 z-0">
+              {/* Garis Bawah ke Kadus (Hijau & Merah) - Desktop Only */}
+              <div className="hidden md:flex mx-auto mt-6 -mb-1 z-0">
                 <div className="w-[3px] h-12 bg-[#22c55e]"></div>
                 <div className="w-[3px] h-12 bg-red-500 ml-1"></div>
               </div>
               
-              <div className="w-full max-w-4xl mx-auto flex flex-col">
+              <div className="hidden md:flex w-full max-w-4xl mx-auto flex-col">
                 <div className="w-full h-[3px] bg-[#22c55e] mb-1"></div>
                 <div className="w-full h-[3px] bg-red-500"></div>
               </div>
 
               {/* Level 5: Kadus Row */}
-              <div className="flex justify-around w-full max-w-4xl relative z-10 mt-0">
+              <div className="flex flex-col md:flex-row justify-around items-center w-full max-w-4xl relative z-10 mt-0 gap-4 md:gap-0">
                 {kadus.length > 0 ? kadus.map((item: any, idx: number) => (
                   <div key={item.id || idx} className="flex flex-col items-center w-64">
                     <div className="flex">
                       <div className="w-[3px] h-6 bg-[#22c55e]"></div>
-                      <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+                      <div className="w-[3px] h-6 bg-red-500 ml-1 md:block hidden"></div>
                     </div>
                     <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
                       <h3 className="font-serif text-xs mb-1">{item.jabatan}</h3>
@@ -253,7 +253,7 @@ export default async function Home() {
                     </div>
                   </div>
                 )) : (
-                  <p className="text-gray-400 py-4 w-full text-center">Data Kadus belum diisi (urutan 5 di admin)</p>
+                  <p className="text-gray-400 py-4 w-full text-center hidden md:block">Data Kadus belum diisi (urutan 5 di admin)</p>
                 )}
               </div>
 
