@@ -87,13 +87,13 @@ export default async function Home() {
           </div>
 
           <div className="card mt-12 mb-12">
-            <h3 className="card-title text-center text-[#1e3a8a]">Sambutan Kepala Desa</h3>
-            <div className="sambutan-text text-gray-700 leading-relaxed text-center max-w-4xl mx-auto px-4 md:px-8">
+            <h3 className="card-title text-center text-[#1e3a8a] mb-6">Sambutan Kepala Desa</h3>
+            <div className="sambutan-text text-gray-700 leading-relaxed max-w-4xl mx-auto px-4 md:px-8">
               <p className="mb-4">Assalamu’alaikum Warahmatullahi Wabarakatuh,<br/>Salam sejahtera,</p>
-              <p className="mb-4">Selamat datang di website resmi Desa Cikalong.</p>
-              <p className="mb-4">Website ini kami hadirkan sebagai sarana informasi, komunikasi, dan transparansi pelayanan publik kepada masyarakat.</p>
-              <p className="mb-4">Dengan semangat <strong>"Ngahiji Ku Rasa, Ngahaja Ku Karsa, Ngajayakeun Cikalong"</strong>, mari kita bersama membangun desa yang maju, mandiri, dan berbudaya.</p>
-              <p className="mb-4">Terima kasih atas kunjungan Anda. Saran dan masukan sangat kami harapkan demi kemajuan bersama.</p>
+              <p className="mb-4 text-justify">Selamat datang di website resmi Desa Cikalong.</p>
+              <p className="mb-4 text-justify">Website ini kami hadirkan sebagai sarana informasi, komunikasi, dan transparansi pelayanan publik kepada masyarakat.</p>
+              <p className="mb-4 text-justify">Dengan semangat <strong>"Ngahiji Ku Rasa, Ngahaja Ku Karsa, Ngajayakeun Cikalong"</strong>, mari kita bersama membangun desa yang maju, mandiri, dan berbudaya.</p>
+              <p className="mb-4 text-justify">Terima kasih atas kunjungan Anda. Saran dan masukan sangat kami harapkan demi kemajuan bersama.</p>
               <p className="mb-6">Wassalamu’alaikum Warahmatullahi Wabarakatuh.</p>
               <p className="text-xl font-bold text-gray-900 mt-2 pb-4">Ruspandi</p>
             </div>

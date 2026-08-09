@@ -1,8 +1,9 @@
 "use client";
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
 const menuItems = [
   { name: 'Dashboard', path: '/admin', icon: '✨' },
@@ -20,11 +21,42 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
+  const [session, setSession] = useState<any>(null);
   
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push('/admin/login');
+      } else {
+        setSession(session);
+      }
+    };
+    checkUser();
 
-  if (!mounted) return null;
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      if (!session) {
+        router.push('/admin/login');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [router]);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push('/admin/login');
+  };
+
+  if (!mounted || !session) return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="animate-spin h-10 w-10 border-4 border-indigo-600 border-t-transparent rounded-full"></div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-[#f8fafc] flex flex-col md:flex-row font-sans selection:bg-indigo-500 selection:text-white">
@@ -65,11 +97,15 @@ export default function AdminLayout({
           })}
         </nav>
         
-        <div className="p-6 mt-auto border-t border-slate-50">
+        <div className="p-6 mt-auto border-t border-slate-50 space-y-3">
           <Link href="/" className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-black text-white rounded-xl font-medium transition-all shadow-lg shadow-slate-900/20 hover:shadow-xl hover:-translate-y-0.5 text-sm">
             <span>🌍</span>
             <span>Lihat Website</span>
           </Link>
+          <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl font-medium transition-all text-sm">
+            <span>🚪</span>
+            <span>Keluar</span>
+          </button>
         </div>
       </aside>
 
@@ -86,7 +122,7 @@ export default function AdminLayout({
 
       {/* Bottom Navigation (Mobile) */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex justify-around p-3 pb-safe z-50 shadow-[0_-4px_24px_rgba(0,0,0,0.05)]">
-        {menuItems.slice(0, 5).map((item) => {
+        {menuItems.slice(0, 4).map((item) => {
           const isActive = pathname === item.path;
           return (
             <Link 
@@ -101,6 +137,10 @@ export default function AdminLayout({
             </Link>
           );
         })}
+        <button onClick={handleLogout} className="flex flex-col items-center p-2 rounded-xl transition-all text-red-400 hover:text-red-600">
+          <span className="text-xl mb-1">🚪</span>
+          <span className="text-[10px] font-semibold">Keluar</span>
+        </button>
       </nav>
     </div>
   );

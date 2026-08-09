@@ -140,6 +140,65 @@ export default function PengaturanPage() {
           {message && <span className="text-sm font-medium">{message}</span>}
         </div>
       </form>
+
+      {/* Tambah Admin Section */}
+      <div className="mt-12 pt-8 border-t border-slate-200">
+        <h2 className="text-xl font-bold text-slate-800 mb-4">👥 Tambah Akun Admin</h2>
+        <p className="text-sm text-gray-500 mb-4">Tambahkan email dan password baru agar orang lain bisa masuk ke panel admin ini.</p>
+        
+        <form onSubmit={async (e) => {
+          e.preventDefault();
+          const target = e.target as any;
+          const email = target.email.value;
+          const password = target.password.value;
+          target.submitBtn.disabled = true;
+          target.submitBtn.textContent = 'Membuat...';
+          
+          try {
+            // Gunakan client kedua tanpa persist session agar admin yg sedang login tidak ter-logout
+            const { createClient } = await import('@supabase/supabase-js');
+            const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+            const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+            const secondClient = createClient(url, key, { auth: { persistSession: false } });
+            
+            const { error } = await secondClient.auth.signUp({ email, password });
+            
+            if (error) {
+              alert('Gagal membuat akun: ' + error.message);
+            } else {
+              alert('✅ Akun admin baru berhasil dibuat! Mereka sudah bisa menggunakannya untuk login.');
+              target.reset();
+            }
+          } catch (err) {
+            console.error(err);
+          } finally {
+            target.submitBtn.disabled = false;
+            target.submitBtn.textContent = 'Buat Akun Admin';
+          }
+        }} className="space-y-4 max-w-md bg-slate-50 p-6 rounded-xl border border-slate-100">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Email Baru</label>
+            <input 
+              type="email" name="email" required placeholder="admin2@cikalong.desa.id"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <input 
+              type="password" name="password" required placeholder="Minimal 6 karakter"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
+          <button 
+            name="submitBtn"
+            type="submit" 
+            className="w-full bg-slate-800 hover:bg-slate-900 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+          >
+            Buat Akun Admin
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
