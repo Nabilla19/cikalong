@@ -9,12 +9,12 @@ export default async function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-grid">
-          <div className="footer-section text-center">
+          <div className="footer-section text-center flex flex-col items-center">
             <div className="footer-logo">
               <div className="logo-icon-footer"></div>
               <h2>Desa Cikalong</h2>
             </div>
-            <p className="footer-desc mx-auto max-w-2xl">
+            <p className="footer-desc mx-auto max-w-2xl text-center">
               Portal informasi resmi Desa Cikalong. Kami berkomitmen untuk memberikan pelayanan publik terbaik dan transparan kepada masyarakat.
             </p>
           </div>
