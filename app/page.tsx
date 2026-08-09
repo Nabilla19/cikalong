@@ -1,7 +1,41 @@
 import Link from 'next/link';
 import Header from './components/Header';
 import Footer from './components/Footer';
-export default function Home() {
+import { supabase } from '@/lib/supabaseClient';
+
+export const revalidate = 0;
+
+export default async function Home() {
+  const [
+    { data: profil },
+    { data: struktur },
+    { data: geografi },
+    { data: umkm },
+    { data: berita },
+    { data: pengaturan }
+  ] = await Promise.all([
+    supabase.from('profil_desa').select('*').eq('id', 1).single(),
+    supabase.from('struktur_organisasi').select('*').order('urutan', { ascending: true }),
+    supabase.from('geografi').select('*').eq('id', 1).single(),
+    supabase.from('umkm').select('*').order('nama_usaha', { ascending: true }),
+    supabase.from('berita').select('*').order('diterbitkan_pada', { ascending: false }),
+    supabase.from('pengaturan_web').select('*').eq('id', 1).single()
+  ]);
+
+  const misiArray = profil?.misi ? profil.misi.split('\n').filter(Boolean) : [
+    'Meningkatkan kualitas sumber daya manusia melalui pendidikan dan kesehatan.',
+    'Membangun infrastruktur desa yang memadai dan berwawasan lingkungan.',
+    'Melestarikan budaya dan kearifan lokal Desa Cikalong.',
+    'Memberdayakan ekonomi kerakyatan melalui UMKM dan pariwisata.'
+  ];
+
+  const kades = struktur?.find((s: any) => s.urutan === 1);
+  const sekdes = struktur?.find((s: any) => s.urutan === 2);
+  const kaur = struktur?.filter((s: any) => s.urutan === 3) || [];
+  const kasi = struktur?.filter((s: any) => s.urutan === 4) || [];
+  const kadus = struktur?.filter((s: any) => s.urutan === 5) || [];
+
+
   const masyarakat = [
     { inisial: 'AS', nama: 'Bapak Aman Suherman', jabatan: 'Tokoh Adat', kutipan: 'Cikalong Budayanya Masih Terjaga.' },
     { inisial: 'HN', nama: 'Ibu Hasna', jabatan: 'UMKM Cikalong', kutipan: 'Cikalong Makanannya Enak-enak.' },
@@ -88,27 +122,23 @@ export default function Home() {
           
           <div className="card">
             <h3 className="card-title">Sejarah Desa</h3>
-            <p className="text-gray-600 leading-relaxed mb-4">
-              Desa Cikalong yang terletak di Kecamatan Sidamulih, Kabupaten Pangandaran, memiliki sejarah panjang yang sarat nilai budaya dan kearifan lokal. Berdiri sejak abad ke-18, desa ini awalnya merupakan wilayah adat yang dipimpin oleh para sesepuh seperti Eyang Raksa Dipa (Ki Gede Mataram) dan kemudian dilanjutkan oleh Eyang Pradjawidjaya Diningrat, seorang tokoh pelarian dari pasukan Pangeran Diponegoro. Nama “Cikalong” sendiri memiliki dua makna filosofis, yakni sebagai tempat awal berdirinya pemerintahan ("Cikal" berarti awal, "Long" dari elong berarti pemekaran), serta merujuk pada sumber air bawah tanah yang mengalir ke Sungai Cijumbleng.
-            </p>
-            <p className="text-gray-600 leading-relaxed">
-              Secara resmi dan administratif, Desa Cikalong berdiri pada Juli 1978 sebagai hasil pemekaran dari Desa Sukaresik. Hingga saat ini, Desa Cikalong masih melestarikan kearifan lokal, nilai-nilai spiritual, serta sistem gotong royong sebagai bentuk rasa syukur dan penghormatan terhadap alam serta leluhur.
+            <p className="text-gray-600 leading-relaxed mb-4 whitespace-pre-wrap">
+              {profil?.sejarah || 'Sejarah belum ditambahkan.'}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
             <div className="card h-full">
               <h3 className="card-title text-center text-[#1e3a8a]">Visi Desa</h3>
-              <p className="text-gray-700 text-center font-medium leading-relaxed italic text-lg">"Pembangunan Yang Berkelanjutan untuk Mewujudkan Desa Budaya dengan Menitikberatkan PADA PENDIDIKAN AGAMA DAN KARAKTER."</p>
+              <p className="text-gray-700 text-center font-medium leading-relaxed italic text-lg">"{profil?.visi || 'Visi belum ditambahkan.'}"</p>
             </div>
 
             <div className="card h-full">
               <h3 className="card-title">Misi Desa</h3>
-              <ul className="list-disc pl-6 text-gray-600 space-y-3 leading-relaxed">
-                <li>Meningkatkan kualitas sumber daya manusia melalui pendidikan dan kesehatan.</li>
-                <li>Membangun infrastruktur desa yang memadai dan berwawasan lingkungan.</li>
-                <li>Melestarikan budaya dan kearifan lokal Desa Cikalong.</li>
-                <li>Memberdayakan ekonomi kerakyatan melalui UMKM dan pariwisata.</li>
+              <ul className="list-decimal pl-6 text-gray-600 space-y-3 leading-relaxed">
+                {misiArray.map((m: string, i: number) => (
+                  <li key={i}>{m}</li>
+                ))}
               </ul>
             </div>
           </div>
@@ -127,8 +157,8 @@ export default function Home() {
               {/* Level 1: Kepala Desa */}
               <div className="org-node relative z-10 w-full flex flex-col items-center">
                 <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-4 rounded shadow-md text-center w-72 relative">
-                  <h3 className="font-serif text-sm mb-1">Kepala Desa Cikalong</h3>
-                  <p className="font-black text-xl uppercase tracking-wide">Ruspandi</p>
+                  <h3 className="font-serif text-sm mb-1">{kades?.jabatan || 'Kepala Desa'}</h3>
+                  <p className="font-black text-xl uppercase tracking-wide">{kades?.nama || 'Belum diisi'}</p>
                 </div>
                 <div className="w-[3px] h-8 bg-[#22c55e]"></div> {/* Garis Utama Hijau */}
               </div>
@@ -144,8 +174,8 @@ export default function Home() {
                 <div className="w-64 flex flex-col items-center">
                   <div className="w-[3px] h-6 bg-red-500 relative z-0"></div>
                   <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-3 rounded shadow-md text-center w-full relative z-10">
-                    <h3 className="font-serif text-sm mb-1">Sekretaris Desa</h3>
-                    <p className="font-black text-lg uppercase">Kosmara</p>
+                    <h3 className="font-serif text-sm mb-1">{sekdes?.jabatan || 'Sekretaris Desa'}</h3>
+                    <p className="font-black text-lg uppercase">{sekdes?.nama || 'Belum diisi'}</p>
                   </div>
                 </div>
               </div>
@@ -154,45 +184,18 @@ export default function Home() {
               <div className="w-full max-w-4xl h-[3px] bg-[#22c55e] mx-auto"></div>
 
               {/* Level 3: Kaur Row */}
-              <div className="flex justify-between w-full max-w-4xl relative z-10 mt-0">
-                
-                {/* Perencanaan */}
-                <div className="flex flex-col items-center w-64">
-                  <div className="w-1 h-6 bg-[#22c55e]"></div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                    <h3 className="font-serif text-xs mb-1">Kaur Perencanaan</h3>
-                    <p className="font-bold text-sm uppercase">Etikah, A.Md</p>
+              <div className="flex justify-around w-full max-w-4xl relative z-10 mt-0">
+                {kaur.length > 0 ? kaur.map((item: any, idx: number) => (
+                  <div key={item.id || idx} className="flex flex-col items-center w-64">
+                    <div className="w-1 h-6 bg-[#22c55e]"></div>
+                    <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                      <h3 className="font-serif text-xs mb-1">{item.jabatan}</h3>
+                      <p className="font-bold text-sm uppercase">{item.nama}</p>
+                    </div>
                   </div>
-                </div>
-
-                {/* Keuangan + Staf */}
-                <div className="flex flex-col items-center w-64">
-                  <div className="w-1 h-6 bg-[#22c55e]"></div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                    <h3 className="font-serif text-xs mb-1">Kaur Keuangan</h3>
-                    <p className="font-bold text-sm uppercase">Nolis Pitriani</p>
-                  </div>
-                  <div className="w-1 h-8 bg-[#22c55e]"></div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                    <h3 className="font-serif text-xs mb-1">Staf Keuangan</h3>
-                    <p className="font-bold text-sm uppercase">Arif Firmansyah</p>
-                  </div>
-                </div>
-
-                {/* TU & Umum + Staf */}
-                <div className="flex flex-col items-center w-64">
-                  <div className="w-1 h-6 bg-[#22c55e]"></div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                    <h3 className="font-serif text-xs mb-1">Kaur Tata Usaha & Umum</h3>
-                    <p className="font-bold text-sm uppercase">Sutarma Wiguna, S.Pd</p>
-                  </div>
-                  <div className="w-1 h-8 bg-[#22c55e]"></div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                    <h3 className="font-serif text-xs mb-1">Staf Umum</h3>
-                    <p className="font-bold text-sm uppercase">Endi Mulyadi, S.Pd</p>
-                  </div>
-                </div>
-
+                )) : (
+                  <p className="text-gray-400 py-4 w-full text-center">Data Kaur belum diisi (urutan 3 di admin)</p>
+                )}
               </div>
 
               {/* Trunk going down to Kasi (Green & Red) */}
@@ -208,41 +211,21 @@ export default function Home() {
               </div>
 
               {/* Level 4: Kasi Row */}
-              <div className="flex justify-between w-full max-w-4xl relative z-10 mt-0">
-                
-                <div className="flex flex-col items-center w-64">
-                  <div className="flex">
-                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
-                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+              <div className="flex justify-around w-full max-w-4xl relative z-10 mt-0">
+                {kasi.length > 0 ? kasi.map((item: any, idx: number) => (
+                  <div key={item.id || idx} className="flex flex-col items-center w-64">
+                    <div className="flex">
+                      <div className="w-[3px] h-6 bg-[#22c55e]"></div>
+                      <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+                    </div>
+                    <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                      <h3 className="font-serif text-xs mb-1">{item.jabatan}</h3>
+                      <p className="font-bold text-sm uppercase">{item.nama}</p>
+                    </div>
                   </div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                    <h3 className="font-serif text-xs mb-1">Kepala Seksi Pelayanan</h3>
-                    <p className="font-bold text-sm uppercase">Sukirman</p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-center w-64">
-                  <div className="flex">
-                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
-                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
-                  </div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                    <h3 className="font-serif text-xs mb-1">Kepala Seksi Pemerintahan</h3>
-                    <p className="font-bold text-sm uppercase">Nurdiana, S. Pd.Si</p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-center w-64">
-                  <div className="flex">
-                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
-                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
-                  </div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                    <h3 className="font-serif text-xs mb-1">Kepala Seksi Kesejahteraan</h3>
-                    <p className="font-bold text-sm uppercase">Kusnendar</p>
-                  </div>
-                </div>
-
+                )) : (
+                  <p className="text-gray-400 py-4 w-full text-center">Data Kasi belum diisi (urutan 4 di admin)</p>
+                )}
               </div>
 
               {/* Garis Bawah ke Kadus (Hijau & Merah) */}
@@ -257,41 +240,21 @@ export default function Home() {
               </div>
 
               {/* Level 5: Kadus Row */}
-              <div className="flex justify-between w-full max-w-4xl relative z-10 mt-0">
-                
-                <div className="flex flex-col items-center w-64">
-                  <div className="flex">
-                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
-                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+              <div className="flex justify-around w-full max-w-4xl relative z-10 mt-0">
+                {kadus.length > 0 ? kadus.map((item: any, idx: number) => (
+                  <div key={item.id || idx} className="flex flex-col items-center w-64">
+                    <div className="flex">
+                      <div className="w-[3px] h-6 bg-[#22c55e]"></div>
+                      <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
+                    </div>
+                    <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
+                      <h3 className="font-serif text-xs mb-1">{item.jabatan}</h3>
+                      <p className="font-bold text-sm uppercase">{item.nama}</p>
+                    </div>
                   </div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                    <h3 className="font-serif text-xs mb-1">Kepala Dusun Citembong</h3>
-                    <p className="font-bold text-sm uppercase">Aris Kustandar</p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-center w-64">
-                  <div className="flex">
-                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
-                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
-                  </div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                    <h3 className="font-serif text-xs mb-1">Kepala Dusun Cimanggu</h3>
-                    <p className="font-bold text-sm uppercase">Didin Haridin</p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col items-center w-64">
-                  <div className="flex">
-                    <div className="w-[3px] h-6 bg-[#22c55e]"></div>
-                    <div className="w-[3px] h-6 bg-red-500 ml-1"></div>
-                  </div>
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                    <h3 className="font-serif text-xs mb-1">Kepala Dusun Cimanggu</h3>
-                    <p className="font-bold text-sm uppercase">Heri</p>
-                  </div>
-                </div>
-
+                )) : (
+                  <p className="text-gray-400 py-4 w-full text-center">Data Kadus belum diisi (urutan 5 di admin)</p>
+                )}
               </div>
 
             </div>
@@ -314,23 +277,18 @@ export default function Home() {
                 alt="Geografi Cikalong"
                 className="rounded-2xl shadow-md my-6 w-full object-cover h-64"
               />
-              <p className="text-gray-600 leading-relaxed">Desa Cikalong terletak di Kecamatan Sidamulih, Kabupaten Pangandaran, Jawa Barat. Berdiri pada Juli 1978 sebagai hasil pemekaran dari Desa Sukaresik, desa ini dikenal dengan potensi alam dan budaya lokal yang kuat.</p>
+              <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">{geografi?.deskripsi || 'Belum ada data geografi.'}</p>
             </div>
 
             <div className="flex flex-col gap-8">
               <div className="card flex-1">
                 <h3 className="card-title">Batas Wilayah</h3>
                 <ul className="space-y-3 text-gray-600">
-                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Utara:</strong> Desa Kersaratu</li>
-                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Selatan:</strong> Desa Sukaresik</li>
-                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Timur:</strong> Desa Sidamulih</li>
-                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Barat:</strong> Desa Bojong</li>
+                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Utara:</strong> {geografi?.batas_utara || 'Desa Kersaratu'}</li>
+                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Selatan:</strong> {geografi?.batas_selatan || 'Desa Sukaresik'}</li>
+                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Timur:</strong> {geografi?.batas_timur || 'Desa Sidamulih'}</li>
+                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Barat:</strong> {geografi?.batas_barat || 'Desa Bojong'}</li>
                 </ul>
-              </div>
-
-              <div className="card flex-1">
-                <h3 className="card-title">Kondisi Geografis</h3>
-                <p className="text-gray-600 leading-relaxed">Secara geografis, Desa Cikalong memiliki karakteristik alam yang khas, berupa wilayah perbukitan yang berhawa sejuk dengan suhu rata-rata sekitar 37°C. Hamparan sawah seluas hampir 949 hektar (tepatnya 948,778 Ha) menjadi bagian penting dari lanskap desa, sekaligus penopang sektor pertaniannya.</p>
               </div>
             </div>
           </div>
@@ -370,45 +328,21 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="card hover:-translate-y-2 transition-transform duration-300">
-              <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#1e3a8a] transition-colors">    
-                    Desa Cikalong: Wisata Budaya yang Masih Melestarikan Tradisi Leluhur
-                </Link>
-              </h3>
-              <p className="text-xs font-semibold text-[#1e3a8a] mb-3 tracking-wider uppercase">18 Juni 2025 • Kumparan.com</p>
-              <p className="text-gray-600 leading-relaxed">Artikel ini menggambarkan keunikan lokal desa, mulai dari aktivitas seni budaya, sejarah yang hidup dalam keseharian warga, hingga nilai-nilai kearifan lokal yang terus dijaga.</p>
-            </div>
-
-            <div className="card hover:-translate-y-2 transition-transform duration-300">
-              <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#1e3a8a] transition-colors">    
-                    Mahasiswa dan Dosen Unpad melakukan PPM di Desa Cikalong, Pangandaran
-                </Link>
-              </h3>
-              <p className="text-xs font-semibold text-[#1e3a8a] mb-3 tracking-wider uppercase">Juni 2025 • Kumparan.com</p>
-              <p className="text-gray-600 leading-relaxed">Artikel terbaru tentang Kegiatan PPM mahasiswa dan Dosen Unpad di Desa Cikalong, Kabupaten pangandaran. Simak Selengkapnya.</p>
-            </div>
-
-            <div className="card hover:-translate-y-2 transition-transform duration-300">
-              <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#1e3a8a] transition-colors">    
-                     Peran Sumber Daya Manusia dalam Pelestarian Tradisi Hajat Bumi dan Ngabuku Taun di Desa Cikalong
-                </Link>
-              </h3>
-              <p className="text-xs font-semibold text-[#1e3a8a] mb-3 tracking-wider uppercase">Juni 2025 • abc.com</p>
-              <p className="text-gray-600 leading-relaxed">Hajat Bumi (perayaan bumi) dan Ngabuku Taun (ritual tahun baru atau panen) merupakan acara di Desa Cikalong sebagai bentuk rasa Syukur masyarakat kepada alam dan Tuhan atas hasil panen yang melimpah.</p>
-            </div>
-
-            <div className="card hover:-translate-y-2 transition-transform duration-300">
-              <h3 className="card-title text-xl">
-                <Link href="https://kumparan.com/rully-a/25HNgjkoO9H?utm_source=Desktop&utm_medium=copy-to-clipboard&shareID=HHLU1mtYsQFc" target="_blank" className="hover:text-[#1e3a8a] transition-colors">
-                    Cikalong, Desa Kecil dengan Orang-Orang Hebat Penjaga Warisan
-                </Link>
-              </h3>
-              <p className="text-xs font-semibold text-[#1e3a8a] mb-3 tracking-wider uppercase">Juni 2025 • abc.com</p>
-              <p className="text-gray-600 leading-relaxed">Mengangkat kisah inspiratif tokoh-tokoh luar biasa dari Desa Cikalong, mulai dari penjaga seni, tradisi, dan usaha lokal yang patut kita kenal dan hargai.</p>
-            </div>
+            {berita?.map((item: any) => (
+              <div key={item.id} className="card hover:-translate-y-2 transition-transform duration-300">
+                {item.foto_url && (
+                  <img src={item.foto_url} alt={item.judul} className="w-full h-48 object-cover rounded-xl mb-4" />
+                )}
+                <h3 className="card-title text-xl">
+                  {item.judul}
+                </h3>
+                <p className="text-xs font-semibold text-[#1e3a8a] mb-3 tracking-wider uppercase">{new Date(item.diterbitkan_pada).toLocaleDateString('id-ID', { dateStyle: 'long' })}</p>
+                <p className="text-gray-600 leading-relaxed">{item.isi}</p>
+              </div>
+            ))}
+            {(!berita || berita.length === 0) && (
+              <p className="col-span-full text-center text-gray-500 py-8">Belum ada berita yang diterbitkan.</p>
+            )}
           </div>
         </div>
       </section>
@@ -421,43 +355,25 @@ export default function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            <div className="card flex flex-col hover:-translate-y-2 transition-transform duration-300">
-              <div className="h-48 mb-6 overflow-hidden rounded-xl">
-                <img src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/WhatsApp%20Image%202025-06-24%20at%2012.18.27_79ab0ebc.jpg?updatedAt=1750742589442" alt="UMKM Opak Cikalong" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
+            {umkm?.map((item: any) => (
+              <div key={item.id} className="card flex flex-col hover:-translate-y-2 transition-transform duration-300">
+                {item.foto_url && (
+                  <div className="h-48 mb-6 overflow-hidden rounded-xl">
+                    <img src={item.foto_url} alt={item.nama_usaha} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
+                  </div>
+                )}
+                <h3 className="text-xl font-bold mb-4 text-[#1e3a8a]">{item.nama_usaha}</h3>
+                <div className="space-y-2 text-sm text-gray-600 flex-1">
+                  <p><strong className="text-gray-900">Produk:</strong> {item.produk}</p>
+                  <p><strong className="text-gray-900">Pemilik:</strong> {item.pemilik}</p>
+                  <p><strong className="text-gray-900">Alamat:</strong> {item.alamat}</p>
+                  <p className="mt-4 italic">{item.deskripsi}</p>
+                </div>
               </div>
-              <h3 className="text-xl font-bold mb-4 text-[#1e3a8a]">UMKM Opak Cikalong</h3>
-              <div className="space-y-2 text-sm text-gray-600 flex-1">
-                <p><strong className="text-gray-900">Produk:</strong> Opak khas Cikalong</p>
-                <p><strong className="text-gray-900">Pemilik:</strong> Ibu Kisah</p>
-                <p><strong className="text-gray-900">Alamat:</strong> Nagrak Dusun Cimanggu</p>
-              </div>
-            </div>
-
-            <div className="card flex flex-col hover:-translate-y-2 transition-transform duration-300">
-              <div className="h-48 mb-6 overflow-hidden rounded-xl">
-                <img src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/DSC_0566.JPG?updatedAt=1750742523060" alt="UMKM Sari Mukti Keripik" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-[#1e3a8a]">UMKM Sari Mukti Keripik</h3>
-              <div className="space-y-2 text-sm text-gray-600 flex-1">
-                <p><strong className="text-gray-900">Produk:</strong> Aneka jenis keripik</p>
-                <p><strong className="text-gray-900">Pemilik:</strong> Bapak Sajim dan Ibu Asna</p>
-                <p><strong className="text-gray-900">Alamat:</strong> Jln. Kalikopi, Dusun Cikalong</p>
-                <p className="mt-4 italic">Sari Mukti memproduksi aneka keripik khas dari Desa Cikalong, seperti pisang, sale, singkong, ubi, peyek, dan lainnya.</p>
-              </div>
-            </div>
-
-            <div className="card flex flex-col hover:-translate-y-2 transition-transform duration-300 md:col-span-2 lg:col-span-1">
-              <div className="h-48 mb-6 overflow-hidden rounded-xl">
-                <img src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/WhatsApp%20Image%202025-06-24%20at%2012.17.57_50d28fe6.jpg?updatedAt=1750742589463" alt="Pulo Sangkuriang Barokah" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"/>
-              </div>
-              <h3 className="text-xl font-bold mb-4 text-[#1e3a8a]">Pulo Sangkuriang Barokah</h3>
-              <div className="space-y-2 text-sm text-gray-600 flex-1">
-                <p><strong className="text-gray-900">Produk:</strong> Bibit & Ikan Konsumsi Mujaer</p>
-                <p><strong className="text-gray-900">Pemilik:</strong> Bapak Ruswan (Pak Kancil)</p>
-                <p><strong className="text-gray-900">Alamat:</strong> Desa Cikalong</p>
-                <p className="mt-4 italic">Memanfaatkan sumber air di Desa Cikalong yang dimulai dari kolam sawah hingga berkembang pesat.</p>
-              </div>
-            </div>
+            ))}
+            {(!umkm || umkm.length === 0) && (
+              <p className="col-span-full text-center text-gray-500 py-8">Belum ada data Budaya/UMKM.</p>
+            )}
           </div>
         </div>
       </section>
@@ -477,7 +393,7 @@ export default function Home() {
                   <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">📞</div>
                   <div>
                     <strong className="block text-gray-900 mb-1">WhatsApp Pelayanan</strong>
-                    <span className="text-gray-600">+62 853-2013-9810 (Endi)</span>
+                    <span className="text-gray-600">{pengaturan?.nomor_wa || '+62 853-2013-9810 (Endi)'}</span>
                   </div>
                 </div>
                 
@@ -485,7 +401,7 @@ export default function Home() {
                   <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">✉️</div>
                   <div>
                     <strong className="block text-gray-900 mb-1">Email Desa</strong>
-                    <span className="text-gray-600 break-all">cikalongpangandaran@gmail.com</span>
+                    <span className="text-gray-600 break-all">{pengaturan?.email || 'cikalongpangandaran@gmail.com'}</span>
                   </div>
                 </div>
 
@@ -493,8 +409,8 @@ export default function Home() {
                   <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">📱</div>
                   <div>
                     <strong className="block text-gray-900 mb-1">Media Sosial</strong>
-                    <span className="text-gray-600 block text-sm">IG: @desacikalongpnd</span>
-                    <span className="text-gray-600 block text-sm">TikTok: @desacikalongpnd</span>
+                    <span className="text-gray-600 block text-sm">{pengaturan?.instagram || 'IG: @desacikalongpnd'}</span>
+                    <span className="text-gray-600 block text-sm">{pengaturan?.facebook || 'TikTok: @desacikalongpnd'}</span>
                   </div>
                 </div>
 
