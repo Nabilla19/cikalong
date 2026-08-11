@@ -84,8 +84,8 @@ export default function AdminLayout({
       {/* Mobile Topbar */}
       <div className="md:hidden flex items-center justify-between p-4 bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold text-sm shadow-md">
-            C
+          <div className="w-10 h-10 rounded-lg bg-white overflow-hidden shadow-md border border-slate-100">
+            <img src="/logo%20cikalong.jpeg" alt="Logo Cikalong" className="w-full h-full object-cover" />
           </div>
           <h2 className="text-lg font-bold text-slate-800">Cikalong</h2>
         </div>
@@ -141,8 +141,8 @@ export default function AdminLayout({
           {/* Brand */}
           <div className="p-8 flex items-center gap-4 relative">
             <div className="absolute inset-0 bg-gradient-to-b from-emerald-50/50 to-transparent pointer-events-none"></div>
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 shadow-lg shadow-emerald-500/30 flex items-center justify-center text-white font-black text-2xl relative z-10 ring-2 ring-white">
-              C
+            <div className="w-16 h-16 rounded-2xl bg-white shadow-lg shadow-emerald-500/10 flex items-center justify-center relative z-10 ring-2 ring-white overflow-hidden">
+              <img src="/logo%20cikalong.jpeg" alt="Logo Cikalong" className="w-full h-full object-cover" />
             </div>
             <div className="relative z-10">
               <h2 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-emerald-900 to-teal-800 tracking-tight">Cikalong</h2>

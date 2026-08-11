@@ -50,8 +50,8 @@ export default function LoginPage() {
           </div>
           
           <div className="relative z-10 w-full max-w-lg text-white">
-            <div className="w-16 h-16 bg-white/10 backdrop-blur-xl rounded-2xl flex items-center justify-center mb-8 border border-white/20 shadow-xl ring-1 ring-white/30">
-              <ShieldCheck className="w-8 h-8 text-emerald-400" />
+            <div className="w-20 h-20 bg-white/90 backdrop-blur-xl rounded-2xl flex items-center justify-center mb-8 border border-white/20 shadow-xl ring-1 ring-white/30 overflow-hidden">
+              <img src="/logo%20cikalong.jpeg" alt="Logo Cikalong" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-5xl font-extrabold tracking-tight mb-6 leading-tight">
               Sistem Informasi<br />
@@ -73,8 +73,8 @@ export default function LoginPage() {
         {/* Right Panel: Login Form */}
         <div className="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12 lg:p-24 relative">
           <div className="w-full max-w-md bg-white/70 backdrop-blur-xl rounded-3xl p-8 sm:p-12 shadow-2xl border border-white/50">
-            <div className="lg:hidden w-16 h-16 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-emerald-500/30">
-              <ShieldCheck className="w-8 h-8 text-white" />
+            <div className="lg:hidden w-20 h-20 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-lg shadow-emerald-500/10 overflow-hidden border border-slate-100">
+              <img src="/logo%20cikalong.jpeg" alt="Logo Cikalong" className="w-full h-full object-cover" />
             </div>
             
             <h2 className="text-3xl font-bold text-slate-900 tracking-tight mb-2">Selamat Datang</h2>
