@@ -151,29 +151,29 @@ export default async function Home() {
           <div className="text-center">
             <h1 className="section-title text-center">Struktur Perangkat Desa</h1>
           </div>
-          <div className="org-chart-container mt-12 pb-8">
-            <div className="min-w-full md:min-w-[1000px] flex flex-col items-center overflow-x-hidden md:overflow-x-visible">
+          <div className="org-chart-container mt-12 pb-12">
+            <div className="min-w-full md:min-w-full lg:min-w-[1000px] flex flex-col items-center overflow-x-hidden md:overflow-x-visible gap-10">
               
               {/* Level 1: Kepala Desa */}
-              <div className="org-node relative z-10 w-full flex flex-col items-center mb-6">
-                <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-4 rounded shadow-md text-center w-72 relative">
+              <div className="org-node relative z-10 w-full flex flex-col items-center">
+                <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-5 rounded-lg shadow-lg text-center w-80 relative">
                   <h3 className="font-serif text-sm mb-1">{kades?.jabatan || 'Kepala Desa'}</h3>
-                  <p className="font-black text-xl uppercase tracking-wide">{kades?.nama || 'Belum diisi'}</p>
+                  <p className="font-black text-2xl uppercase tracking-wide">{kades?.nama || 'Belum diisi'}</p>
                 </div>
               </div>
 
               {/* Level 2: Sekretaris Desa */}
-              <div className="w-full max-w-4xl mx-auto relative z-10 flex flex-col items-center mb-8">
-                <div className="w-64 flex flex-col items-center">
-                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-3 rounded shadow-md text-center w-full relative z-10">
+              <div className="w-full max-w-4xl mx-auto relative z-10 flex flex-col items-center">
+                <div className="w-72 flex flex-col items-center">
+                  <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-4 rounded-lg shadow-lg text-center w-full relative z-10">
                     <h3 className="font-serif text-sm mb-1">{sekdes?.jabatan || 'Sekretaris Desa'}</h3>
-                    <p className="font-black text-lg uppercase">{sekdes?.nama || 'Belum diisi'}</p>
+                    <p className="font-black text-xl uppercase">{sekdes?.nama || 'Belum diisi'}</p>
                   </div>
                 </div>
               </div>
 
               {/* Level 3: Kaur Row */}
-              <div className="flex flex-col md:flex-row justify-around items-center md:items-start w-full max-w-4xl mx-auto relative z-10 gap-6 md:gap-4 mb-8">
+              <div className="flex flex-col md:flex-row justify-around items-center md:items-start w-full max-w-5xl mx-auto relative z-10 gap-8 md:gap-6">
                 {kaur.length > 0 ? kaur.map((item: any, idx: number) => (
                   <div key={item.id || idx} className="flex flex-col items-center w-64">
                     <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
