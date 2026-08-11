@@ -1,49 +1,79 @@
 "use client";
 
 import Link from 'next/link';
+import { 
+  Landmark, 
+  Users, 
+  Newspaper, 
+  Store, 
+  Map, 
+  Settings,
+  ArrowRight
+} from 'lucide-react';
 
 export default function AdminDashboard() {
   const cards = [
-    { name: 'Sejarah & Visi Misi', path: '/admin/profil', icon: '🏛️', color: 'bg-blue-50 text-blue-600', border: 'border-blue-100', hover: 'hover:shadow-blue-500/20' },
-    { name: 'Struktur Organisasi', path: '/admin/struktur', icon: '👥', color: 'bg-indigo-50 text-indigo-600', border: 'border-indigo-100', hover: 'hover:shadow-indigo-500/20' },
-    { name: 'Berita Desa', path: '/admin/berita', icon: '📰', color: 'bg-orange-50 text-orange-600', border: 'border-orange-100', hover: 'hover:shadow-orange-500/20' },
-    { name: 'Budaya & UMKM', path: '/admin/umkm', icon: '🛍️', color: 'bg-pink-50 text-pink-600', border: 'border-pink-100', hover: 'hover:shadow-pink-500/20' },
-    { name: 'Geografi', path: '/admin/geografi', icon: '🗺️', color: 'bg-emerald-50 text-emerald-600', border: 'border-emerald-100', hover: 'hover:shadow-emerald-500/20' },
-    { name: 'Pengaturan', path: '/admin/pengaturan', icon: '⚙️', color: 'bg-slate-50 text-slate-600', border: 'border-slate-200', hover: 'hover:shadow-slate-500/20' },
+    { name: 'Sejarah & Visi Misi', path: '/admin/profil', icon: Landmark, color: 'from-blue-400 to-indigo-500', glow: 'group-hover:shadow-blue-500/30' },
+    { name: 'Struktur Organisasi', path: '/admin/struktur', icon: Users, color: 'from-violet-400 to-purple-500', glow: 'group-hover:shadow-purple-500/30' },
+    { name: 'Berita Desa', path: '/admin/berita', icon: Newspaper, color: 'from-orange-400 to-amber-500', glow: 'group-hover:shadow-orange-500/30' },
+    { name: 'Budaya & UMKM', path: '/admin/umkm', icon: Store, color: 'from-pink-400 to-rose-500', glow: 'group-hover:shadow-pink-500/30' },
+    { name: 'Geografi', path: '/admin/geografi', icon: Map, color: 'from-emerald-400 to-teal-500', glow: 'group-hover:shadow-emerald-500/30' },
+    { name: 'Pengaturan', path: '/admin/pengaturan', icon: Settings, color: 'from-slate-400 to-slate-600', glow: 'group-hover:shadow-slate-500/30' },
   ];
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Selamat Datang 👋</h1>
-        <p className="text-lg text-slate-500 max-w-2xl">
-          Ini adalah pusat kendali website Desa Cikalong. Pilih modul di bawah ini untuk mengelola konten yang akan ditampilkan kepada masyarakat luas.
+    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      
+      {/* Header Section */}
+      <div className="flex flex-col gap-3 relative z-10">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold w-fit mb-2 shadow-sm">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          Sistem Online
+        </div>
+        <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+          Selamat Datang, <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-600">Admin</span> 👋
+        </h1>
+        <p className="text-lg text-slate-500 max-w-2xl font-medium mt-2 leading-relaxed">
+          Ini adalah pusat kendali website Desa Cikalong. Pilih modul di bawah ini untuk mengelola konten dan memastikan informasi masyarakat selalu terbarui.
         </p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {cards.map((card) => (
-          <Link 
-            href={card.path} 
-            key={card.name}
-            className={`group relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl border ${card.border} shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${card.hover} overflow-hidden flex flex-col items-start`}
-          >
-            {/* Background decoration */}
-            <div className={`absolute -right-8 -top-8 w-32 h-32 rounded-full blur-3xl opacity-20 transition-opacity group-hover:opacity-60 ${card.color.split(' ')[0]}`} />
-            
-            <div className={`w-14 h-14 rounded-2xl ${card.color} flex items-center justify-center text-3xl mb-6 shadow-inner transition-transform group-hover:scale-110 duration-300`}>
-              {card.icon}
-            </div>
-            
-            <h3 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-slate-900">{card.name}</h3>
-            
-            <div className="mt-auto pt-6 flex items-center text-sm font-semibold text-slate-500 group-hover:text-slate-800 transition-colors">
-              <span>Kelola modul</span>
-              <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-            </div>
-          </Link>
-        ))}
+      {/* Cards Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+        {cards.map((card) => {
+          const Icon = card.icon;
+          return (
+            <Link 
+              href={card.path} 
+              key={card.name}
+              className={`group relative bg-white rounded-[2rem] p-8 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${card.glow} overflow-hidden flex flex-col items-start`}
+            >
+              {/* Background gradient decoration */}
+              <div className={`absolute -right-12 -top-12 w-40 h-40 rounded-full bg-gradient-to-br ${card.color} blur-3xl opacity-10 transition-opacity duration-500 group-hover:opacity-30`} />
+              
+              {/* Icon Container */}
+              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${card.color} flex items-center justify-center text-white mb-6 shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
+                <Icon className="w-8 h-8" strokeWidth={2.5} />
+              </div>
+              
+              {/* Title */}
+              <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-slate-900 transition-colors">{card.name}</h3>
+              
+              {/* Action Link */}
+              <div className="mt-auto pt-6 w-full flex items-center justify-between text-sm font-bold text-slate-400 group-hover:text-emerald-600 transition-colors border-t border-slate-50">
+                <span>Kelola Modul</span>
+                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-emerald-50 transition-colors">
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </div>
+              </div>
+            </Link>
+          );
+        })}
       </div>
+      
     </div>
   );
 }

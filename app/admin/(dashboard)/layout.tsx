@@ -4,15 +4,29 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
+import { 
+  LayoutDashboard, 
+  Landmark, 
+  Users, 
+  Newspaper, 
+  Store, 
+  Map, 
+  Settings, 
+  LogOut, 
+  Globe,
+  Loader2,
+  Menu,
+  X
+} from 'lucide-react';
 
 const menuItems = [
-  { name: 'Dashboard', path: '/admin', icon: '✨' },
-  { name: 'Profil Desa', path: '/admin/profil', icon: '🏛️' },
-  { name: 'Struktur Organisasi', path: '/admin/struktur', icon: '👥' },
-  { name: 'Berita Desa', path: '/admin/berita', icon: '📰' },
-  { name: 'Budaya & UMKM', path: '/admin/umkm', icon: '🛍️' },
-  { name: 'Geografi', path: '/admin/geografi', icon: '🗺️' },
-  { name: 'Pengaturan & Kontak', path: '/admin/pengaturan', icon: '⚙️' },
+  { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
+  { name: 'Profil Desa', path: '/admin/profil', icon: Landmark },
+  { name: 'Struktur Organisasi', path: '/admin/struktur', icon: Users },
+  { name: 'Berita Desa', path: '/admin/berita', icon: Newspaper },
+  { name: 'Budaya & UMKM', path: '/admin/umkm', icon: Store },
+  { name: 'Geografi', path: '/admin/geografi', icon: Map },
+  { name: 'Pengaturan & Kontak', path: '/admin/pengaturan', icon: Settings },
 ];
 
 export default function AdminLayout({
@@ -24,6 +38,7 @@ export default function AdminLayout({
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [session, setSession] = useState<any>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   useEffect(() => {
     setMounted(true);
@@ -53,95 +68,136 @@ export default function AdminLayout({
   };
 
   if (!mounted || !session) return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="animate-spin h-10 w-10 border-4 border-indigo-600 border-t-transparent rounded-full"></div>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
+      <Loader2 className="w-12 h-12 text-emerald-500 animate-spin mb-4" />
+      <p className="text-slate-500 font-medium animate-pulse">Memuat workspace...</p>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex flex-col md:flex-row font-sans selection:bg-indigo-500 selection:text-white">
-      {/* Premium Sidebar (Desktop) */}
-      <aside className="hidden md:flex w-72 bg-white border-r border-indigo-50 flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)] relative z-20">
-        <div className="p-8 flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/30 flex items-center justify-center text-white font-bold text-xl">
+    <div className="min-h-screen bg-[#f1f5f9] flex flex-col md:flex-row font-sans selection:bg-emerald-500 selection:text-white relative overflow-hidden">
+      
+      {/* Decorative Global Background */}
+      <div className="fixed top-[-20%] right-[-10%] w-[40rem] h-[40rem] bg-emerald-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-50 z-0 pointer-events-none"></div>
+      <div className="fixed bottom-[-20%] left-[-10%] w-[40rem] h-[40rem] bg-teal-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-50 z-0 pointer-events-none"></div>
+
+      {/* Mobile Topbar */}
+      <div className="md:hidden flex items-center justify-between p-4 bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold text-sm shadow-md">
             C
           </div>
-          <div>
-            <h2 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-900 to-slate-800">Cikalong</h2>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Admin Workspace</p>
+          <h2 className="text-lg font-bold text-slate-800">Cikalong</h2>
+        </div>
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="p-2 bg-slate-100 text-slate-600 rounded-lg"
+        >
+          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {/* Mobile Menu Dropdown */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-40 bg-slate-900/20 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)}>
+          <div 
+            className="absolute top-[73px] left-4 right-4 bg-white rounded-2xl shadow-2xl border border-slate-100 p-4 animate-in slide-in-from-top-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <nav className="flex flex-col gap-1">
+              {menuItems.map((item) => {
+                const isActive = pathname === item.path;
+                const Icon = item.icon;
+                return (
+                  <Link 
+                    key={item.path} 
+                    href={item.path}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                      isActive 
+                        ? 'bg-emerald-50 text-emerald-700 font-bold' 
+                        : 'text-slate-600 hover:bg-slate-50'
+                    }`}
+                  >
+                    <Icon className={`w-5 h-5 ${isActive ? 'text-emerald-600' : 'text-slate-400'}`} />
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              })}
+              <div className="h-px bg-slate-100 my-2"></div>
+              <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 transition-all text-left">
+                <LogOut className="w-5 h-5 text-red-500" />
+                <span className="font-semibold">Keluar</span>
+              </button>
+            </nav>
           </div>
         </div>
-        
-        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-          {menuItems.map((item) => {
-            const isActive = pathname === item.path;
-            return (
-              <Link 
-                key={item.path} 
-                href={item.path} 
-                className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all duration-300 group relative overflow-hidden ${
-                  isActive 
-                    ? 'bg-indigo-50 text-indigo-700 font-semibold shadow-sm' 
-                    : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
-                }`}
-              >
-                {isActive && (
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-600 rounded-r-full" />
-                )}
-                <span className={`text-xl transition-transform duration-300 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`}>
-                  {item.icon}
-                </span>
-                <span className="text-sm font-medium">{item.name}</span>
-              </Link>
-            );
-          })}
-        </nav>
-        
-        <div className="p-6 mt-auto border-t border-slate-50 space-y-3">
-          <Link href="/" className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-black text-white rounded-xl font-medium transition-all shadow-lg shadow-slate-900/20 hover:shadow-xl hover:-translate-y-0.5 text-sm">
-            <span>🌍</span>
-            <span>Lihat Website</span>
-          </Link>
-          <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-red-50 hover:bg-red-100 text-red-600 rounded-xl font-medium transition-all text-sm">
-            <span>🚪</span>
-            <span>Keluar</span>
-          </button>
+      )}
+
+      {/* Premium Sidebar (Desktop) - Floating Design */}
+      <aside className="hidden md:flex w-72 flex-col z-20 p-6 h-screen sticky top-0">
+        <div className="bg-white/80 backdrop-blur-xl border border-white flex-1 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col overflow-hidden">
+          
+          {/* Brand */}
+          <div className="p-8 flex items-center gap-4 relative">
+            <div className="absolute inset-0 bg-gradient-to-b from-emerald-50/50 to-transparent pointer-events-none"></div>
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 shadow-lg shadow-emerald-500/30 flex items-center justify-center text-white font-black text-2xl relative z-10 ring-2 ring-white">
+              C
+            </div>
+            <div className="relative z-10">
+              <h2 className="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-emerald-900 to-teal-800 tracking-tight">Cikalong</h2>
+              <p className="text-[10px] font-bold text-emerald-500/80 uppercase tracking-widest mt-0.5">Admin Workspace</p>
+            </div>
+          </div>
+          
+          {/* Navigation */}
+          <nav className="flex-1 px-5 py-2 space-y-1.5 overflow-y-auto">
+            {menuItems.map((item) => {
+              const isActive = pathname === item.path;
+              const Icon = item.icon;
+              return (
+                <Link 
+                  key={item.path} 
+                  href={item.path} 
+                  className={`flex items-center gap-3.5 px-4 py-3.5 rounded-2xl transition-all duration-300 group relative ${
+                    isActive 
+                      ? 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 font-bold shadow-sm ring-1 ring-emerald-500/10' 
+                      : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800 font-medium'
+                  }`}
+                >
+                  {isActive && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-8 bg-emerald-500 rounded-r-full shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                  )}
+                  <div className={`p-2 rounded-xl transition-all duration-300 ${isActive ? 'bg-white shadow-sm text-emerald-600' : 'bg-transparent text-slate-400 group-hover:text-slate-600 group-hover:bg-slate-100'}`}>
+                    <Icon className="w-5 h-5" strokeWidth={isActive ? 2.5 : 2} />
+                  </div>
+                  <span className="text-sm tracking-wide">{item.name}</span>
+                </Link>
+              );
+            })}
+          </nav>
+          
+          {/* Bottom Actions */}
+          <div className="p-5 mt-auto border-t border-slate-100 bg-slate-50/50 space-y-3">
+            <Link href="/" className="group flex items-center justify-center gap-2 w-full py-3.5 px-4 bg-white border border-slate-200 hover:border-emerald-300 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 rounded-2xl font-semibold transition-all shadow-sm text-sm">
+              <Globe className="w-4 h-4 text-slate-400 group-hover:text-emerald-500 transition-colors" />
+              <span>Lihat Website</span>
+            </Link>
+            <button onClick={handleLogout} className="group flex items-center justify-center gap-2 w-full py-3.5 px-4 bg-red-50/50 hover:bg-red-50 text-red-600 rounded-2xl font-semibold transition-all text-sm border border-transparent hover:border-red-100">
+              <LogOut className="w-4 h-4 text-red-400 group-hover:text-red-500 transition-colors" />
+              <span>Keluar</span>
+            </button>
+          </div>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 relative h-screen overflow-y-auto bg-[#f8fafc] pb-24 md:pb-0">
-        {/* Decorative background blob */}
-        <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-indigo-50/50 to-transparent -z-10 pointer-events-none" />
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-purple-200/20 rounded-full blur-3xl -z-10 pointer-events-none" />
-        
-        <div className="p-4 md:p-10 max-w-7xl mx-auto w-full">
+      <main className="flex-1 relative h-screen overflow-y-auto bg-transparent z-10">
+        <div className="p-4 md:p-8 lg:p-12 max-w-7xl mx-auto w-full pb-32 md:pb-12">
           {children}
         </div>
       </main>
 
-      {/* Bottom Navigation (Mobile) */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex justify-around p-3 pb-safe z-50 shadow-[0_-4px_24px_rgba(0,0,0,0.05)]">
-        {menuItems.slice(0, 4).map((item) => {
-          const isActive = pathname === item.path;
-          return (
-            <Link 
-              key={item.path} 
-              href={item.path} 
-              className={`flex flex-col items-center p-2 rounded-xl transition-all ${
-                isActive ? 'text-indigo-600 bg-indigo-50' : 'text-slate-400 hover:text-slate-600'
-              }`}
-            >
-              <span className="text-xl mb-1">{item.icon}</span>
-              <span className="text-[10px] font-semibold truncate max-w-[60px] text-center">{item.name.split(' ')[0]}</span>
-            </Link>
-          );
-        })}
-        <button onClick={handleLogout} className="flex flex-col items-center p-2 rounded-xl transition-all text-red-400 hover:text-red-600">
-          <span className="text-xl mb-1">🚪</span>
-          <span className="text-[10px] font-semibold">Keluar</span>
-        </button>
-      </nav>
     </div>
   );
 }
