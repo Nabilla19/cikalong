@@ -49,23 +49,25 @@ export default function AdminDashboard() {
             <Link 
               href={card.path} 
               key={card.name}
-              className={`group relative bg-white rounded-[2rem] p-8 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${card.glow} overflow-hidden flex flex-col items-start`}
+              className={`group relative bg-white rounded-[2rem] p-6 sm:p-8 border border-slate-100 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${card.glow} overflow-hidden flex flex-col items-start min-h-[220px] justify-between`}
             >
               {/* Background gradient decoration */}
               <div className={`absolute -right-12 -top-12 w-40 h-40 rounded-full bg-gradient-to-br ${card.color} blur-3xl opacity-10 transition-opacity duration-500 group-hover:opacity-30`} />
               
-              {/* Icon Container */}
-              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${card.color} flex items-center justify-center text-white mb-6 shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
-                <Icon className="w-8 h-8" strokeWidth={2.5} />
+              <div className="w-full">
+                {/* Icon Container */}
+                <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br ${card.color} flex items-center justify-center text-white mb-4 sm:mb-6 shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
+                  <Icon className="w-7 h-7 sm:w-8 sm:h-8" strokeWidth={2.5} />
+                </div>
+                
+                {/* Title */}
+                <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-2 group-hover:text-slate-900 transition-colors leading-tight">{card.name}</h3>
               </div>
               
-              {/* Title */}
-              <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-slate-900 transition-colors">{card.name}</h3>
-              
               {/* Action Link */}
-              <div className="mt-auto pt-6 w-full flex items-center justify-between text-sm font-bold text-slate-400 group-hover:text-emerald-600 transition-colors border-t border-slate-50">
+              <div className="mt-4 pt-4 w-full flex items-center justify-between text-sm font-bold text-slate-400 group-hover:text-emerald-600 transition-colors border-t border-slate-50">
                 <span>Kelola Modul</span>
-                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-emerald-50 transition-colors">
+                <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-emerald-50 transition-colors shrink-0">
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </div>

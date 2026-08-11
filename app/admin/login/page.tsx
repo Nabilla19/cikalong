@@ -31,7 +31,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex w-full bg-slate-50 relative overflow-hidden">
+    <div className="min-h-screen flex w-full bg-slate-50 relative overflow-y-auto overflow-x-hidden">
       {/* Decorative Background Elements */}
       <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-emerald-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
       <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
@@ -93,8 +93,8 @@ export default function LoginPage() {
               
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-slate-700 ml-1">Alamat Email</label>
-                <div className="relative group">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+                <div className="flex items-center w-full bg-white border border-slate-200 focus-within:border-emerald-500 focus-within:ring-4 focus-within:ring-emerald-500/10 rounded-2xl shadow-sm transition-all group">
+                  <div className="pl-4 pr-3 text-slate-400 group-focus-within:text-emerald-500 transition-colors">
                     <Mail className="w-5 h-5" />
                   </div>
                   <input
@@ -102,7 +102,7 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full pl-12 pr-5 py-4 bg-white border border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 rounded-2xl text-slate-900 placeholder-slate-400 outline-none transition-all font-medium shadow-sm"
+                    className="w-full py-4 pr-5 bg-transparent text-slate-900 placeholder-slate-400 outline-none font-medium"
                     placeholder="admin@cikalong.desa.id"
                   />
                 </div>
@@ -112,8 +112,8 @@ export default function LoginPage() {
                 <div className="flex items-center justify-between ml-1">
                   <label className="text-sm font-semibold text-slate-700">Kata Sandi</label>
                 </div>
-                <div className="relative group">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+                <div className="flex items-center w-full bg-white border border-slate-200 focus-within:border-emerald-500 focus-within:ring-4 focus-within:ring-emerald-500/10 rounded-2xl shadow-sm transition-all group">
+                  <div className="pl-4 pr-3 text-slate-400 group-focus-within:text-emerald-500 transition-colors">
                     <Lock className="w-5 h-5" />
                   </div>
                   <input
@@ -121,7 +121,7 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="w-full pl-12 pr-5 py-4 bg-white border border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 rounded-2xl text-slate-900 placeholder-slate-400 outline-none transition-all font-medium shadow-sm"
+                    className="w-full py-4 pr-5 bg-transparent text-slate-900 placeholder-slate-400 outline-none font-medium"
                     placeholder="••••••••"
                   />
                 </div>
