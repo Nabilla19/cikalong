@@ -16,7 +16,8 @@ import {
   Globe,
   Loader2,
   Menu,
-  X
+  X,
+  Palette
 } from 'lucide-react';
 
 const menuItems = [
@@ -24,7 +25,8 @@ const menuItems = [
   { name: 'Profil Desa', path: '/admin/profil', icon: Landmark },
   { name: 'Struktur Organisasi', path: '/admin/struktur', icon: Users },
   { name: 'Berita Desa', path: '/admin/berita', icon: Newspaper },
-  { name: 'Budaya & UMKM', path: '/admin/umkm', icon: Store },
+  { name: 'Budaya', path: '/admin/budaya', icon: Palette },
+  { name: 'UMKM', path: '/admin/umkm', icon: Store },
   { name: 'Geografi', path: '/admin/geografi', icon: Map },
   { name: 'Pengaturan & Kontak', path: '/admin/pengaturan', icon: Settings },
 ];

@@ -103,10 +103,19 @@ export default function PengaturanPage() {
   if (loading) return <div className="p-8 text-center text-gray-500">Memuat data...</div>;
 
   return (
-    <div className="max-w-2xl bg-white p-8 rounded-xl shadow-sm border border-slate-200">
-      <h1 className="text-2xl font-bold text-slate-800 mb-6">⚙️ Pengaturan & Kontak</h1>
+    <div className="w-full relative z-10">
+      <div className="bg-white/70 backdrop-blur-xl border border-white p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] mb-8">
+        <div className="flex items-center gap-4 mb-8">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center shadow-inner">
+            <span className="text-2xl">⚙️</span>
+          </div>
+          <div>
+            <h1 className="text-2xl font-black text-slate-800 tracking-tight">Pengaturan & Kontak</h1>
+            <p className="text-sm text-slate-500 font-medium mt-1">Kelola informasi kontak dan profil desa.</p>
+          </div>
+        </div>
       
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp Pelayanan</label>
           <input 
@@ -155,22 +164,30 @@ export default function PengaturanPage() {
           />
         </div>
 
-        <div className="pt-4 flex items-center gap-4">
+        <div className="pt-6 mt-4 flex items-center gap-4 border-t border-slate-100">
           <button 
             type="submit" 
             disabled={saving}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors disabled:opacity-50"
+            className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold py-3 px-8 rounded-xl shadow-md shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30 transition-all duration-300 disabled:opacity-50 transform hover:-translate-y-0.5"
           >
             {saving ? 'Menyimpan...' : 'Simpan Perubahan'}
           </button>
-          {message && <span className="text-sm font-medium">{message}</span>}
+          {message && <span className="text-sm font-medium px-4 py-2 bg-emerald-50 text-emerald-700 rounded-lg animate-in fade-in">{message}</span>}
         </div>
       </form>
+      </div>
 
       {/* Tambah Admin Section */}
-      <div className="mt-12 pt-8 border-t border-slate-200">
-        <h2 className="text-xl font-bold text-slate-800 mb-4">👥 Tambah Akun Admin</h2>
-        <p className="text-sm text-gray-500 mb-4">Tambahkan email dan password baru agar orang lain bisa masuk ke panel admin ini.</p>
+      <div className="bg-white/70 backdrop-blur-xl border border-white p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] mb-8">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center shadow-inner">
+            <span className="text-xl">👥</span>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-slate-800">Tambah Akun Admin</h2>
+            <p className="text-sm text-slate-500 mt-1">Tambahkan email dan password baru agar orang lain bisa masuk.</p>
+          </div>
+        </div>
         
         <form onSubmit={async (e) => {
           e.preventDefault();
@@ -220,7 +237,7 @@ export default function PengaturanPage() {
           <button 
             name="submitBtn"
             type="submit" 
-            className="w-full bg-slate-800 hover:bg-slate-900 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+            className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-6 rounded-xl shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
           >
             Buat Akun Admin
           </button>
@@ -228,29 +245,35 @@ export default function PengaturanPage() {
       </div>
 
       {/* Daftar Admin Section */}
-      <div className="mt-12 pt-8 border-t border-slate-200">
-        <h2 className="text-xl font-bold text-slate-800 mb-4">📋 Daftar Admin</h2>
-        <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="bg-white/70 backdrop-blur-xl border border-white p-8 md:p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center shadow-inner">
+            <span className="text-xl">📋</span>
+          </div>
+          <h2 className="text-xl font-bold text-slate-800">Daftar Admin</h2>
+        </div>
+        
+        <div className="bg-white/50 border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
           <table className="w-full text-left text-sm text-slate-600">
-            <thead className="bg-slate-50 border-b border-slate-200 text-slate-800">
+            <thead className="bg-slate-50/80 border-b border-slate-200 text-slate-800 backdrop-blur-sm">
               <tr>
-                <th className="px-6 py-3 font-semibold">Email</th>
-                <th className="px-6 py-3 font-semibold">Dibuat Pada</th>
-                <th className="px-6 py-3 font-semibold text-right">Aksi</th>
+                <th className="px-6 py-4 font-bold tracking-wide text-xs uppercase">Email</th>
+                <th className="px-6 py-4 font-bold tracking-wide text-xs uppercase">Dibuat Pada</th>
+                <th className="px-6 py-4 font-bold tracking-wide text-xs uppercase text-right">Aksi</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200">
+            <tbody className="divide-y divide-slate-100">
               {admins.length > 0 ? (
                 admins.map((admin) => (
-                  <tr key={admin.id} className="hover:bg-slate-50">
-                    <td className="px-6 py-4">{admin.email}</td>
-                    <td className="px-6 py-4">
+                  <tr key={admin.id} className="hover:bg-white transition-colors duration-200">
+                    <td className="px-6 py-5 font-medium text-slate-700">{admin.email}</td>
+                    <td className="px-6 py-5">
                       {new Date(admin.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
                     </td>
-                    <td className="px-6 py-4 text-right">
+                    <td className="px-6 py-5 text-right">
                       <button 
                         onClick={() => handleDeleteAdmin(admin.id)}
-                        className="text-red-500 hover:text-red-700 font-medium"
+                        className="px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 hover:text-red-700 font-semibold rounded-lg transition-colors text-xs tracking-wide"
                       >
                         Hapus
                       </button>
@@ -259,7 +282,7 @@ export default function PengaturanPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={3} className="px-6 py-8 text-center text-slate-500">Memuat data admin...</td>
+                  <td colSpan={3} className="px-6 py-12 text-center text-slate-500 font-medium">Memuat data admin...</td>
                 </tr>
               )}
             </tbody>

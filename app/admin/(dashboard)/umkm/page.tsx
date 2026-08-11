@@ -115,15 +115,15 @@ export default function UmkmPage() {
             🛍️
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Budaya & UMKM</h1>
-            <p className="text-slate-500 text-sm mt-1">Tambahkan data potensi lokal desa</p>
+            <h1 className="text-2xl font-bold text-slate-800 tracking-tight">UMKM Desa</h1>
+            <p className="text-slate-500 text-sm mt-1">Kelola data UMKM yang ada di desa</p>
           </div>
         </div>
 
         <form onSubmit={handleAdd} className="space-y-6 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">Nama Usaha/Budaya</label>
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Nama Usaha</label>
               <input 
                 type="text" required value={newUmkm.nama_usaha} onChange={e => setNewUmkm({...newUmkm, nama_usaha: e.target.value})}
                 className="w-full px-5 py-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-pink-500/20 focus:border-pink-500 focus:bg-white outline-none transition-all"
@@ -160,8 +160,8 @@ export default function UmkmPage() {
             <label className="block text-sm font-semibold text-slate-700 mb-2">Deskripsi Lengkap</label>
             <textarea 
               value={newUmkm.deskripsi} onChange={e => setNewUmkm({...newUmkm, deskripsi: e.target.value})} rows={4}
-              className="w-full px-5 py-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-pink-500/20 focus:border-pink-500 focus:bg-white outline-none transition-all resize-y"
-              placeholder="Ceritakan tentang UMKM atau kebudayaan ini..."
+              className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-pink-500/20 focus:border-pink-500 focus:bg-white outline-none transition-all resize-y"
+              placeholder="Ceritakan tentang UMKM ini..."
             />
           </div>
           
@@ -202,8 +202,8 @@ export default function UmkmPage() {
 
       {/* List UMKM */}
       <div className="bg-white/90 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
-        <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-          <span>📋</span> Direktori UMKM & Budaya
+        <h2 className="text-xl font-bold text-slate-800 mb-8 flex items-center gap-2">
+          <span>📋</span> Direktori UMKM
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {umkmList.map((umkm) => (
@@ -246,7 +246,7 @@ export default function UmkmPage() {
           ))}
           {umkmList.length === 0 && (
             <div className="col-span-full py-12 text-center text-slate-400 font-medium bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-              Belum ada data UMKM/Budaya.
+              Belum ada data UMKM.
             </div>
           )}
         </div>
