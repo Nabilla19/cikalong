@@ -35,6 +35,7 @@ export default function Header() {
       <div className="header-container">
         <div className="logo-container">
           <div className="logo-icon"></div>
+          <img src="/logo%20cikalong.jpeg" alt="Logo Desa Cikalong" className="logo-village" />
           <div className="logo-text">
             <h1>Desa Cikalong</h1>
           </div>
