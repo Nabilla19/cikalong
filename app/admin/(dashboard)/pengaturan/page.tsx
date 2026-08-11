@@ -7,6 +7,7 @@ export default function PengaturanPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [admins, setAdmins] = useState<any[]>([]);
   
   const [formData, setFormData] = useState({
     wa: '',
@@ -19,7 +20,32 @@ export default function PengaturanPage() {
 
   useEffect(() => {
     fetchData();
+    fetchAdmins();
   }, []);
+
+  async function fetchAdmins() {
+    try {
+      const res = await fetch('/api/admin-users');
+      if (res.ok) {
+        const data = await res.json();
+        setAdmins(data);
+      }
+    } catch (error) {
+      console.error('Error fetching admins:', error);
+    }
+  }
+
+  async function handleDeleteAdmin(id: string) {
+    if (!confirm('Yakin ingin menghapus admin ini?')) return;
+    try {
+      const res = await fetch(`/api/admin-users?id=${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Gagal menghapus');
+      setAdmins(admins.filter(a => a.id !== id));
+      alert('Admin berhasil dihapus');
+    } catch (error: any) {
+      alert(error.message);
+    }
+  }
 
   async function fetchData() {
     try {
@@ -168,6 +194,7 @@ export default function PengaturanPage() {
             } else {
               alert('✅ Akun admin baru berhasil dibuat! Mereka sudah bisa menggunakannya untuk login.');
               target.reset();
+              fetchAdmins();
             }
           } catch (err) {
             console.error(err);
@@ -198,6 +225,46 @@ export default function PengaturanPage() {
             Buat Akun Admin
           </button>
         </form>
+      </div>
+
+      {/* Daftar Admin Section */}
+      <div className="mt-12 pt-8 border-t border-slate-200">
+        <h2 className="text-xl font-bold text-slate-800 mb-4">📋 Daftar Admin</h2>
+        <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+          <table className="w-full text-left text-sm text-slate-600">
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-800">
+              <tr>
+                <th className="px-6 py-3 font-semibold">Email</th>
+                <th className="px-6 py-3 font-semibold">Dibuat Pada</th>
+                <th className="px-6 py-3 font-semibold text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-200">
+              {admins.length > 0 ? (
+                admins.map((admin) => (
+                  <tr key={admin.id} className="hover:bg-slate-50">
+                    <td className="px-6 py-4">{admin.email}</td>
+                    <td className="px-6 py-4">
+                      {new Date(admin.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button 
+                        onClick={() => handleDeleteAdmin(admin.id)}
+                        className="text-red-500 hover:text-red-700 font-medium"
+                      >
+                        Hapus
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={3} className="px-6 py-8 text-center text-slate-500">Memuat data admin...</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
