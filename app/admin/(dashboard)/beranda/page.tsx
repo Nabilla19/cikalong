@@ -21,6 +21,9 @@ export default function BerandaAdminPage() {
     sambutan_nama: ''
   });
 
+  const [fotoHeroFile, setFotoHeroFile] = useState<File | null>(null);
+  const [fotoPengumumanFile, setFotoPengumumanFile] = useState<File | null>(null);
+
   // Pandangan Masyarakat State
   const [masyarakatList, setMasyarakatList] = useState<any[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -62,14 +65,59 @@ export default function BerandaAdminPage() {
     setBerandaData({ ...berandaData, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<File | null>>) => {
+    if (e.target.files && e.target.files[0]) {
+      setter(e.target.files[0]);
+    }
+  };
+
   const handleBerandaSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSavingBeranda(true);
     setMessage('');
     
     try {
-      const { error } = await supabase.from('beranda').upsert({ id: 1, ...berandaData });
+      let heroUrl = berandaData.foto_hero_url;
+      let pengumumanUrl = berandaData.pengumuman_foto_url;
+
+      // Upload Foto Hero
+      if (fotoHeroFile) {
+        const fileExt = fotoHeroFile.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const filePath = `beranda/hero_${fileName}`;
+        
+        const { error: uploadError } = await supabase.storage.from('uploads').upload(filePath, fotoHeroFile);
+        if (uploadError) throw uploadError;
+        
+        const { data } = supabase.storage.from('uploads').getPublicUrl(filePath);
+        heroUrl = data.publicUrl;
+      }
+
+      // Upload Foto Pengumuman
+      if (fotoPengumumanFile) {
+        const fileExt = fotoPengumumanFile.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const filePath = `beranda/pengumuman_${fileName}`;
+        
+        const { error: uploadError } = await supabase.storage.from('uploads').upload(filePath, fotoPengumumanFile);
+        if (uploadError) throw uploadError;
+        
+        const { data } = supabase.storage.from('uploads').getPublicUrl(filePath);
+        pengumumanUrl = data.publicUrl;
+      }
+
+      const updatedBeranda = {
+        ...berandaData,
+        foto_hero_url: heroUrl,
+        pengumuman_foto_url: pengumumanUrl,
+      };
+
+      const { error } = await supabase.from('beranda').upsert({ id: 1, ...updatedBeranda });
       if (error) throw error;
+      
+      setBerandaData(updatedBeranda);
+      setFotoHeroFile(null);
+      setFotoPengumumanFile(null);
       setMessage('✅ Berhasil menyimpan Beranda!');
     } catch (error) {
       console.error('Error saving beranda:', error);
@@ -168,8 +216,13 @@ export default function BerandaAdminPage() {
               <input type="text" name="judul_hero" value={berandaData.judul_hero} onChange={handleBerandaChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">URL Foto Hero</label>
-              <input type="text" name="foto_hero_url" value={berandaData.foto_hero_url} onChange={handleBerandaChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" />
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Foto Hero</label>
+              <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, setFotoHeroFile)} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" />
+              {berandaData.foto_hero_url && !fotoHeroFile && (
+                <div className="mt-2">
+                  <img src={berandaData.foto_hero_url} alt="Current Hero" className="w-32 h-auto rounded-lg object-cover" />
+                </div>
+              )}
             </div>
 
             <div className="col-span-1 md:col-span-2 mt-4">
@@ -184,8 +237,13 @@ export default function BerandaAdminPage() {
               <input type="text" name="pengumuman_deskripsi" value={berandaData.pengumuman_deskripsi} onChange={handleBerandaChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" />
             </div>
             <div className="col-span-1 md:col-span-2">
-              <label className="block text-sm font-semibold text-slate-700 mb-2">URL Foto Pengumuman</label>
-              <input type="text" name="pengumuman_foto_url" value={berandaData.pengumuman_foto_url} onChange={handleBerandaChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" />
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Foto Pengumuman</label>
+              <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, setFotoPengumumanFile)} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" />
+              {berandaData.pengumuman_foto_url && !fotoPengumumanFile && (
+                <div className="mt-2">
+                  <img src={berandaData.pengumuman_foto_url} alt="Current Pengumuman" className="w-32 h-auto rounded-lg object-cover" />
+                </div>
+              )}
             </div>
 
             <div className="col-span-1 md:col-span-2 mt-4">
