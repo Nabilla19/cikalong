@@ -18,7 +18,7 @@ export default async function ProfilPage() {
   return (
     <>
       <Header />
-      <div className="pt-24 min-h-screen flex flex-col">
+      <div className="pt-8 min-h-screen flex flex-col">
         <section id="profil" className="section flex-1">
           <div className="container">
             <div className="text-center">

@@ -11,7 +11,7 @@ export default async function KontakPage() {
   return (
     <>
       <Header />
-      <div className="pt-24 min-h-screen flex flex-col">
+      <div className="pt-8 min-h-screen flex flex-col">
         <section id="kontak" className="section flex-1">
           <div className="container">
             <div className="text-center">
