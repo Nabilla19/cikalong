@@ -22,6 +22,7 @@ import {
 
 const menuItems = [
   { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
+  { name: 'Beranda', path: '/admin/beranda', icon: Globe },
   { name: 'Profil Desa', path: '/admin/profil', icon: Landmark },
   { name: 'Struktur Organisasi', path: '/admin/struktur', icon: Users },
   { name: 'Berita Desa', path: '/admin/berita', icon: Newspaper },

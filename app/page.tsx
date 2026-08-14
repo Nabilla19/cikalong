@@ -8,40 +8,14 @@ export const revalidate = 0;
 
 export default async function Home() {
   const [
-    { data: profil },
-    { data: struktur },
-    { data: geografi },
-    { data: umkm },
-    { data: berita },
-    { data: pengaturan },
-    { data: budaya }
+    { data: beranda },
+    { data: masyarakat }
   ] = await Promise.all([
-    supabase.from('profil_desa').select('*').eq('id', 1).single(),
-    supabase.from('struktur_organisasi').select('*').order('urutan', { ascending: true }),
-    supabase.from('geografi').select('*').eq('id', 1).single(),
-    supabase.from('umkm').select('*').order('nama_usaha', { ascending: true }),
-    supabase.from('berita').select('*').order('diterbitkan_pada', { ascending: false }),
-    supabase.from('pengaturan_web').select('*').eq('id', 1).single(),
-    supabase.from('budaya').select('*').order('judul', { ascending: true })
+    supabase.from('beranda').select('*').eq('id', 1).single(),
+    supabase.from('pandangan_masyarakat').select('*').order('urutan', { ascending: true })
   ]);
 
-  const misiArray = profil?.misi ? profil.misi.split('\n').filter(Boolean) : [
-    'Meningkatkan kualitas sumber daya manusia melalui pendidikan dan kesehatan.',
-    'Membangun infrastruktur desa yang memadai dan berwawasan lingkungan.',
-    'Melestarikan budaya dan kearifan lokal Desa Cikalong.',
-    'Memberdayakan ekonomi kerakyatan melalui UMKM dan pariwisata.'
-  ];
-
-  const strukturData = struktur || [];
-  const groupedStruktur = strukturData.reduce((acc: any, curr: any) => {
-    if (!acc[curr.urutan]) acc[curr.urutan] = [];
-    acc[curr.urutan].push(curr);
-    return acc;
-  }, {});
-  const sortedUrutan = Object.keys(groupedStruktur).sort((a, b) => Number(a) - Number(b));
-
-
-  const masyarakat = [
+  const fallbackMasyarakat = [
     { inisial: 'AS', nama: 'Bapak Aman Suherman', jabatan: 'Tokoh Adat', kutipan: 'Cikalong Budayanya Masih Terjaga.' },
     { inisial: 'HN', nama: 'Ibu Hasna', jabatan: 'UMKM Cikalong', kutipan: 'Cikalong Makanannya Enak-enak.' },
     { inisial: 'OD', nama: 'Bapak Odin', jabatan: 'Petani', kutipan: 'Cikalong Masih Asri dan Bersih.' },
@@ -50,21 +24,24 @@ export default async function Home() {
     { inisial: 'DA', nama: 'Dilla A', jabatan: 'Masyarakat', kutipan: 'Cikalong adalah desa yang hijau membuat mata segar.' },
   ];
 
+  const pandangan = (masyarakat && masyarakat.length > 0) ? masyarakat : fallbackMasyarakat;
 
   return (
     <>
       <Header />
 
       {/* BERANDA - BANNER UTAMA */}
-      <section id="beranda" className="section pt-32 bg-light">
+      <section id="beranda" className="section pt-32 bg-light min-h-screen">
         <div className="container">
           <div className="text-center">
-            <h1 className="section-title text-center">Selamat Datang di Website Digital Desa Cikalong</h1>
+            <h1 className="section-title text-center">
+              {beranda?.judul_hero || 'Selamat Datang di Website Digital Desa Cikalong'}
+            </h1>
           </div>
 
           <div className="main-image-wrapper">
             <ZoomableImage
-              src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/WhatsApp%20Image%202025-06-22%20at%2015.39.30_5c32b844.jpg?updatedAt=1750776307281"
+              src={beranda?.foto_hero_url || "https://ik.imagekit.io/klccxl9cu/Web%20Desa/WhatsApp%20Image%202025-06-22%20at%2015.39.30_5c32b844.jpg?updatedAt=1750776307281"}
               alt="Balai Desa Cikalong"
               className="main-banner-img"
             />
@@ -72,30 +49,37 @@ export default async function Home() {
 
           <div className="carousel-container mt-12">
             <div className="carousel-slide">
-              <ZoomableImage src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/IMG_7633.HEIC?updatedAt=1751085829472" alt="Pengumuman" />
+              <ZoomableImage 
+                src={beranda?.pengumuman_foto_url || "https://ik.imagekit.io/klccxl9cu/Web%20Desa/IMG_7633.HEIC?updatedAt=1751085829472"} 
+                alt="Pengumuman" 
+              />
               <div className="carousel-content">
-                <h3 className="carousel-title">Pengumuman Penting Desa</h3>
-                <p className="carousel-description">Informasi penting dari Kantor Desa untuk Masyarakat Desa Cikalong.</p>
+                <h3 className="carousel-title">{beranda?.pengumuman_judul || 'Pengumuman Penting Desa'}</h3>
+                <p className="carousel-description">{beranda?.pengumuman_deskripsi || 'Informasi penting dari Kantor Desa untuk Masyarakat Desa Cikalong.'}</p>
               </div>
             </div>
           </div>
 
           <div className="card mt-12 mb-12 flex flex-col items-center text-center">
-            <h3 className="card-title text-[#1e3a8a] mb-6">Sambutan Kepala Desa</h3>
-            <div className="sambutan-text text-gray-700 leading-relaxed max-w-3xl w-full px-4">
-              <p className="mb-4">Assalamu’alaikum Warahmatullahi Wabarakatuh,<br />Salam sejahtera,</p>
-              <p className="mb-4">Selamat datang di website resmi Desa Cikalong.</p>
-              <p className="mb-4">Website ini kami hadirkan sebagai sarana informasi, komunikasi, dan transparansi pelayanan publik kepada masyarakat.</p>
-              <p className="mb-4">Dengan semangat <strong>"Ngahiji Ku Rasa, Ngahaja Ku Karsa, Ngajayakeun Cikalong"</strong>, mari kita bersama membangun desa yang maju, mandiri, dan berbudaya.</p>
-              <p className="mb-4">Terima kasih atas kunjungan Anda. Saran dan masukan sangat kami harapkan demi kemajuan bersama.</p>
-              <p className="mb-6">Wassalamu’alaikum Warahmatullahi Wabarakatuh.</p>
-              <p className="text-xl font-bold text-gray-900 mt-2 pb-4">Ruspandi</p>
+            <h3 className="card-title text-[#1e3a8a] mb-6">{beranda?.sambutan_judul || 'Sambutan Kepala Desa'}</h3>
+            <div className="sambutan-text text-gray-700 leading-relaxed max-w-3xl w-full px-4 whitespace-pre-wrap">
+              {beranda?.sambutan_isi ? beranda.sambutan_isi : (
+                <>
+                  <p className="mb-4">Assalamu’alaikum Warahmatullahi Wabarakatuh,<br />Salam sejahtera,</p>
+                  <p className="mb-4">Selamat datang di website resmi Desa Cikalong.</p>
+                  <p className="mb-4">Website ini kami hadirkan sebagai sarana informasi, komunikasi, dan transparansi pelayanan publik kepada masyarakat.</p>
+                  <p className="mb-4">Dengan semangat <strong>"Ngahiji Ku Rasa, Ngahaja Ku Karsa, Ngajayakeun Cikalong"</strong>, mari kita bersama membangun desa yang maju, mandiri, dan berbudaya.</p>
+                  <p className="mb-4">Terima kasih atas kunjungan Anda. Saran dan masukan sangat kami harapkan demi kemajuan bersama.</p>
+                  <p className="mb-6">Wassalamu’alaikum Warahmatullahi Wabarakatuh.</p>
+                </>
+              )}
+              <p className="text-xl font-bold text-gray-900 mt-2 pb-4">{beranda?.sambutan_nama || 'Ruspandi'}</p>
             </div>
           </div>
 
           <h2 className="section-subtitle mt-16 text-[#1e3a8a]">Pandangan Umum Masyarakat</h2>
           <div className="grid-staff mt-8">
-            {masyarakat.map((item, idx) => (
+            {pandangan.map((item: any, idx: number) => (
               <div key={idx} className="staff-card">
                 <div className="staff-photo">{item.inisial}</div>
                 <h3 className="text-xl font-bold text-gray-900">{item.nama}</h3>
@@ -103,294 +87,6 @@ export default async function Home() {
                 <p className="text-gray-600 italic">"{item.kutipan}"</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PROFIL DESA */}
-      <section id="profil" className="section">
-        <div className="container">
-          <div className="text-center">
-            <h1 className="section-title text-center">Profil Desa Cikalong</h1>
-          </div>
-
-          <div className="card">
-            <h3 className="card-title">Sejarah Desa</h3>
-            <p className="text-gray-600 leading-relaxed mb-4 whitespace-pre-wrap">
-              {profil?.sejarah || 'Sejarah belum ditambahkan.'}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-            <div className="card h-full">
-              <h3 className="card-title text-center text-[#1e3a8a]">Visi Desa</h3>
-              <p className="text-gray-700 text-center font-medium leading-relaxed italic text-lg">"{profil?.visi || 'Visi belum ditambahkan.'}"</p>
-            </div>
-
-            <div className="card h-full">
-              <h3 className="card-title">Misi Desa</h3>
-              <ul className="list-decimal pl-6 text-gray-600 space-y-3 leading-relaxed">
-                {misiArray.map((m: string, i: number) => (
-                  <li key={i}>{m}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* STRUKTUR */}
-      <section id="struktur" className="section bg-light">
-        <div className="container">
-          <div className="text-center">
-            <h1 className="section-title text-center">Struktur Perangkat Desa</h1>
-          </div>
-          <div className="org-chart-container mt-12 pb-12">
-            <div className="min-w-full md:min-w-full lg:min-w-[1000px] flex flex-col items-center overflow-x-hidden md:overflow-x-visible gap-10">
-
-              {sortedUrutan.length > 0 ? (
-                sortedUrutan.map((uStr, levelIndex) => {
-                  const items = groupedStruktur[uStr];
-                  const isTopLevel = levelIndex === 0;
-                  const isSecondLevel = levelIndex === 1 && items.length === 1;
-
-                  if (isTopLevel && items.length === 1) {
-                    const kades = items[0];
-                    return (
-                      <div key={uStr} className="org-node relative z-10 w-full flex flex-col items-center">
-                        <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-5 rounded-lg shadow-lg text-center w-80 relative">
-                          <h3 className="font-serif text-sm mb-1">{kades.jabatan}</h3>
-                          <p className="font-black text-2xl uppercase tracking-wide">{kades.nama}</p>
-                        </div>
-                      </div>
-                    );
-                  }
-
-                  if (isSecondLevel) {
-                    const sekdes = items[0];
-                    return (
-                      <div key={uStr} className="w-full max-w-4xl mx-auto relative z-10 flex flex-col items-center">
-                        <div className="w-72 flex flex-col items-center">
-                          <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-6 py-4 rounded-lg shadow-lg text-center w-full relative z-10">
-                            <h3 className="font-serif text-sm mb-1">{sekdes.jabatan}</h3>
-                            <p className="font-black text-xl uppercase">{sekdes.nama}</p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  }
-
-                  return (
-                    <div key={uStr} className="flex flex-wrap justify-center items-center md:items-start w-full max-w-5xl mx-auto relative z-10 gap-6 md:gap-6 mb-4">
-                      {items.map((item: any, idx: number) => (
-                        <div key={item.id || idx} className="flex flex-col items-center w-64 mb-4">
-                          <div className="org-box border-l-8 border-[var(--primary)] bg-gradient-to-r from-[var(--accent)] to-[#fde68a] text-[var(--foreground)] px-4 py-3 rounded shadow text-center w-full">
-                            <h3 className="font-serif text-xs mb-1">{item.jabatan}</h3>
-                            <p className="font-bold text-sm uppercase">{item.nama}</p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  );
-                })
-              ) : (
-                <p className="text-gray-400 py-8 text-center w-full">Struktur perangkat desa belum diisi.</p>
-              )}
-
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* GEOGRAFI */}
-      <section id="geografi" className="section">
-        <div className="container">
-          <div className="text-center">
-            <h1 className="section-title text-center">Geografi Desa Cikalong</h1>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="card h-full">
-              <h3 className="card-title">Lokasi dan Wilayah</h3>
-              <ZoomableImage
-                src="https://ik.imagekit.io/klccxl9cu/Web%20Desa/WhatsApp%20Image%202025-06-20%20at%2016.51.22_09ceb57c.jpg?updatedAt=1750776306995"
-                alt="Geografi Cikalong"
-                className="rounded-2xl shadow-md my-6 w-full object-cover h-64"
-              />
-              <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">{geografi?.deskripsi || 'Belum ada data geografi.'}</p>
-            </div>
-
-            <div className="flex flex-col gap-8">
-              <div className="card flex-1">
-                <h3 className="card-title">Batas Wilayah</h3>
-                <ul className="space-y-3 text-gray-600">
-                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Utara:</strong> {geografi?.batas_utara || 'Desa Kersaratu'}</li>
-                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Selatan:</strong> {geografi?.batas_selatan || 'Desa Sukaresik'}</li>
-                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Timur:</strong> {geografi?.batas_timur || 'Desa Sidamulih'}</li>
-                  <li className="flex items-center gap-3"><span className="text-[#1e3a8a] font-bold text-xl">•</span> <strong>Barat:</strong> {geografi?.batas_barat || 'Desa Bojong'}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* AKTIVITAS & BUDAYA */}
-      <section id="aktivitas" className="section bg-light">
-        <div className="container">
-          <div className="text-center">
-            <h1 className="section-title text-center">Aktivitas & Budaya Desa Cikalong</h1>
-          </div>
-          <h2 className="section-subtitle mt-8 mb-8 text-[#1e3a8a]">Pelestarian Budaya Leluhur</h2>
-
-          <div className="grid-budaya">
-            {budaya?.map((b: any, i: number) => (
-              <div key={b.id || i} className="card p-0 overflow-hidden flex flex-col hover:shadow-2xl transition-all duration-500 group">
-                <div className="relative overflow-hidden h-56 bg-slate-100 flex items-center justify-center">
-                  {b.foto_url ? (
-                    <ZoomableImage src={b.foto_url} alt={b.judul} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  ) : (
-                    <span className="text-4xl">🎭</span>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
-                  <h3 className="absolute bottom-4 left-4 text-white font-bold text-xl z-10">{b.judul}</h3>
-                </div>
-                <div className="p-6 flex-1 bg-white">
-                  <p className="text-gray-600 leading-relaxed text-sm whitespace-pre-wrap">{b.deskripsi}</p>
-                </div>
-              </div>
-            ))}
-            {(!budaya || budaya.length === 0) && (
-              <div className="col-span-full text-center py-12 text-slate-500">
-                Data kebudayaan belum ditambahkan.
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* BERITA */}
-      <section id="berita" className="section">
-        <div className="container">
-          <div className="text-center">
-            <h1 className="section-title text-center">Berita Desa</h1>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {berita?.map((item: any) => (
-              <div key={item.id} className="card hover:-translate-y-2 transition-transform duration-300">
-                {item.foto_url && (
-                  <ZoomableImage src={item.foto_url} alt={item.judul} className="w-full h-48 object-cover rounded-xl mb-4" />
-                )}
-                <h3 className="card-title text-xl">
-                  {item.judul}
-                </h3>
-                <p className="text-xs font-semibold text-[#1e3a8a] mb-3 tracking-wider uppercase">{new Date(item.diterbitkan_pada).toLocaleDateString('id-ID', { dateStyle: 'long' })}</p>
-                <p className="text-gray-600 leading-relaxed">{item.isi}</p>
-              </div>
-            ))}
-            {(!berita || berita.length === 0) && (
-              <p className="col-span-full text-center text-gray-500 py-8">Belum ada berita yang diterbitkan.</p>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* UMKM */}
-      <section id="umkm" className="section bg-light">
-        <div className="container">
-          <div className="text-center">
-            <h1 className="section-title text-center">UMKM Desa Cikalong</h1>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-            {umkm?.map((item: any) => (
-              <div key={item.id} className="card flex flex-col hover:-translate-y-2 transition-transform duration-300">
-                {item.foto_url && (
-                  <div className="h-48 mb-6 overflow-hidden rounded-xl">
-                    <ZoomableImage src={item.foto_url} alt={item.nama_usaha} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
-                  </div>
-                )}
-                <h3 className="text-xl font-bold mb-4 text-[#1e3a8a]">{item.nama_usaha}</h3>
-                <div className="space-y-2 text-sm text-gray-600 flex-1">
-                  <p><strong className="text-gray-900">Produk:</strong> {item.produk}</p>
-                  <p><strong className="text-gray-900">Pemilik:</strong> {item.pemilik}</p>
-                  <p><strong className="text-gray-900">Alamat:</strong> {item.alamat}</p>
-                  <p className="mt-4 italic">{item.deskripsi}</p>
-                </div>
-              </div>
-            ))}
-            {(!umkm || umkm.length === 0) && (
-              <p className="col-span-full text-center text-gray-500 py-8">Belum ada data Budaya/UMKM.</p>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* KONTAK */}
-      <section id="kontak" className="section">
-        <div className="container">
-          <div className="text-center">
-            <h1 className="section-title text-center">Hubungi Kami</h1>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mt-8">
-            <div className="card md:col-span-3">
-              <h3 className="card-title text-2xl mb-6">Informasi Kontak</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">📞</div>
-                  <div>
-                    <strong className="block text-gray-900 mb-1">WhatsApp Pelayanan</strong>
-                    <span className="text-gray-600">{pengaturan?.wa || '+62 853-2013-9810 (Endi)'}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">✉️</div>
-                  <div>
-                    <strong className="block text-gray-900 mb-1">Email Desa</strong>
-                    <span className="text-gray-600 break-all">{pengaturan?.email || 'cikalongpangandaran@gmail.com'}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">📱</div>
-                  <div>
-                    <strong className="block text-gray-900 mb-1">Media Sosial</strong>
-                    <span className="text-gray-600 block text-sm">{pengaturan?.instagram || 'IG: @desacikalongpnd'}</span>
-                    <span className="text-gray-600 block text-sm">{pengaturan?.facebook || 'TikTok: @desacikalongpnd'}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">📍</div>
-                  <div>
-                    <strong className="block text-gray-900 mb-1">Alamat Kantor</strong>
-                    <span className="text-gray-600 text-sm block mb-2">Jl. Cikalong - Sidamulih No. 45<br />Kec. Sidamulih, Pangandaran</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="card md:col-span-2">
-              <h3 className="card-title border-b border-[#1e3a8a]/20 pb-4 mb-6 text-2xl">Jam Pelayanan</h3>
-              <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                  <span className="font-medium text-gray-800">Senin - Jumat</span>
-                  <span className="bg-[#1e3a8a] text-white px-3 py-1 rounded-full text-sm font-semibold">08.00 - 14.00</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="font-medium text-gray-800">Sabtu</span>
-                  <span className="bg-[#1e3a8a] text-white px-3 py-1 rounded-full text-sm font-semibold">08.00 - 12.00</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="font-medium text-gray-800">Minggu</span>
-                  <span className="bg-gray-200 text-gray-500 px-3 py-1 rounded-full text-sm font-semibold line-through">Tutup</span>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
       </section>
