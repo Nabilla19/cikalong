@@ -107,12 +107,17 @@ export default function BerandaAdminPage() {
       }
 
       const updatedBeranda = {
-        ...berandaData,
+        judul_hero: berandaData.judul_hero,
+        pengumuman_judul: berandaData.pengumuman_judul,
+        pengumuman_deskripsi: berandaData.pengumuman_deskripsi,
+        sambutan_judul: berandaData.sambutan_judul,
+        sambutan_isi: berandaData.sambutan_isi,
+        sambutan_nama: berandaData.sambutan_nama,
         foto_hero_url: heroUrl,
         pengumuman_foto_url: pengumumanUrl,
       };
 
-      const { error } = await supabase.from('beranda').upsert({ id: 1, ...updatedBeranda });
+      const { error } = await supabase.from('beranda').update(updatedBeranda).eq('id', 1);
       if (error) throw error;
       
       setBerandaData(updatedBeranda);
