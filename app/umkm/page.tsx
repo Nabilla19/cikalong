@@ -34,6 +34,18 @@ export default async function UMKMPage() {
                     <p><strong className="text-gray-900">Alamat:</strong> {item.alamat}</p>
                     <p className="mt-4 italic">{item.deskripsi}</p>
                   </div>
+                  {item.no_wa && (
+                    <div className="mt-6 pt-4 border-t border-gray-100">
+                      <a 
+                        href={`https://wa.me/${item.no_wa.replace(/\D/g,'')}?text=Halo%20${encodeURIComponent(item.nama_usaha)},%20saya%20melihat%20produk%20Anda%20di%20Website%20Desa%20Cikalong%20dan%20ingin%20bertanya/memesan.`}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white py-2.5 px-4 rounded-xl font-bold transition-all w-full shadow-sm hover:shadow-md"
+                      >
+                        💬 Pesan via WhatsApp
+                      </a>
+                    </div>
+                  )}
                 </div>
               ))}
               {(!umkm || umkm.length === 0) && (

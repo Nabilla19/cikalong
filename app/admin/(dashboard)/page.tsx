@@ -9,17 +9,21 @@ import {
   Map, 
   Settings,
   ArrowRight,
-  Palette
+  Palette,
+  Scale,
+  FileArchive
 } from 'lucide-react';
 
 export default function AdminDashboard() {
   const cards = [
     { name: 'Sejarah & Visi Misi', path: '/admin/profil', icon: Landmark, color: 'from-blue-400 to-indigo-500', glow: 'group-hover:shadow-blue-500/30' },
     { name: 'Struktur Organisasi', path: '/admin/struktur', icon: Users, color: 'from-violet-400 to-purple-500', glow: 'group-hover:shadow-purple-500/30' },
-    { name: 'Berita Desa', path: '/admin/berita', icon: Newspaper, color: 'from-orange-400 to-amber-500', glow: 'group-hover:shadow-orange-500/30' },
-    { name: 'Budaya', path: '/admin/budaya', icon: Palette, color: 'from-fuchsia-400 to-pink-500', glow: 'group-hover:shadow-fuchsia-500/30' },
-    { name: 'UMKM', path: '/admin/umkm', icon: Store, color: 'from-pink-400 to-rose-500', glow: 'group-hover:shadow-pink-500/30' },
     { name: 'Geografi', path: '/admin/geografi', icon: Map, color: 'from-emerald-400 to-teal-500', glow: 'group-hover:shadow-emerald-500/30' },
+    { name: 'Budaya', path: '/admin/budaya', icon: Palette, color: 'from-fuchsia-400 to-pink-500', glow: 'group-hover:shadow-fuchsia-500/30' },
+    { name: 'Berita Desa', path: '/admin/berita', icon: Newspaper, color: 'from-orange-400 to-amber-500', glow: 'group-hover:shadow-orange-500/30' },
+    { name: 'UMKM', path: '/admin/umkm', icon: Store, color: 'from-pink-400 to-rose-500', glow: 'group-hover:shadow-pink-500/30' },
+    { name: 'Produk Hukum', path: '/admin/produk-hukum', icon: Scale, color: 'from-cyan-400 to-blue-500', glow: 'group-hover:shadow-cyan-500/30' },
+    { name: 'Arsip Dokumen', path: '/admin/arsip-dokumen', icon: FileArchive, color: 'from-stone-400 to-neutral-500', glow: 'group-hover:shadow-stone-500/30' },
     { name: 'Pengaturan', path: '/admin/pengaturan', icon: Settings, color: 'from-slate-400 to-slate-600', glow: 'group-hover:shadow-slate-500/30' },
   ];
 

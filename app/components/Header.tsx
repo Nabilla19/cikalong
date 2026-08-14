@@ -27,6 +27,8 @@ export default function Header() {
     { name: 'Aktivitas & Budaya', path: '/budaya' },
     { name: 'Berita', path: '/berita' },
     { name: 'UMKM', path: '/umkm' },
+    { name: 'Produk Hukum', path: '/produk-hukum' },
+    { name: 'Arsip Dokumen', path: '/arsip-dokumen' },
     { name: 'Kontak', path: '/kontak' },
   ];
 

@@ -11,6 +11,7 @@ type Umkm = {
   alamat: string;
   deskripsi: string;
   foto_url: string;
+  no_wa: string;
 };
 
 export default function UmkmPage() {
@@ -22,7 +23,7 @@ export default function UmkmPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [newUmkm, setNewUmkm] = useState({ 
-    nama_usaha: '', produk: '', pemilik: '', alamat: '', deskripsi: '' 
+    nama_usaha: '', produk: '', pemilik: '', alamat: '', deskripsi: '', no_wa: '' 
   });
 
   useEffect(() => {
@@ -88,7 +89,7 @@ export default function UmkmPage() {
       
       if (dbData) {
         setUmkmList([...umkmList, dbData[0]].sort((a, b) => a.nama_usaha.localeCompare(b.nama_usaha)));
-        setNewUmkm({ nama_usaha: '', produk: '', pemilik: '', alamat: '', deskripsi: '' });
+        setNewUmkm({ nama_usaha: '', produk: '', pemilik: '', alamat: '', deskripsi: '', no_wa: '' });
         setSelectedFile(null);
         if (fileInputRef.current) fileInputRef.current.value = '';
         setMessage('✅ Berhasil ditambahkan!');
@@ -152,6 +153,14 @@ export default function UmkmPage() {
                 type="text" value={newUmkm.alamat} onChange={e => setNewUmkm({...newUmkm, alamat: e.target.value})}
                 className="w-full px-5 py-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-pink-500/20 focus:border-pink-500 focus:bg-white outline-none transition-all"
                 placeholder="Dusun Cikalong RT 01/02"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Nomor WhatsApp (Aktif)</label>
+              <input 
+                type="text" value={newUmkm.no_wa} onChange={e => setNewUmkm({...newUmkm, no_wa: e.target.value})}
+                className="w-full px-5 py-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:ring-4 focus:ring-green-500/20 focus:border-green-500 focus:bg-white outline-none transition-all"
+                placeholder="Contoh: 6281234567890 (Gunakan 62, bukan 0)"
               />
             </div>
           </div>
@@ -232,6 +241,11 @@ export default function UmkmPage() {
                 <div className="flex items-start gap-2 text-sm text-slate-600 mb-4">
                   <span>📍</span> <span className="line-clamp-2">{umkm.alamat || '-'}</span>
                 </div>
+                {umkm.no_wa && (
+                  <div className="flex items-center gap-2 text-sm text-green-600 font-semibold mb-4">
+                    <span>💬</span> <span>+{umkm.no_wa}</span>
+                  </div>
+                )}
                 
                 <div className="mt-auto pt-4 border-t border-slate-100 flex justify-end">
                   <button 
