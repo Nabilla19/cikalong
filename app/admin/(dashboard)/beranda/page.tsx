@@ -119,9 +119,9 @@ export default function BerandaAdminPage() {
       setFotoHeroFile(null);
       setFotoPengumumanFile(null);
       setMessage('✅ Berhasil menyimpan Beranda!');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving beranda:', error);
-      setMessage('❌ Gagal menyimpan data Beranda.');
+      setMessage(`❌ Gagal menyimpan data Beranda: ${error.message || JSON.stringify(error)}`);
     } finally {
       setSavingBeranda(false);
       setTimeout(() => setMessage(''), 3000);

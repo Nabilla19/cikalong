@@ -21,10 +21,10 @@ export default function Header() {
 
   const navLinks = [
     { name: 'Beranda', path: '/' },
-    { name: 'Profil Desa', path: '/profil' },
+    { name: 'Profil', path: '/profil' },
     { name: 'Struktur', path: '/struktur' },
     { name: 'Geografi', path: '/geografi' },
-    { name: 'Aktivitas & Budaya', path: '/budaya' },
+    { name: 'Budaya', path: '/budaya' },
     { name: 'Berita', path: '/berita' },
     { name: 'UMKM', path: '/umkm' },
     { name: 'Produk Hukum', path: '/produk-hukum' },

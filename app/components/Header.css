@@ -76,7 +76,8 @@
 
 .desktop-nav ul {
   display: flex;
-  gap: 25px;
+  gap: 12px;
+  align-items: center;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -87,11 +88,12 @@
   color: #fbf8f1;
   font-family: var(--font-serif), Georgia, serif;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.9rem;
   transition: all 0.3s ease;
   display: inline-block;
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 4px;
+  white-space: nowrap;
 }
 
 .header.header-scrolled .desktop-nav a {
@@ -186,7 +188,7 @@
   color: #10b981;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .desktop-nav {
     display: none;
   }
