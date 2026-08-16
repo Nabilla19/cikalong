@@ -109,18 +109,18 @@ export default function ArsipDokumenAdminPage() {
 
         <form onSubmit={handleAdd} className="space-y-6">
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">Deskripsi Singkat</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Judul Dokumen / Deskripsi</label>
             <input 
               type="text" required value={judul} onChange={e => setJudul(e.target.value)}
               className="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-stone-500 outline-none"
-              placeholder="Contoh: Gotong royong membersihkan lingkungan"
+              placeholder="Contoh: Laporan APBDes atau Gotong Royong"
             />
           </div>
           
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-2">Foto Dokumentasi</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">File Dokumen / Foto</label>
             <input 
-              ref={fileInputRef} type="file" required accept="image/*" onChange={handleFileChange}
+              ref={fileInputRef} type="file" required accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" onChange={handleFileChange}
               className="w-full px-5 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-stone-500 outline-none"
             />
           </div>
@@ -138,13 +138,22 @@ export default function ArsipDokumenAdminPage() {
       </div>
 
       <div className="max-w-3xl bg-white/90 backdrop-blur-xl p-8 rounded-3xl shadow-sm border border-slate-100">
-        <h2 className="text-xl font-bold text-slate-800 mb-6">Galeri Dokumentasi</h2>
+        <h2 className="text-xl font-bold text-slate-800 mb-6">Daftar Arsip & Dokumentasi</h2>
         <div className="space-y-4">
-          {arsipList.map((item) => (
+          {arsipList.map((item) => {
+            const isImage = item.file_url?.toLowerCase().match(/\.(jpeg|jpg|gif|png|webp|svg)(\?.*)?$/) !== null;
+            return (
             <div key={item.id} className="flex items-center justify-between p-4 border border-slate-100 rounded-xl hover:shadow-md transition-all">
               <div className="flex items-center gap-4">
-                <img src={item.file_url} alt="arsip" className="w-16 h-16 object-cover rounded-lg" />
-                <h3 className="font-bold text-slate-800 line-clamp-2">{item.judul}</h3>
+                {isImage ? (
+                  <img src={item.file_url} alt="arsip" className="w-16 h-16 object-cover rounded-lg shrink-0" />
+                ) : (
+                  <div className="w-16 h-16 bg-stone-100 text-stone-500 rounded-lg flex items-center justify-center text-2xl shrink-0">📄</div>
+                )}
+                <div>
+                  <h3 className="font-bold text-slate-800 line-clamp-2">{item.judul}</h3>
+                  {!isImage && <a href={item.file_url} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 hover:underline">Buka File</a>}
+                </div>
               </div>
               <button 
                 onClick={() => handleDelete(item.id)}

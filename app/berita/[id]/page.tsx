@@ -6,8 +6,9 @@ import { supabase } from '@/lib/supabaseClient';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export default async function BeritaDetailPage({ params }: { params: { id: string } }) {
-  const { data: berita } = await supabase.from('berita').select('*').eq('id', params.id).single();
+export default async function BeritaDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const { data: berita } = await supabase.from('berita').select('*').eq('id', resolvedParams.id).single();
 
   if (!berita) {
     return (
