@@ -2,6 +2,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ZoomableImage from './components/ZoomableImage';
 import { supabase } from '@/lib/supabaseClient';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -60,20 +61,32 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="card mt-12 mb-12 flex flex-col items-center text-center">
-            <h3 className="card-title text-[#1e3a8a] mb-6">{beranda?.sambutan_judul || 'Sambutan Kepala Desa'}</h3>
-            <div className="sambutan-text text-gray-700 leading-relaxed max-w-3xl w-full px-4 whitespace-pre-wrap">
-              {beranda?.sambutan_isi ? beranda.sambutan_isi : (
-                <>
-                  <p className="mb-4">Assalamu’alaikum Warahmatullahi Wabarakatuh,<br />Salam sejahtera,</p>
-                  <p className="mb-4">Selamat datang di website resmi Desa Cikalong.</p>
-                  <p className="mb-4">Website ini kami hadirkan sebagai sarana informasi, komunikasi, dan transparansi pelayanan publik kepada masyarakat.</p>
-                  <p className="mb-4">Dengan semangat <strong>"Ngahiji Ku Rasa, Ngahaja Ku Karsa, Ngajayakeun Cikalong"</strong>, mari kita bersama membangun desa yang maju, mandiri, dan berbudaya.</p>
-                  <p className="mb-4">Terima kasih atas kunjungan Anda. Saran dan masukan sangat kami harapkan demi kemajuan bersama.</p>
-                  <p className="mb-6">Wassalamu’alaikum Warahmatullahi Wabarakatuh.</p>
-                </>
-              )}
-              <p className="text-xl font-bold text-gray-900 mt-2 pb-4">{beranda?.sambutan_nama || 'Ruspandi'}</p>
+          <div className="mt-20 mb-12 bg-emerald-50 rounded-[3rem] p-8 md:p-12 shadow-sm border border-emerald-100 flex flex-col md:flex-row items-center gap-10 lg:gap-16 max-w-5xl mx-auto">
+            <div className="w-full md:w-auto flex justify-center shrink-0">
+              <div className="relative w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-[12px] border-white shadow-xl bg-white flex items-center justify-center">
+                {beranda?.sambutan_foto_url ? (
+                  <img src={beranda.sambutan_foto_url} alt={beranda?.sambutan_nama || 'Kepala Desa'} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="text-6xl text-slate-300">👤</div>
+                )}
+              </div>
+            </div>
+            <div className="w-full md:flex-1 flex flex-col items-start text-left">
+              <h3 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-2 font-serif">
+                Sambutan <span className="text-emerald-700">Kepala Desa</span>
+              </h3>
+              <p className="text-xl font-bold text-slate-900 mb-6">{beranda?.sambutan_nama || 'Kepala Desa'}</p>
+              
+              <div className="flex gap-4">
+                <span className="text-emerald-300 text-6xl font-serif leading-none mt-[-10px]">“</span>
+                <div className="text-slate-600 leading-relaxed whitespace-pre-wrap text-lg">
+                  {beranda?.sambutan_isi ? beranda.sambutan_isi : 'Selamat datang di situs resmi Desa Cikalong. Melalui situs ini kami berupaya menghadirkan pelayanan yang mudah, informasi yang terbuka, dan ruang bagi warga untuk ikut membangun desa Cikalong.'}
+                </div>
+              </div>
+              
+              <Link href="/profil" className="mt-8 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-3 px-6 rounded-full inline-flex items-center gap-2 transition-all hover:-translate-y-1 shadow-lg shadow-emerald-700/30">
+                Baca Profil Lengkap <span aria-hidden="true">&rarr;</span>
+              </Link>
             </div>
           </div>
 

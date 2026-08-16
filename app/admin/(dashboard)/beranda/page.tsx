@@ -18,11 +18,13 @@ export default function BerandaAdminPage() {
     pengumuman_foto_url: '',
     sambutan_judul: '',
     sambutan_isi: '',
-    sambutan_nama: ''
+    sambutan_nama: '',
+    sambutan_foto_url: ''
   });
 
   const [fotoHeroFile, setFotoHeroFile] = useState<File | null>(null);
   const [fotoPengumumanFile, setFotoPengumumanFile] = useState<File | null>(null);
+  const [fotoSambutanFile, setFotoSambutanFile] = useState<File | null>(null);
 
   // Pandangan Masyarakat State
   const [masyarakatList, setMasyarakatList] = useState<any[]>([]);
@@ -79,6 +81,7 @@ export default function BerandaAdminPage() {
     try {
       let heroUrl = berandaData.foto_hero_url;
       let pengumumanUrl = berandaData.pengumuman_foto_url;
+      let sambutanUrl = berandaData.sambutan_foto_url;
 
       // Upload Foto Hero
       if (fotoHeroFile) {
@@ -106,6 +109,19 @@ export default function BerandaAdminPage() {
         pengumumanUrl = data.publicUrl;
       }
 
+      // Upload Foto Sambutan
+      if (fotoSambutanFile) {
+        const fileExt = fotoSambutanFile.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const filePath = `beranda/sambutan_${fileName}`;
+        
+        const { error: uploadError } = await supabase.storage.from('uploads').upload(filePath, fotoSambutanFile);
+        if (uploadError) throw uploadError;
+        
+        const { data } = supabase.storage.from('uploads').getPublicUrl(filePath);
+        sambutanUrl = data.publicUrl;
+      }
+
       const updatedBeranda = {
         judul_hero: berandaData.judul_hero,
         pengumuman_judul: berandaData.pengumuman_judul,
@@ -115,6 +131,7 @@ export default function BerandaAdminPage() {
         sambutan_nama: berandaData.sambutan_nama,
         foto_hero_url: heroUrl,
         pengumuman_foto_url: pengumumanUrl,
+        sambutan_foto_url: sambutanUrl,
       };
 
       const { error } = await supabase.from('beranda').update(updatedBeranda).eq('id', 1);
@@ -123,6 +140,7 @@ export default function BerandaAdminPage() {
       setBerandaData(updatedBeranda);
       setFotoHeroFile(null);
       setFotoPengumumanFile(null);
+      setFotoSambutanFile(null);
       setMessage('✅ Berhasil menyimpan Beranda!');
     } catch (error: any) {
       console.error('Error saving beranda:', error);
@@ -261,6 +279,16 @@ export default function BerandaAdminPage() {
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-2">Nama (cth: Ruspandi)</label>
               <input type="text" name="sambutan_nama" value={berandaData.sambutan_nama} onChange={handleBerandaChange} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" />
+            </div>
+            
+            <div className="col-span-1 md:col-span-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Foto Sambutan / Kepala Desa</label>
+              <input type="file" accept="image/*" onChange={(e) => handleFileChange(e, setFotoSambutanFile)} className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" />
+              {berandaData.sambutan_foto_url && !fotoSambutanFile && (
+                <div className="mt-2">
+                  <img src={berandaData.sambutan_foto_url} alt="Current Sambutan" className="w-24 h-24 rounded-full object-cover" />
+                </div>
+              )}
             </div>
             <div className="col-span-1 md:col-span-2">
               <label className="block text-sm font-semibold text-slate-700 mb-2">Isi Sambutan</label>
