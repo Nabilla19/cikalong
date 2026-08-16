@@ -120,7 +120,7 @@ export default function GeografiPage() {
       const { error } = await supabase.from('geografi').upsert(payload);
       if (error) throw error;
       setMessage('✅ Berhasil disimpan!');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving data:', error);
       setMessage(`❌ Gagal: ${error?.message || 'Kesalahan tidak diketahui'}`);
     } finally {
