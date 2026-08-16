@@ -78,7 +78,7 @@ export default async function Home() {
               <p className="text-xl font-bold text-slate-900 mb-6">{beranda?.sambutan_nama || 'Kepala Desa'}</p>
               
               <div className="flex gap-4">
-                <span className="text-emerald-300 text-6xl font-serif leading-none mt-[-10px]">“</span>
+                <span className="text-emerald-300 text-6xl font-serif leading-none mt-[-10px]">&ldquo;</span>
                 <div className="text-slate-600 leading-relaxed whitespace-pre-wrap text-lg">
                   {beranda?.sambutan_isi ? beranda.sambutan_isi : 'Selamat datang di situs resmi Desa Cikalong. Melalui situs ini kami berupaya menghadirkan pelayanan yang mudah, informasi yang terbuka, dan ruang bagi warga untuk ikut membangun desa Cikalong.'}
                 </div>
