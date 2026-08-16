@@ -122,7 +122,7 @@ export default function GeografiPage() {
       setMessage('✅ Berhasil disimpan!');
     } catch (error) {
       console.error('Error saving data:', error);
-      setMessage('❌ Gagal menyimpan data.');
+      setMessage(`❌ Gagal: ${error?.message || 'Kesalahan tidak diketahui'}`);
     } finally {
       setSaving(false);
       setTimeout(() => setMessage(''), 3000);
