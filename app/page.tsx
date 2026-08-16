@@ -83,10 +83,6 @@ export default async function Home() {
                   {beranda?.sambutan_isi ? beranda.sambutan_isi : 'Selamat datang di situs resmi Desa Cikalong. Melalui situs ini kami berupaya menghadirkan pelayanan yang mudah, informasi yang terbuka, dan ruang bagi warga untuk ikut membangun desa Cikalong.'}
                 </div>
               </div>
-              
-              <Link href="/profil" className="mt-8 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-3 px-6 rounded-full inline-flex items-center gap-2 transition-all hover:-translate-y-1 shadow-lg shadow-emerald-700/30">
-                Baca Profil Lengkap <span aria-hidden="true">&rarr;</span>
-              </Link>
             </div>
           </div>
 
