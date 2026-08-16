@@ -1,13 +1,15 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ZoomableImage from '../components/ZoomableImage';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function BudayaPage() {
-  const { data: budaya } = await supabase.from('budaya').select('*').order('judul', { ascending: true });
+  const budaya = await prisma.budaya.findMany({
+    orderBy: { judul: 'asc' }
+  });
 
   return (
     <>

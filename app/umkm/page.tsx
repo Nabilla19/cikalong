@@ -1,13 +1,15 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ZoomableImage from '../components/ZoomableImage';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export default async function UMKMPage() {
-  const { data: umkm } = await supabase.from('umkm').select('*').order('nama_usaha', { ascending: true });
+export default async function UmkmPage() {
+  const umkm = await prisma.umkm.findMany({
+    orderBy: { nama_usaha: 'asc' }
+  });
 
   return (
     <>

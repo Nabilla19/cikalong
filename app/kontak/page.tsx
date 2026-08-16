@@ -1,12 +1,14 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function KontakPage() {
-  const { data: pengaturan } = await supabase.from('pengaturan_web').select('*').eq('id', 1).single();
+  const pengaturan = await prisma.pengaturanWeb.findUnique({
+    where: { id: 1 }
+  });
 
   return (
     <>
@@ -26,7 +28,7 @@ export default async function KontakPage() {
                     <div className="w-12 h-12 rounded-full bg-[#f0e6d2] text-[#1e3a8a] flex items-center justify-center text-2xl shadow-sm shrink-0">📞</div>
                     <div>
                       <strong className="block text-gray-900 mb-1">WhatsApp Pelayanan</strong>
-                      <span className="text-gray-600">{pengaturan?.wa || '+62 853-2013-9810 (Endi)'}</span>
+                      <span className="text-gray-600">{pengaturan?.telepon || '+62 853-2013-9810 (Endi)'}</span>
                     </div>
                   </div>
 

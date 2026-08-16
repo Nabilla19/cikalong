@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password_hash String
+  nama          String
+  role          String   @default("admin")
+  created_at    DateTime @default(now())
+}
+
+model Berita {
+  id               String   @id @default(uuid())
+  judul            String
+  isi              String   @db.Text
+  foto_url         String?
+  diterbitkan_oleh String?
+  diterbitkan_pada DateTime @default(now())
+  created_at       DateTime @default(now())
+}
+
+model StrukturOrganisasi {
+  id         String   @id @default(uuid())
+  jabatan    String
+  nama       String
+  urutan     Int
+  created_at DateTime @default(now())
+}
+
+model ProdukHukum {
+  id         String   @id @default(uuid())
+  judul      String
+  file_url   String
+  created_at DateTime @default(now())
+}
+
+model ArsipDokumen {
+  id         String   @id @default(uuid())
+  judul      String
+  file_url   String
+  created_at DateTime @default(now())
+}
+
+model Geografi {
+  id                 Int      @id @default(autoincrement())
+  letak_dan_luas     String?  @db.Text
+  kondisi_tanah      Json?
+  kependudukan       Json?
+  mata_pencaharian   Json?
+  tingkat_pendidikan Json?
+  sarana_prasarana   Json?
+  created_at         DateTime @default(now())
+}
+
+model Beranda {
+  id                    Int      @id @default(autoincrement())
+  judul_hero            String?
+  foto_hero_url         String?
+  pengumuman_judul      String?
+  pengumuman_deskripsi  String?
+  pengumuman_foto_url   String?
+  sambutan_judul        String?
+  sambutan_isi          String?  @db.Text
+  sambutan_nama         String?
+  sambutan_foto_url     String?
+  created_at            DateTime @default(now())
+}
+
+model PandanganMasyarakat {
+  id         String   @id @default(uuid())
+  nama       String
+  kutipan    String
+  pekerjaan  String?
+  urutan     Int      @default(0)
+  created_at DateTime @default(now())
+}
+
+model PengaturanWeb {
+  id           Int      @id @default(autoincrement())
+  nama_desa    String?
+  alamat       String?
+  telepon      String?
+  email        String?
+  facebook     String?
+  instagram    String?
+  youtube      String?
+  teks_footer  String?
+  created_at   DateTime @default(now())
+}
+
+model ProfilDesa {
+  id         Int      @id @default(autoincrement())
+  sejarah    String?  @db.Text
+  visi       String?  @db.Text
+  misi       String?  @db.Text
+  created_at DateTime @default(now())
+}
+
+model Budaya {
+  id         String   @id @default(uuid())
+  judul      String
+  deskripsi  String?  @db.Text
+  foto_url   String?
+  created_at DateTime @default(now())
+}
+
+model Umkm {
+  id           String   @id @default(uuid())
+  nama_usaha   String
+  pemilik      String?
+  deskripsi    String?  @db.Text
+  kontak       String?
+  foto_url     String?
+  created_at   DateTime @default(now())
+}

@@ -1,7 +1,7 @@
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ZoomableImage from './components/ZoomableImage';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
@@ -9,11 +9,11 @@ export const revalidate = 0;
 
 export default async function Home() {
   const [
-    { data: beranda },
-    { data: masyarakat }
+    beranda,
+    masyarakat
   ] = await Promise.all([
-    supabase.from('beranda').select('*').eq('id', 1).single(),
-    supabase.from('pandangan_masyarakat').select('*').order('urutan', { ascending: true })
+    prisma.beranda.findUnique({ where: { id: 1 } }),
+    prisma.pandanganMasyarakat.findMany({ orderBy: { urutan: 'asc' } })
   ]);
 
   const fallbackMasyarakat = [

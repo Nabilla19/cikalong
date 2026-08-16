@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { dbAction } from '@/app/actions/admin';
 
 type Umkm = {
   id: string;
@@ -33,8 +33,8 @@ export default function UmkmPage() {
   async function fetchData() {
     try {
       setLoading(true);
-      const { data, error } = await supabase.from('umkm').select('*').order('nama_usaha', { ascending: true });
-      if (error) throw error;
+      const { data, error } = await dbAction('umkm', 'findMany', { orderBy: { nama_usaha: 'asc' } });
+      if (error) throw new Error(error);
       if (data) setUmkmList(data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -46,8 +46,8 @@ export default function UmkmPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Yakin ingin menghapus entri ini?')) return;
     try {
-      const { error } = await supabase.from('umkm').delete().eq('id', id);
-      if (error) throw error;
+      const { error } = await dbAction('umkm', 'delete', { where: { id } });
+      if (error) throw new Error(error);
       setUmkmList(umkmList.filter(u => u.id !== id));
     } catch (error) {
       console.error('Error deleting:', error);
@@ -70,25 +70,19 @@ export default function UmkmPage() {
       let fotoUrl = '';
 
       if (selectedFile) {
-        const fileExt = selectedFile.name.split('.').pop();
-        const fileName = `umkm_${Math.random()}.${fileExt}`;
-        const filePath = `${fileName}`;
-        
-        const { error: uploadError } = await supabase.storage
-          .from('uploads')
-          .upload(filePath, selectedFile);
-          
-        if (uploadError) throw uploadError;
-        
-        const { data } = supabase.storage.from('uploads').getPublicUrl(filePath);
-        fotoUrl = data.publicUrl;
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        const res = await fetch('/api/upload', { method: 'POST', body: formData });
+        if (!res.ok) throw new Error('Gagal upload file');
+        const { url } = await res.json();
+        fotoUrl = url;
       }
 
-      const { data: dbData, error } = await supabase.from('umkm').insert([{ ...newUmkm, foto_url: fotoUrl }]).select();
-      if (error) throw error;
+      const { data: dbData, error } = await dbAction('umkm', 'create', { data: { ...newUmkm, foto_url: fotoUrl } });
+      if (error) throw new Error(error);
       
       if (dbData) {
-        setUmkmList([...umkmList, dbData[0]].sort((a, b) => a.nama_usaha.localeCompare(b.nama_usaha)));
+        setUmkmList([...umkmList, dbData].sort((a, b) => a.nama_usaha.localeCompare(b.nama_usaha)));
         setNewUmkm({ nama_usaha: '', produk: '', pemilik: '', alamat: '', deskripsi: '', no_wa: '' });
         setSelectedFile(null);
         if (fileInputRef.current) fileInputRef.current.value = '';

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+
 import { useRouter } from 'next/navigation';
 import { Mail, Lock, ShieldCheck, Loader2, ArrowRight } from 'lucide-react';
 
@@ -17,16 +17,22 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      setError(error.message);
-      setLoading(false);
-    } else {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.error || 'Gagal login');
+      }
+      
       router.push('/admin');
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
     }
   };
 

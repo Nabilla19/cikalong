@@ -1,13 +1,15 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ZoomableImage from '../components/ZoomableImage';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function ArsipDokumenPage() {
-  const { data: arsip } = await supabase.from('arsip_dokumen').select('*').order('created_at', { ascending: false });
+  const arsip = await prisma.arsipDokumen.findMany({
+    orderBy: { created_at: 'desc' }
+  });
 
   return (
     <>

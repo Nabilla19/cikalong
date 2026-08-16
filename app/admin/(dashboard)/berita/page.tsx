@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { dbAction } from '@/app/actions/admin';
 
 type Berita = {
   id: string;
@@ -28,8 +28,8 @@ export default function BeritaPage() {
   async function fetchData() {
     try {
       setLoading(true);
-      const { data, error } = await supabase.from('berita').select('*').order('diterbitkan_pada', { ascending: false });
-      if (error) throw error;
+      const { data, error } = await dbAction('berita', 'findMany', { orderBy: { diterbitkan_pada: 'desc' } });
+      if (error) throw new Error(error);
       if (data) setBeritaList(data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -41,8 +41,8 @@ export default function BeritaPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Yakin ingin menghapus berita ini?')) return;
     try {
-      const { error } = await supabase.from('berita').delete().eq('id', id);
-      if (error) throw error;
+      const { error } = await dbAction('berita', 'delete', { where: { id } });
+      if (error) throw new Error(error);
       setBeritaList(beritaList.filter(b => b.id !== id));
     } catch (error) {
       console.error('Error deleting:', error);
@@ -66,25 +66,19 @@ export default function BeritaPage() {
 
       // Upload file jika ada
       if (selectedFile) {
-        const fileExt = selectedFile.name.split('.').pop();
-        const fileName = `${Math.random()}.${fileExt}`;
-        const filePath = `${fileName}`;
-        
-        const { error: uploadError } = await supabase.storage
-          .from('uploads')
-          .upload(filePath, selectedFile);
-          
-        if (uploadError) throw uploadError;
-        
-        const { data } = supabase.storage.from('uploads').getPublicUrl(filePath);
-        fotoUrl = data.publicUrl;
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        const res = await fetch('/api/upload', { method: 'POST', body: formData });
+        if (!res.ok) throw new Error('Gagal upload file');
+        const { url } = await res.json();
+        fotoUrl = url;
       }
 
-      const { data: dbData, error } = await supabase.from('berita').insert([{ ...newBerita, foto_url: fotoUrl }]).select();
-      if (error) throw error;
+      const { data: dbData, error } = await dbAction('berita', 'create', { data: { ...newBerita, foto_url: fotoUrl } });
+      if (error) throw new Error(error);
       
       if (dbData) {
-        setBeritaList([dbData[0], ...beritaList]);
+        setBeritaList([dbData, ...beritaList]);
         setNewBerita({ judul: '', isi: '' });
         setSelectedFile(null);
         if (fileInputRef.current) fileInputRef.current.value = '';

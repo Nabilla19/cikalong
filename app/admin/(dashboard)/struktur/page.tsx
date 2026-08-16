@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { dbAction } from '@/app/actions/admin';
 
 type Anggota = {
   id: string;
@@ -25,8 +25,8 @@ export default function StrukturPage() {
   async function fetchData() {
     try {
       setLoading(true);
-      const { data, error } = await supabase.from('struktur_organisasi').select('*').order('urutan', { ascending: true });
-      if (error) throw error;
+      const { data, error } = await dbAction('strukturOrganisasi', 'findMany', { orderBy: { urutan: 'asc' } });
+      if (error) throw new Error(error);
       if (data) setAnggotaList(data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -38,8 +38,8 @@ export default function StrukturPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Yakin ingin menghapus anggota ini?')) return;
     try {
-      const { error } = await supabase.from('struktur_organisasi').delete().eq('id', id);
-      if (error) throw error;
+      const { error } = await dbAction('strukturOrganisasi', 'delete', { where: { id } });
+      if (error) throw new Error(error);
       setAnggotaList(anggotaList.filter(a => a.id !== id));
     } catch (error) {
       console.error('Error deleting:', error);
@@ -51,10 +51,10 @@ export default function StrukturPage() {
     e.preventDefault();
     setSaving(true);
     try {
-      const { data, error } = await supabase.from('struktur_organisasi').insert([newAnggota]).select();
-      if (error) throw error;
+      const { data, error } = await dbAction('strukturOrganisasi', 'create', { data: newAnggota });
+      if (error) throw new Error(error);
       if (data) {
-        setAnggotaList([...anggotaList, data[0]].sort((a, b) => a.urutan - b.urutan));
+        setAnggotaList([...anggotaList, data].sort((a, b) => a.urutan - b.urutan));
         setNewAnggota({ jabatan: '', nama: '', urutan: 0 });
         setMessage('✅ Berhasil ditambahkan!');
       }

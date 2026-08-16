@@ -1,33 +1,49 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-// Menggunakan Service Role Key yang baru saja ditambahkan untuk bypass RLS & Auth Rules
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-
-const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false
-  }
-});
+import prisma from '@/lib/prisma';
+import bcrypt from 'bcryptjs';
 
 // GET: Mengambil daftar semua admin
 export async function GET() {
   try {
-    const { data: { users }, error } = await supabaseAdmin.auth.admin.listUsers();
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        email: true,
+        created_at: true,
+        role: true
+      }
+    });
+    return NextResponse.json(users);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 400 });
+  }
+}
+
+// POST: Membuat admin baru
+export async function POST(request: Request) {
+  try {
+    const { email, password } = await request.json();
     
-    if (error) throw error;
+    if (!email || !password) {
+      return NextResponse.json({ error: 'Email dan password diperlukan' }, { status: 400 });
+    }
     
-    // Hanya mengirim data yang dibutuhkan (ID, email, created_at, last_sign_in_at)
-    const adminList = users.map(user => ({
-      id: user.id,
-      email: user.email,
-      created_at: user.created_at,
-      last_sign_in_at: user.last_sign_in_at,
-    }));
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) {
+      return NextResponse.json({ error: 'Email sudah terdaftar' }, { status: 400 });
+    }
     
-    return NextResponse.json(adminList);
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await prisma.user.create({
+      data: {
+        email,
+        nama: email.split('@')[0], // Default nama
+        password_hash: hashedPassword,
+        role: 'admin'
+      }
+    });
+    
+    return NextResponse.json({ success: true, user: { id: user.id, email: user.email } });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
@@ -43,9 +59,9 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
     }
     
-    const { error } = await supabaseAdmin.auth.admin.deleteUser(id);
-    
-    if (error) throw error;
+    await prisma.user.delete({
+      where: { id }
+    });
     
     return NextResponse.json({ success: true, message: 'Admin berhasil dihapus' });
   } catch (error: any) {

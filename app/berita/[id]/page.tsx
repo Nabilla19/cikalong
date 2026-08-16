@@ -1,14 +1,16 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function BeritaDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
-  const { data: berita } = await supabase.from('berita').select('*').eq('id', resolvedParams.id).single();
+  const berita = await prisma.berita.findUnique({
+    where: { id: resolvedParams.id }
+  });
 
   if (!berita) {
     return (

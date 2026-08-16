@@ -1,12 +1,14 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function StrukturPage() {
-  const { data: struktur } = await supabase.from('struktur_organisasi').select('*').order('urutan', { ascending: true });
+  const struktur = await prisma.strukturOrganisasi.findMany({
+    orderBy: { urutan: 'asc' }
+  });
 
   const strukturData = struktur || [];
   const groupedStruktur = strukturData.reduce((acc: any, curr: any) => {

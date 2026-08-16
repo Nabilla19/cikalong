@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { dbAction } from '@/app/actions/admin';
 
 export default function PengaturanPage() {
   const [loading, setLoading] = useState(true);
@@ -50,13 +50,8 @@ export default function PengaturanPage() {
   async function fetchData() {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('pengaturan_web')
-        .select('*')
-        .eq('id', 1)
-        .single();
+      const { data, error } = await dbAction('pengaturanWeb', 'findUnique', { where: { id: 1 } });
         
-      if (error) throw error;
       if (data) {
         setFormData({
           wa: data.wa || '',
@@ -84,12 +79,13 @@ export default function PengaturanPage() {
     setMessage('');
     
     try {
-      const { error } = await supabase
-        .from('pengaturan_web')
-        .update(formData)
-        .eq('id', 1);
+      const { error } = await dbAction('pengaturanWeb', 'upsert', {
+        where: { id: 1 },
+        update: formData,
+        create: { id: 1, ...formData }
+      });
         
-      if (error) throw error;
+      if (error) throw new Error(error);
       setMessage('✅ Berhasil disimpan!');
     } catch (error) {
       console.error('Error saving data:', error);
@@ -198,16 +194,16 @@ export default function PengaturanPage() {
           target.submitBtn.textContent = 'Membuat...';
           
           try {
-            // Gunakan client kedua tanpa persist session agar admin yg sedang login tidak ter-logout
-            const { createClient } = await import('@supabase/supabase-js');
-            const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-            const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-            const secondClient = createClient(url, key, { auth: { persistSession: false } });
+            const res = await fetch('/api/admin-users', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password })
+            });
             
-            const { error } = await secondClient.auth.signUp({ email, password });
+            const data = await res.json();
             
-            if (error) {
-              alert('Gagal membuat akun: ' + error.message);
+            if (!res.ok || data.error) {
+              alert('Gagal membuat akun: ' + (data.error || 'Terjadi kesalahan'));
             } else {
               alert('✅ Akun admin baru berhasil dibuat! Mereka sudah bisa menggunakannya untuk login.');
               target.reset();

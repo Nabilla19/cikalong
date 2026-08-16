@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { dbAction } from '@/app/actions/admin';
 import { Plus, Trash2, Save, Loader2 } from 'lucide-react';
 
 type KeyValue = { label: string; value: string };
@@ -41,15 +41,14 @@ export default function GeografiPage() {
   async function fetchData() {
     try {
       setLoading(true);
-      const { data, error } = await supabase.from('geografi').select('*').eq('id', 1).single();
-      if (error && error.code !== 'PGRST116') throw error;
+      const { data, error } = await dbAction('geografi', 'findUnique', { where: { id: 1 } });
       if (data) {
         setLetakLuas(data.letak_dan_luas || '');
-        setKondisiTanah(data.kondisi_tanah || []);
-        setKependudukan(data.kependudukan || []);
-        setMataPencaharian(data.mata_pencaharian || []);
-        setPendidikan(data.tingkat_pendidikan || []);
-        setSarana(data.sarana_prasarana || defaultSarana);
+        setKondisiTanah(data.kondisi_tanah as any || []);
+        setKependudukan(data.kependudukan as any || []);
+        setMataPencaharian(data.mata_pencaharian as any || []);
+        setPendidikan(data.tingkat_pendidikan as any || []);
+        setSarana(data.sarana_prasarana as any || defaultSarana);
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -109,7 +108,6 @@ export default function GeografiPage() {
     
     try {
       const payload = {
-        id: 1,
         letak_dan_luas: letakLuas,
         kondisi_tanah: kondisiTanah,
         kependudukan: kependudukan,
@@ -117,8 +115,12 @@ export default function GeografiPage() {
         tingkat_pendidikan: pendidikan,
         sarana_prasarana: sarana
       };
-      const { error } = await supabase.from('geografi').upsert(payload);
-      if (error) throw error;
+      const { error } = await dbAction('geografi', 'upsert', {
+        where: { id: 1 },
+        update: payload,
+        create: { id: 1, ...payload }
+      });
+      if (error) throw new Error(error);
       setMessage('✅ Berhasil disimpan!');
     } catch (error: any) {
       console.error('Error saving data:', error);

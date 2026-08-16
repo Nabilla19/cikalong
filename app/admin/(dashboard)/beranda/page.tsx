@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { dbAction } from '@/app/actions/admin';
 import { Pencil, Trash2, Plus, Save } from 'lucide-react';
 
 export default function BerandaAdminPage() {
@@ -45,13 +45,13 @@ export default function BerandaAdminPage() {
     try {
       setLoading(true);
       // Fetch Beranda
-      const { data: beranda, error: err1 } = await supabase.from('beranda').select('*').eq('id', 1).single();
+      const { data: beranda, error: err1 } = await dbAction('beranda', 'findUnique', { where: { id: 1 } });
       if (!err1 && beranda) {
         setBerandaData(beranda);
       }
       
       // Fetch Pandangan Masyarakat
-      const { data: masyarakat, error: err2 } = await supabase.from('pandangan_masyarakat').select('*').order('urutan', { ascending: true });
+      const { data: masyarakat, error: err2 } = await dbAction('pandanganMasyarakat', 'findMany', { orderBy: { urutan: 'asc' } });
       if (!err2 && masyarakat) {
         setMasyarakatList(masyarakat);
       }
@@ -73,6 +73,15 @@ export default function BerandaAdminPage() {
     }
   };
 
+  const uploadFileLocal = async (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = await fetch('/api/upload', { method: 'POST', body: formData });
+    if (!res.ok) throw new Error('Gagal mengupload file');
+    const { url } = await res.json();
+    return url;
+  };
+
   const handleBerandaSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSavingBeranda(true);
@@ -83,44 +92,9 @@ export default function BerandaAdminPage() {
       let pengumumanUrl = berandaData.pengumuman_foto_url;
       let sambutanUrl = berandaData.sambutan_foto_url;
 
-      // Upload Foto Hero
-      if (fotoHeroFile) {
-        const fileExt = fotoHeroFile.name.split('.').pop();
-        const fileName = `${Math.random()}.${fileExt}`;
-        const filePath = `beranda/hero_${fileName}`;
-        
-        const { error: uploadError } = await supabase.storage.from('uploads').upload(filePath, fotoHeroFile);
-        if (uploadError) throw uploadError;
-        
-        const { data } = supabase.storage.from('uploads').getPublicUrl(filePath);
-        heroUrl = data.publicUrl;
-      }
-
-      // Upload Foto Pengumuman
-      if (fotoPengumumanFile) {
-        const fileExt = fotoPengumumanFile.name.split('.').pop();
-        const fileName = `${Math.random()}.${fileExt}`;
-        const filePath = `beranda/pengumuman_${fileName}`;
-        
-        const { error: uploadError } = await supabase.storage.from('uploads').upload(filePath, fotoPengumumanFile);
-        if (uploadError) throw uploadError;
-        
-        const { data } = supabase.storage.from('uploads').getPublicUrl(filePath);
-        pengumumanUrl = data.publicUrl;
-      }
-
-      // Upload Foto Sambutan
-      if (fotoSambutanFile) {
-        const fileExt = fotoSambutanFile.name.split('.').pop();
-        const fileName = `${Math.random()}.${fileExt}`;
-        const filePath = `beranda/sambutan_${fileName}`;
-        
-        const { error: uploadError } = await supabase.storage.from('uploads').upload(filePath, fotoSambutanFile);
-        if (uploadError) throw uploadError;
-        
-        const { data } = supabase.storage.from('uploads').getPublicUrl(filePath);
-        sambutanUrl = data.publicUrl;
-      }
+      if (fotoHeroFile) heroUrl = await uploadFileLocal(fotoHeroFile);
+      if (fotoPengumumanFile) pengumumanUrl = await uploadFileLocal(fotoPengumumanFile);
+      if (fotoSambutanFile) sambutanUrl = await uploadFileLocal(fotoSambutanFile);
 
       const updatedBeranda = {
         judul_hero: berandaData.judul_hero,
@@ -134,8 +108,11 @@ export default function BerandaAdminPage() {
         sambutan_foto_url: sambutanUrl,
       };
 
-      const { error } = await supabase.from('beranda').update(updatedBeranda).eq('id', 1);
-      if (error) throw error;
+      const { error } = await dbAction('beranda', 'update', {
+        where: { id: 1 },
+        data: updatedBeranda
+      });
+      if (error) throw new Error(error);
       
       setBerandaData(updatedBeranda);
       setFotoHeroFile(null);
@@ -184,14 +161,22 @@ export default function BerandaAdminPage() {
 
   const saveMasyarakat = async () => {
     try {
+      const parsedUrutan = parseInt(editForm.urutan.toString(), 10);
+      const dataToSave = { ...editForm, urutan: isNaN(parsedUrutan) ? 0 : parsedUrutan };
+
       if (editingId === 0) {
         // Create
-        const { error } = await supabase.from('pandangan_masyarakat').insert([editForm]);
-        if (error) throw error;
+        const { error } = await dbAction('pandanganMasyarakat', 'create', {
+          data: dataToSave
+        });
+        if (error) throw new Error(error);
       } else {
         // Update
-        const { error } = await supabase.from('pandangan_masyarakat').update(editForm).eq('id', editingId);
-        if (error) throw error;
+        const { error } = await dbAction('pandanganMasyarakat', 'update', {
+          where: { id: editingId },
+          data: dataToSave
+        });
+        if (error) throw new Error(error);
       }
       setEditingId(null);
       fetchData(); // reload list
@@ -201,11 +186,13 @@ export default function BerandaAdminPage() {
     }
   };
 
-  const deleteMasyarakat = async (id: number) => {
+  const deleteMasyarakat = async (id: string) => {
     if (!confirm('Hapus pandangan masyarakat ini?')) return;
     try {
-      const { error } = await supabase.from('pandangan_masyarakat').delete().eq('id', id);
-      if (error) throw error;
+      const { error } = await dbAction('pandanganMasyarakat', 'delete', {
+        where: { id }
+      });
+      if (error) throw new Error(error);
       fetchData(); // reload
     } catch (error) {
       console.error('Error deleting:', error);

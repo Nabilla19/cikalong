@@ -1,12 +1,14 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function ProdukHukumPage() {
-  const { data: produk } = await supabase.from('produk_hukum').select('*').order('created_at', { ascending: false });
+  const produk = await prisma.produkHukum.findMany({
+    orderBy: { created_at: 'desc' }
+  });
 
   return (
     <>

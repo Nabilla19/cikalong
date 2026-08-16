@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
 import { 
   LayoutDashboard, 
   Landmark, 
@@ -44,37 +43,24 @@ export default function AdminLayout({
   const pathname = usePathname();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  const [session, setSession] = useState<any>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   useEffect(() => {
     setMounted(true);
-    const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        router.push('/admin/login');
-      } else {
-        setSession(session);
-      }
-    };
-    checkUser();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      if (!session) {
-        router.push('/admin/login');
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [router]);
+    // Verifikasi sesi sudah ditangani oleh middleware.ts
+    // Jadi kita asumsikan jika komponen ini ter-render, user sudah login.
+  }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    router.push('/admin/login');
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      router.push('/admin/login');
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  if (!mounted || !session) return (
+  if (!mounted) return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
       <Loader2 className="w-12 h-12 text-emerald-500 animate-spin mb-4" />
       <p className="text-slate-500 font-medium animate-pulse">Memuat workspace...</p>

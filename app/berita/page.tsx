@@ -1,13 +1,15 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function BeritaPage() {
-  const { data: berita } = await supabase.from('berita').select('*').order('diterbitkan_pada', { ascending: false });
+  const berita = await prisma.berita.findMany({
+    orderBy: { diterbitkan_pada: 'desc' }
+  });
 
   return (
     <>

@@ -1,8 +1,10 @@
 import Link from 'next/link';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 
 export default async function Footer() {
-  const { data: pengaturan } = await supabase.from('pengaturan_web').select('*').eq('id', 1).single();
+  const pengaturan = await prisma.pengaturanWeb.findUnique({
+    where: { id: 1 }
+  });
   const teksFooter = pengaturan?.teks_footer || 'PPM UIN Suska 2026';
 
   return (

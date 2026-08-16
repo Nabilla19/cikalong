@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { dbAction } from '@/app/actions/admin';
 
 export default function ProfilPage() {
   const [loading, setLoading] = useState(true);
@@ -21,8 +21,7 @@ export default function ProfilPage() {
   async function fetchData() {
     try {
       setLoading(true);
-      const { data, error } = await supabase.from('profil_desa').select('*').eq('id', 1).single();
-      if (error && error.code !== 'PGRST116') throw error; // ignore if not found
+      const { data, error } = await dbAction('profilDesa', 'findUnique', { where: { id: 1 } });
       if (data) {
         setFormData({
           sejarah: data.sejarah || '',
@@ -47,8 +46,12 @@ export default function ProfilPage() {
     setMessage('');
     
     try {
-      const { error } = await supabase.from('profil_desa').upsert({ id: 1, ...formData });
-      if (error) throw error;
+      const { error } = await dbAction('profilDesa', 'upsert', {
+        where: { id: 1 },
+        update: formData,
+        create: { id: 1, ...formData }
+      });
+      if (error) throw new Error(error);
       setMessage('✅ Berhasil disimpan!');
     } catch (error) {
       console.error('Error saving data:', error);

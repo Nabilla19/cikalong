@@ -3,17 +3,19 @@ export const revalidate = 0;
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 
 export default async function GeografiPage() {
-  const { data } = await supabase.from('geografi').select('*').eq('id', 1).single();
+  const data = await prisma.geografi.findUnique({
+    where: { id: 1 }
+  });
   
   const letakLuas = data?.letak_dan_luas || 'Belum ada data letak dan luas wilayah.';
-  const kondisiTanah = data?.kondisi_tanah || [];
-  const kependudukan = data?.kependudukan || [];
-  const mataPencaharian = data?.mata_pencaharian || [];
-  const pendidikan = data?.tingkat_pendidikan || [];
-  const sarana = data?.sarana_prasarana || {
+  const kondisiTanah = (data?.kondisi_tanah as any) || [];
+  const kependudukan = (data?.kependudukan as any) || [];
+  const mataPencaharian = (data?.mata_pencaharian as any) || [];
+  const pendidikan = (data?.tingkat_pendidikan as any) || [];
+  const sarana = (data?.sarana_prasarana as any) || {
     perhubungan: [], pendidikan: [], keagamaan: [], seni_budaya: [], prasarana_desa: []
   };
 

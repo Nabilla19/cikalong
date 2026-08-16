@@ -1,12 +1,14 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { supabase } from '@/lib/supabaseClient';
+import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function ProfilPage() {
-  const { data: profil } = await supabase.from('profil_desa').select('*').eq('id', 1).single();
+  const profil = await prisma.profilDesa.findUnique({
+    where: { id: 1 }
+  });
 
   const misiArray = profil?.misi ? profil.misi.split('\n').filter(Boolean) : [
     'Meningkatkan kualitas sumber daya manusia melalui pendidikan dan kesehatan.',

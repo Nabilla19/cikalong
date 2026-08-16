@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { dbAction } from '@/app/actions/admin';
 import { Trash2 } from 'lucide-react';
 
 export default function ArsipDokumenAdminPage() {
@@ -21,8 +21,8 @@ export default function ArsipDokumenAdminPage() {
   async function fetchData() {
     try {
       setLoading(true);
-      const { data, error } = await supabase.from('arsip_dokumen').select('*').order('created_at', { ascending: false });
-      if (error) throw error;
+      const { data, error } = await dbAction('arsipDokumen', 'findMany', { orderBy: { created_at: 'desc' } });
+      if (error) throw new Error(error);
       if (data) setArsipList(data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -31,11 +31,11 @@ export default function ArsipDokumenAdminPage() {
     }
   }
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     if (!confirm('Yakin ingin menghapus dokumen ini?')) return;
     try {
-      const { error } = await supabase.from('arsip_dokumen').delete().eq('id', id);
-      if (error) throw error;
+      const { error } = await dbAction('arsipDokumen', 'delete', { where: { id } });
+      if (error) throw new Error(error);
       setArsipList(arsipList.filter(p => p.id !== id));
     } catch (error) {
       console.error('Error deleting:', error);
@@ -60,24 +60,18 @@ export default function ArsipDokumenAdminPage() {
     setMessage('');
     
     try {
-      const fileExt = selectedFile.name.split('.').pop();
-      const fileName = `arsip_dokumen_${Date.now()}.${fileExt}`;
-      const filePath = `dokumen/${fileName}`;
-      
-      const { error: uploadError } = await supabase.storage
-        .from('uploads')
-        .upload(filePath, selectedFile);
-        
-      if (uploadError) throw uploadError;
-      
-      const { data } = supabase.storage.from('uploads').getPublicUrl(filePath);
-      const fileUrl = data.publicUrl;
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      if (!res.ok) throw new Error('Gagal upload file');
+      const { url } = await res.json();
+      const fileUrl = url;
 
-      const { data: dbData, error } = await supabase.from('arsip_dokumen').insert([{ judul, file_url: fileUrl }]).select();
-      if (error) throw error;
+      const { data: dbData, error } = await dbAction('arsipDokumen', 'create', { data: { judul, file_url: fileUrl } });
+      if (error) throw new Error(error);
       
       if (dbData) {
-        setArsipList([dbData[0], ...arsipList]);
+        setArsipList([dbData, ...arsipList]);
         setJudul('');
         setSelectedFile(null);
         if (fileInputRef.current) fileInputRef.current.value = '';
