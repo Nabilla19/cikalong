@@ -163,7 +163,8 @@ export default function ArsipDokumenAdminPage() {
                 <Trash2 className="w-5 h-5" />
               </button>
             </div>
-          ))}
+            );
+          })}
           {arsipList.length === 0 && <p className="text-center text-slate-500 py-4">Belum ada dokumen.</p>}
         </div>
       </div>
