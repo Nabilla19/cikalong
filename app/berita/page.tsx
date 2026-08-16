@@ -29,7 +29,7 @@ export default async function BeritaPage() {
                     {item.judul}
                   </h3>
                   <p className="text-xs font-semibold text-[#1e3a8a] mb-3 tracking-wider uppercase">{new Date(item.diterbitkan_pada).toLocaleDateString('id-ID', { dateStyle: 'long' })}</p>
-                  <p className="text-gray-600 leading-relaxed">{item.isi}</p>
+                  <p className="text-gray-600 leading-relaxed whitespace-pre-wrap text-left">{item.isi}</p>
                 </div>
               ))}
               {(!berita || berita.length === 0) && (

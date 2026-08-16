@@ -191,7 +191,7 @@ export default function BeritaPage() {
               <div className="flex-1 flex flex-col">
                 <h3 className="font-bold text-lg text-slate-800 line-clamp-2 mb-1 group-hover:text-orange-600 transition-colors">{berita.judul}</h3>
                 <p className="text-xs font-medium text-orange-500 mb-2">{new Date(berita.diterbitkan_pada).toLocaleDateString('id-ID', { dateStyle: 'long' })}</p>
-                <p className="text-sm text-slate-500 line-clamp-2 mb-3">{berita.isi}</p>
+                <p className="text-sm text-slate-500 line-clamp-3 mb-3 whitespace-pre-wrap text-left">{berita.isi}</p>
                 <div className="mt-auto flex justify-end">
                   <button 
                     onClick={() => handleDelete(berita.id)}

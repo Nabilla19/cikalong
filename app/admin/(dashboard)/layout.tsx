@@ -26,6 +26,7 @@ const menuItems = [
   { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
   { name: 'Beranda', path: '/admin/beranda', icon: Globe },
   { name: 'Profil Desa', path: '/admin/profil', icon: Landmark },
+  { name: 'Geografi', path: '/admin/geografi', icon: Map },
   { name: 'Struktur', path: '/admin/struktur', icon: Users },
   { name: 'Budaya', path: '/admin/budaya', icon: Palette },
   { name: 'Berita Desa', path: '/admin/berita', icon: Newspaper },
