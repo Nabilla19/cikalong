@@ -54,11 +54,11 @@ export default function PengaturanPage() {
         
       if (data) {
         setFormData({
-          wa: data.wa || '',
+          wa: data.telepon || '',
           email: data.email || '',
-          alamat_kantor: data.alamat_kantor || '',
-          ig: data.ig || '',
-          tiktok: data.tiktok || '',
+          alamat_kantor: data.alamat || '',
+          ig: data.instagram || '',
+          tiktok: data.youtube || '', // mapped from youtube
           teks_footer: data.teks_footer || ''
         });
       }
@@ -79,10 +79,19 @@ export default function PengaturanPage() {
     setMessage('');
     
     try {
+      const dbPayload = {
+        telepon: formData.wa,
+        email: formData.email,
+        alamat: formData.alamat_kantor,
+        instagram: formData.ig,
+        youtube: formData.tiktok, // mapping tiktok to youtube since schema doesn't have tiktok
+        teks_footer: formData.teks_footer
+      };
+
       const { error } = await dbAction('pengaturanWeb', 'upsert', {
         where: { id: 1 },
-        update: formData,
-        create: { id: 1, ...formData }
+        update: dbPayload,
+        create: { id: 1, ...dbPayload }
       });
         
       if (error) throw new Error(error);

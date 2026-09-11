@@ -144,11 +144,11 @@ export default function GeografiPage() {
           <div key={i} className="flex gap-2 items-center">
             <input 
               type="text" value={item.label} onChange={(e) => handleListChange(setter, i, 'label', e.target.value)}
-              placeholder="Contoh: Petani" className="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
+              placeholder="Contoh: Petani" className="flex-1 min-w-0 px-3 py-2 text-sm border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
             />
             <input 
               type="text" value={item.value} onChange={(e) => handleListChange(setter, i, 'value', e.target.value)}
-              placeholder="1.323 Orang" className="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
+              placeholder="1.323 Orang" className="flex-1 min-w-0 px-3 py-2 text-sm border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
             />
             <button type="button" onClick={() => removeListItem(setter, i)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
               <Trash2 className="w-4 h-4" />
@@ -173,11 +173,11 @@ export default function GeografiPage() {
           <div key={i} className="flex gap-2 items-center">
             <input 
               type="text" value={item.label} onChange={(e) => handleSaranaChange(category, i, 'label', e.target.value)}
-              placeholder="Fasilitas..." className="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
+              placeholder="Fasilitas..." className="flex-1 min-w-0 px-3 py-2 text-sm border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
             />
             <input 
               type="text" value={item.value} onChange={(e) => handleSaranaChange(category, i, 'value', e.target.value)}
-              placeholder="Jumlah..." className="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
+              placeholder="Jumlah..." className="flex-1 min-w-0 px-3 py-2 text-sm border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500"
             />
             <button type="button" onClick={() => removeSaranaItem(category, i)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors">
               <Trash2 className="w-4 h-4" />

@@ -78,7 +78,15 @@ export default function UmkmPage() {
         fotoUrl = url;
       }
 
-      const { data: dbData, error } = await dbAction('umkm', 'create', { data: { ...newUmkm, foto_url: fotoUrl } });
+      const { data: dbData, error } = await dbAction('umkm', 'create', { 
+        data: { 
+          nama_usaha: newUmkm.nama_usaha,
+          pemilik: newUmkm.pemilik,
+          deskripsi: `Kategori/Produk: ${newUmkm.produk}\nAlamat: ${newUmkm.alamat}\n\n${newUmkm.deskripsi}`,
+          kontak: newUmkm.no_wa,
+          foto_url: fotoUrl 
+        } 
+      });
       if (error) throw new Error(error);
       
       if (dbData) {

@@ -19,7 +19,12 @@ export async function POST(request: Request) {
     const filename = `${uniqueSuffix}-${file.name.replace(/\s+/g, '-')}`;
     
     // Save to public/uploads
-    const path = join(process.cwd(), 'public/uploads', filename);
+    const uploadDir = join(process.cwd(), 'public/uploads');
+    const { existsSync, mkdirSync } = require('fs');
+    if (!existsSync(uploadDir)) {
+      mkdirSync(uploadDir, { recursive: true });
+    }
+    const path = join(uploadDir, filename);
     await writeFile(path, buffer);
 
     // Return the public URL

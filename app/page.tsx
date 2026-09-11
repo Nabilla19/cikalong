@@ -3,6 +3,7 @@ import Footer from './components/Footer';
 import ZoomableImage from './components/ZoomableImage';
 import prisma from '@/lib/prisma';
 import Link from 'next/link';
+import Slider from './components/Slider';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -10,22 +11,15 @@ export const revalidate = 0;
 export default async function Home() {
   const [
     beranda,
-    masyarakat
+    masyarakat,
+    sliders
   ] = await Promise.all([
     prisma.beranda.findUnique({ where: { id: 1 } }),
-    prisma.pandanganMasyarakat.findMany({ orderBy: { urutan: 'asc' } })
+    prisma.pandanganMasyarakat.findMany({ orderBy: { urutan: 'asc' } }),
+    prisma.sliderBeranda.findMany({ orderBy: { urutan: 'asc' } })
   ]);
 
-  const fallbackMasyarakat = [
-    { inisial: 'AS', nama: 'Bapak Aman Suherman', jabatan: 'Tokoh Adat', kutipan: 'Cikalong Budayanya Masih Terjaga.' },
-    { inisial: 'HN', nama: 'Ibu Hasna', jabatan: 'UMKM Cikalong', kutipan: 'Cikalong Makanannya Enak-enak.' },
-    { inisial: 'OD', nama: 'Bapak Odin', jabatan: 'Petani', kutipan: 'Cikalong Masih Asri dan Bersih.' },
-    { inisial: 'NN', nama: 'Ibu Nunung', jabatan: 'Tokoh Seni', kutipan: 'Cikalong Bagian dari Budaya Seni di Jawa Barat.' },
-    { inisial: 'DC', nama: 'Dwi C', jabatan: 'Masyarakat', kutipan: 'Cikalong merupakan rumah yang tiada bosannya.' },
-    { inisial: 'DA', nama: 'Dilla A', jabatan: 'Masyarakat', kutipan: 'Cikalong adalah desa yang hijau membuat mata segar.' },
-  ];
-
-  const pandangan = (masyarakat && masyarakat.length > 0) ? masyarakat : fallbackMasyarakat;
+  const pandangan = masyarakat || [];
 
   return (
     <>
@@ -36,8 +30,12 @@ export default async function Home() {
         <div className="container">
           <div className="text-center">
             <h1 className="section-title text-center">
-              {beranda?.judul_hero || 'Selamat Datang di Website Digital Desa Cikalong'}
+              {beranda?.judul_hero || "Website Resmi Desa Cikalong"}
             </h1>
+
+            <p className="text-center mt-4 text-lg text-gray-600">
+              Kecamatan Sidamulih, Kabupaten Pangandaran, Jawa Barat
+            </p>
           </div>
 
           <div className="main-image-wrapper">
@@ -48,18 +46,9 @@ export default async function Home() {
             />
           </div>
 
-          <div className="carousel-container mt-12">
-            <div className="carousel-slide">
-              <ZoomableImage 
-                src={beranda?.pengumuman_foto_url || "https://ik.imagekit.io/klccxl9cu/Web%20Desa/IMG_7633.HEIC?updatedAt=1751085829472"} 
-                alt="Pengumuman" 
-              />
-              <div className="carousel-content">
-                <h3 className="carousel-title">{beranda?.pengumuman_judul || 'Pengumuman Penting Desa'}</h3>
-                <p className="carousel-description">{beranda?.pengumuman_deskripsi || 'Informasi penting dari Kantor Desa untuk Masyarakat Desa Cikalong.'}</p>
-              </div>
-            </div>
-          </div>
+          {sliders && sliders.length > 0 && (
+            <Slider slides={sliders} />
+          )}
 
           <div className="mt-20 mb-12 bg-emerald-50 rounded-[3rem] p-8 md:p-12 shadow-sm border border-emerald-100 flex flex-col md:flex-row items-center gap-10 lg:gap-16 max-w-5xl mx-auto">
             <div className="w-full md:w-auto flex justify-center shrink-0">
@@ -76,7 +65,7 @@ export default async function Home() {
                 Sambutan <span className="text-emerald-700">Kepala Desa</span>
               </h3>
               <p className="text-xl font-bold text-slate-900 mb-6">{beranda?.sambutan_nama || 'Kepala Desa'}</p>
-              
+
               <div className="flex gap-4">
                 <span className="text-emerald-300 text-6xl font-serif leading-none mt-[-10px]">&ldquo;</span>
                 <div className="text-slate-600 leading-relaxed whitespace-pre-wrap text-lg">
@@ -86,17 +75,21 @@ export default async function Home() {
             </div>
           </div>
 
-          <h2 className="section-subtitle mt-16 text-[#1e3a8a]">Pandangan Umum Masyarakat</h2>
-          <div className="grid-staff mt-8">
-            {pandangan.map((item: any, idx: number) => (
-              <div key={idx} className="staff-card">
-                <div className="staff-photo">{item.inisial}</div>
-                <h3 className="text-xl font-bold text-gray-900">{item.nama}</h3>
-                <p className="text-[#1e3a8a] font-semibold mb-4">{item.jabatan}</p>
-                <p className="text-gray-600 italic">"{item.kutipan}"</p>
+          {pandangan.length > 0 && (
+            <>
+              <h2 className="section-subtitle mt-16 text-[#1e3a8a]">Pandangan Umum Masyarakat</h2>
+              <div className="grid-staff mt-8">
+                {pandangan.map((item: any, idx: number) => (
+                  <div key={idx} className="staff-card">
+                    <div className="staff-photo uppercase">{item.nama ? item.nama.substring(0, 2) : 'A'}</div>
+                    <h3 className="text-xl font-bold text-gray-900">{item.nama}</h3>
+                    <p className="text-[#1e3a8a] font-semibold mb-4">{item.pekerjaan}</p>
+                    <p className="text-gray-600 italic">"{item.kutipan}"</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          )}
         </div>
       </section>
 

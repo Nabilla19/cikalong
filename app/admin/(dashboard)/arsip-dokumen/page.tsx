@@ -133,33 +133,59 @@ export default function ArsipDokumenAdminPage() {
 
       <div className="max-w-3xl bg-white/90 backdrop-blur-xl p-8 rounded-3xl shadow-sm border border-slate-100">
         <h2 className="text-xl font-bold text-slate-800 mb-6">Daftar Arsip & Dokumentasi</h2>
-        <div className="space-y-4">
-          {arsipList.map((item) => {
-            const isImage = item.file_url?.toLowerCase().match(/\.(jpeg|jpg|gif|png|webp|svg)(\?.*)?$/) !== null;
-            return (
-            <div key={item.id} className="flex items-center justify-between p-4 border border-slate-100 rounded-xl hover:shadow-md transition-all">
-              <div className="flex items-center gap-4">
-                {isImage ? (
-                  <img src={item.file_url} alt="arsip" className="w-16 h-16 object-cover rounded-lg shrink-0" />
-                ) : (
-                  <div className="w-16 h-16 bg-stone-100 text-stone-500 rounded-lg flex items-center justify-center text-2xl shrink-0">📄</div>
-                )}
-                <div>
-                  <h3 className="font-bold text-slate-800 line-clamp-2">{item.judul}</h3>
-                  {!isImage && <a href={item.file_url} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 hover:underline">Buka File</a>}
+        <div className="space-y-6">
+          <div>
+            <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2"><span>📄</span> Dokumen Publik</h3>
+            <div className="space-y-3">
+              {arsipList.filter(item => item.file_url?.toLowerCase().match(/\.(jpeg|jpg|gif|png|webp|svg)(\?.*)?$/) === null).map((item) => (
+                <div key={item.id} className="flex items-center justify-between p-4 border border-slate-100 rounded-xl hover:shadow-md transition-all">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-stone-100 text-stone-500 rounded-lg flex items-center justify-center text-xl shrink-0">📄</div>
+                    <div>
+                      <h4 className="font-bold text-slate-800 line-clamp-2">{item.judul}</h4>
+                      <a href={item.file_url} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600 hover:underline">Buka File</a>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => handleDelete(item.id)}
+                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    title="Hapus"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
                 </div>
-              </div>
-              <button 
-                onClick={() => handleDelete(item.id)}
-                className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                title="Hapus"
-              >
-                <Trash2 className="w-5 h-5" />
-              </button>
+              ))}
+              {arsipList.filter(item => item.file_url?.toLowerCase().match(/\.(jpeg|jpg|gif|png|webp|svg)(\?.*)?$/) === null).length === 0 && (
+                <p className="text-sm text-slate-500 italic">Belum ada dokumen publik.</p>
+              )}
             </div>
-            );
-          })}
-          {arsipList.length === 0 && <p className="text-center text-slate-500 py-4">Belum ada dokumen.</p>}
+          </div>
+
+          <div>
+            <h3 className="font-bold text-slate-700 mb-3 flex items-center gap-2"><span>📸</span> Galeri Foto</h3>
+            <div className="space-y-3">
+              {arsipList.filter(item => item.file_url?.toLowerCase().match(/\.(jpeg|jpg|gif|png|webp|svg)(\?.*)?$/) !== null).map((item) => (
+                <div key={item.id} className="flex items-center justify-between p-4 border border-slate-100 rounded-xl hover:shadow-md transition-all">
+                  <div className="flex items-center gap-4">
+                    <img src={item.file_url} alt="arsip" className="w-12 h-12 object-cover rounded-lg shrink-0" />
+                    <div>
+                      <h4 className="font-bold text-slate-800 line-clamp-2">{item.judul}</h4>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={() => handleDelete(item.id)}
+                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    title="Hapus"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                </div>
+              ))}
+              {arsipList.filter(item => item.file_url?.toLowerCase().match(/\.(jpeg|jpg|gif|png|webp|svg)(\?.*)?$/) !== null).length === 0 && (
+                <p className="text-sm text-slate-500 italic">Belum ada foto yang diunggah.</p>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

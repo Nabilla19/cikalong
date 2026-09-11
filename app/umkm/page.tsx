@@ -31,15 +31,13 @@ export default async function UmkmPage() {
                   )}
                   <h3 className="text-xl font-bold mb-4 text-[#1e3a8a]">{item.nama_usaha}</h3>
                   <div className="space-y-2 text-sm text-gray-600 flex-1">
-                    <p><strong className="text-gray-900">Produk:</strong> {item.produk}</p>
                     <p><strong className="text-gray-900">Pemilik:</strong> {item.pemilik}</p>
-                    <p><strong className="text-gray-900">Alamat:</strong> {item.alamat}</p>
-                    <p className="mt-4 italic">{item.deskripsi}</p>
+                    <p className="mt-4 italic whitespace-pre-wrap">{item.deskripsi}</p>
                   </div>
-                  {item.no_wa && (
+                  {item.kontak && (
                     <div className="mt-6 pt-4 border-t border-gray-100">
                       <a 
-                        href={`https://wa.me/${item.no_wa.replace(/\D/g,'')}?text=Halo%20${encodeURIComponent(item.nama_usaha)},%20saya%20melihat%20produk%20Anda%20di%20Website%20Desa%20Cikalong%20dan%20ingin%20bertanya/memesan.`}
+                        href={`https://wa.me/${item.kontak.replace(/\D/g,'')}?text=Halo%20${encodeURIComponent(item.nama_usaha)},%20saya%20melihat%20produk%20Anda%20di%20Website%20Desa%20Cikalong%20dan%20ingin%20bertanya/memesan.`}
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white py-2.5 px-4 rounded-xl font-bold transition-all w-full shadow-sm hover:shadow-md"

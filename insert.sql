@@ -1,0 +1,1 @@
+INSERT INTO "User" (id, email, password_hash, nama, role, created_at) VALUES (gen_random_uuid(), 'admin@cikalong.com', '$2a$10$vXrmqTyjwcsgOYjz7B.Ab.zXxlSgZvgTSJEO6KoIwER/kd0L3C.Oe', 'Admin Desa', 'admin', NOW());
