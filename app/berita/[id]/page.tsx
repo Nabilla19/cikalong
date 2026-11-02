@@ -23,7 +23,7 @@ function renderIsiBerita(isi: string) {
                 href={part}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 underline underline-offset-4 decoration-blue-400 hover:text-blue-800 hover:decoration-blue-600 break-all font-medium transition-colors"
+                style={{ color: '#2563eb', textDecoration: 'underline', textUnderlineOffset: '4px', wordBreak: 'break-all', fontWeight: '500' }}
               >
                 {part}
               </a>
