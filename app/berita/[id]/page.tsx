@@ -6,6 +6,37 @@ import prisma from '@/lib/prisma';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+// Helper: parse teks biasa jadi paragraf + link yang bisa diklik
+function renderIsiBerita(isi: string) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const lines = isi.split('\n');
+  return lines.map((line, lineIdx) => {
+    const parts = line.split(urlRegex);
+    return (
+      <span key={lineIdx}>
+        {parts.map((part, i) => {
+          const isUrl = /^https?:\/\//.test(part);
+          if (isUrl) {
+            return (
+              <a
+                key={i}
+                href={part}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-600 underline underline-offset-2 hover:text-emerald-800 break-all font-medium"
+              >
+                {part}
+              </a>
+            );
+          }
+          return <span key={i}>{part}</span>;
+        })}
+        {lineIdx < lines.length - 1 && <br />}
+      </span>
+    );
+  });
+}
+
 export default async function BeritaDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   const berita = await prisma.berita.findUnique({
@@ -55,14 +86,19 @@ export default async function BeritaDetailPage({ params }: { params: Promise<{ i
               </h1>
 
               {berita.foto_url && (
-                <div className="mb-10 rounded-2xl overflow-hidden bg-slate-100 shadow-inner">
-                  <img src={berita.foto_url} alt={berita.judul} className="w-full max-h-[500px] object-cover" />
+                <div className="mb-10 rounded-2xl overflow-hidden bg-slate-100 shadow-inner flex items-center justify-center">
+                  {/* object-contain agar foto tidak terpotong, max height dibatasi */}
+                  <img
+                    src={berita.foto_url}
+                    alt={berita.judul}
+                    className="w-full max-h-[600px] object-contain"
+                  />
                 </div>
               )}
 
               <div className="prose prose-slate max-w-none">
-                <p className="text-slate-700 leading-relaxed whitespace-pre-wrap text-lg">
-                  {berita.isi}
+                <p className="text-slate-700 leading-relaxed text-lg">
+                  {renderIsiBerita(berita.isi)}
                 </p>
               </div>
             </article>

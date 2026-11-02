@@ -27,7 +27,7 @@ export default async function BeritaPage() {
                 <div key={item.id} className="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-slate-100 flex flex-col h-full">
                   <div className="relative h-56 overflow-hidden bg-slate-100">
                     {item.foto_url ? (
-                      <img src={item.foto_url} alt={item.judul} className="w-full h-full object-cover" />
+                      <img src={item.foto_url} alt={item.judul} className="w-full h-full object-contain bg-white p-1" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-slate-300 text-4xl">📰</div>
                     )}
